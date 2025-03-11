@@ -84,13 +84,9 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
     </GroupButtons>
 
     <div class="tools-group">
-      <div class="flex items-center">
-        <Heading :editor="editor" />
-
-        <FontSelection :editor="editor" />
-
-        <FontSizeSelection :editor="editor" />
-      </div>
+      <Heading :editor="editor" />
+      <FontSelection :editor="editor" />
+      <FontSizeSelection :editor="editor" />
     </div>
 
     <GroupButtons>
@@ -250,11 +246,11 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
 
 <style lang="scss">
 .toolbar {
-  @apply flex gap-4 flex-wrap items-center pb-1;
+  @apply mt-2 flex gap-4 flex-wrap items-center pb-1;
   @apply w-full;
 
   .tools-group {
-    @apply flex gap-1;
+    @apply w-64 flex gap-1;
     @apply p-0.5 border-2 border-solid border-gray-200 rounded-md;
   }
 }

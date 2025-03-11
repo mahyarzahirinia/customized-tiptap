@@ -1,9 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div
-    class="flex items-center border-2 border-solid border-gray-200 rounded-md"
-  >
+  <div class="flex items-center border border-solid border-gray-200 rounded-lg">
     <v-btn-group
       density="compact"
       divided
