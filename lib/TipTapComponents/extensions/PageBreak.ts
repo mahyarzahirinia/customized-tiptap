@@ -6,6 +6,14 @@ import {
 } from "@tiptap/core";
 import "../styles/pagebreak.css";
 
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    PageBreak: {
+      insertPageBreak: () => ReturnType;
+    };
+  }
+}
+
 export const PageBreak = Node.create({
   name: "pageBreak",
   group: "pagebreak",

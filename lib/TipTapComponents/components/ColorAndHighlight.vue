@@ -76,7 +76,7 @@ const openAdvancedModal = () => {
 };
 
 // apply color from advanced picker
-const applyAdvancedColor = (color: string | null) => {
+const applyAdvancedColor = (color: string | null | undefined) => {
   if (!color) return;
   applyColor(color);
   showAdvancedModal.value = false;

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { defineProps, defineModel } from "vue";
-import Button from "../components/Table.vue";
+import Button from "../components/Button.vue";
 
 defineProps<{
-  applyColor: (color: string | null) => void;
+  applyColor: (color: string | null | undefined) => void;
 }>();
 
 const showModal = defineModel<boolean>("showModal");

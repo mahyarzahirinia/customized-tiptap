@@ -1,4 +1,5 @@
 import { Node, mergeAttributes, type RawCommands } from "@tiptap/core";
+import { type Level } from "@tiptap/extension-heading";
 
 const styling = (value: number) => {
   return {
@@ -11,6 +12,14 @@ const styling = (value: number) => {
     6: "inline text-md",
   }[value];
 };
+
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    CustomTextBlock: {
+      setHeading: (level: Level) => ReturnType;
+    };
+  }
+}
 
 export const CustomTextBlock = Node.create({
   name: "customTextBlock",

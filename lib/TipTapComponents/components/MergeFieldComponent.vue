@@ -14,7 +14,7 @@
 
 <script setup>
 import { NodeViewWrapper, NodeViewContent } from "@tiptap/vue-3";
-import { computed, ref } from "vue";
+import { computed, ref, defineComponent } from "vue";
 
 const isShowValue = ref(false);
 const props = defineProps();

@@ -46,7 +46,7 @@ import { LineHeight } from "./TipTapComponents/extensions/LineHeightExtension";
 import { Indentation } from "./TipTapComponents/extensions/IndentionExtension";
 import { ColorExtension } from "./TipTapComponents/extensions/ColorExtension";
 import { HighlightExtension } from "./TipTapComponents/extensions/HighlightExtension";
-import { Fullscreen } from "./TipTapComponents/extensions/Fullscreen.ts";
+import { Fullscreen } from "./TipTapComponents/extensions/Fullscreen";
 import { PreviewExtension } from "./TipTapComponents/extensions/Preview";
 import { PrintExtension } from "./TipTapComponents/extensions/Print";
 import { PageBreak } from "./TipTapComponents/extensions/PageBreak";
@@ -321,7 +321,7 @@ const handleClose = () => {
         return-object
         variant="underlined"
         @update:search="handleSearchUpdate"
-        @update:model-value="(obj) => insertManually(obj)"
+        @update:model-value="(obj: any) => insertManually(obj)"
         @keydown.enter="handleEnterPress"
         @keydown.escape="handleClose"
       />
@@ -354,7 +354,7 @@ const handleClose = () => {
       return-object
       variant="underlined"
       @update:search="handleSearchUpdate"
-      @update:model-value="(obj) => insertMergeField(obj)"
+      @update:model-value="(obj: any) => insertMergeField(obj)"
       @keydown.enter="handleEnterPress"
       @keydown.escape="handleClose"
       @keydown.delete="() => mergeFieldQuery === '' && handleClose()"

@@ -1,4 +1,12 @@
-import { Extension, type CommandProps } from "@tiptap/core";
+import { Extension, type CommandProps, type RawCommands } from "@tiptap/core";
+
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    Fullscreen: {
+      toggleFullscreen: () => ReturnType;
+    };
+  }
+}
 
 export const Fullscreen = Extension.create({
   name: "fullscreen",
@@ -29,6 +37,6 @@ export const Fullscreen = Extension.create({
 
           return true;
         },
-    };
+    } as Partial<RawCommands>;
   },
 });

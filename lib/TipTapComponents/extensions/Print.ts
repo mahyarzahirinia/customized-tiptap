@@ -1,5 +1,13 @@
 import { Extension, Editor, type RawCommands } from "@tiptap/core";
 
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    PrintExtension: {
+      print: () => ReturnType;
+    };
+  }
+}
+
 export const PrintExtension = Extension.create({
   name: "print",
 
