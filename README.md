@@ -1,1 +1,3 @@
-# Vue Component npm Example
+# Customized, Rich UI tiptap editor
+## vue-v3
+

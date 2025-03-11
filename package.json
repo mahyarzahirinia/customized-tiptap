@@ -2,18 +2,18 @@
   "name": "customized-tiptap-editor",
   "description": "customized, ui rich tiptap editor",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "files": [
     "dist"
   ],
-  "main": "./dist/vue-component-npm-example.umd.cjs",
-  "module": "./dist/vue-component-npm-example.js",
+  "main": "./dist/customized-tiptap.umd.cjs",
+  "module": "./dist/customized-tiptap.js",
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/vue-component-npm-example.js",
-      "require": "./dist/vue-component-npm-example.umd.js"
+      "import": "./dist/customized-tiptap.js",
+      "require": "./dist/customized-tiptap.umd.js"
     },
     "./dist/style.css": "./dist/style.css"
   },
