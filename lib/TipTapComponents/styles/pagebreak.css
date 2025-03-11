@@ -1,0 +1,28 @@
+.page-break {
+    @apply w-full h-2 bg-red-400;
+    /*@apply h-1 w-full bg-red-600 border-t border-dashed border- [ 1 px ] cursor-pointer;*/
+    /*@apply relative my- [ 20 px ] mx-0;*/
+
+    &::after {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        background: #fff;
+        padding: 0 5px;
+        color: #888;
+    }
+}
+
+@media print {
+    .page-break {
+        page-break-before: always;
+        border: none;
+        height: 0;
+    }
+
+    .page-break::after {
+        display: none;
+    }
+}

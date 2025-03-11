@@ -1,2 +1,3 @@
-import VueComponentNpmExample from './VueComponentNpmExample.vue'
-export { VueComponentNpmExample }
+import VueComponentNpmExample from "./VueComponentNpmExample.vue";
+import TipTap from "./TipTap.vue";
+export { VueComponentNpmExample, TipTap };

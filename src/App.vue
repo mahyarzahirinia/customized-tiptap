@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import VueComponentNpmExample from '../lib/VueComponentNpmExample.vue'
+import VueComponentNpmExample from "../lib/VueComponentNpmExample.vue";
+import TipTap from "../lib/TipTap.vue";
 </script>
 
 <template>
-  <VueComponentNpmExample msg="Vue Component npm Example" />
+  <TipTap />
 </template>

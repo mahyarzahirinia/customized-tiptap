@@ -1,0 +1,23 @@
+.anchor-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style the anchor icon */
+.anchor-icon {
+    color: gray;
+    font-size: 14px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Hide the icon in print & exports */
+@media print {
+    .anchor-icon {
+        display: none;
+    }
+}
+
+.export-mode .anchor-icon {
+    display: none;
+}
