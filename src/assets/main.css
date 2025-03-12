@@ -116,21 +116,3 @@
 }
 
 
-:root {
-    --app-font: 'vazir-thin', sans-serif;
-}
-
-/*.main-persian-font {*/
-/*    font-family: 'vazir-medium', sans-serif;*/
-/*}*/
-
-
-/*h1, h2, h3, h4, h5, h6 {*/
-/*    font-family: "vazir-bold", sans-serif;*/
-/*    !*font-weight: 700;*!*/
-/*}*/
-
-p, div, span {
-    font-family: var(--app-font), sans-serif;
-    /*font-weight: 100;*/
-}
