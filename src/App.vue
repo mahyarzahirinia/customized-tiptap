@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import TipTap from "../lib/TipTap.vue";
+import CustomizedTipTap from "../lib/CustomizedTipTap.vue";
 </script>
 
 <template>
   <v-locale-provider rtl>
     <v-app>
       <v-main>
-        <TipTap />
+        <CustomizedTipTap />
       </v-main>
     </v-app>
   </v-locale-provider>

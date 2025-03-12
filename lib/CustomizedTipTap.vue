@@ -302,7 +302,7 @@ const handleClose = () => {
 </script>
 
 <template>
-  <div v-if="editor" class="container tiptap-editor">
+  <div v-if="editor" class="container py-2 px-2 tiptap-editor">
     <Toolbar :editor="editor" />
 
     <div class="merge-field-tool-box mt-2 flex gap-4">

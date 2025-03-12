@@ -1,2 +1,2 @@
-import TipTap from "./TipTap.vue";
-export { TipTap };
+import CustomizedTipTap from "./CustomizedTipTap.vue";
+export { CustomizedTipTap };
