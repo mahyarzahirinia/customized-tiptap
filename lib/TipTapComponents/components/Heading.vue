@@ -3,29 +3,29 @@ import { defineProps, ref } from "vue";
 import { type Editor } from "@tiptap/core";
 import { type Level } from "@tiptap/extension-heading";
 
+type Levels = 0 | Level;
+
 const props = defineProps<{ editor: Editor }>();
 
-const selectedHeading = ref<string | number | undefined>("paragraph");
+const selectedHeading = ref<number | null>();
 const headingOptions = [
-  { title: "پاراگراف", value: "paragraph" },
   { title: "سرتیتر ۶", value: 6 },
   { title: "سرتیتر ۵", value: 5 },
   { title: "سرتیتر ۴", value: 4 },
   { title: "سرتیتر ۳", value: 3 },
   { title: "سرتیتر ۲", value: 2 },
   { title: "سرتیتر ۱", value: 1 },
+  { title: "پاراگراف", value: 0 },
 ];
 
-const applyHeading = (value: string | number) => {
+const applyHeading = (value: Levels) => {
   if (!props.editor) return;
 
-  if (value === "paragraph") {
-    props.editor.commands.setParagraph();
-  } else {
-    const headingLevel = Number(value);
-    // @ts-ignore
-    props.editor.commands.wrapSelectedText(headingLevel);
+  if (value === 0) {
+    props.editor.chain().focus().setParagraph().run();
+    return;
   }
+  props.editor.chain().focus().toggleHeading({ level: value }).run();
 };
 </script>
 

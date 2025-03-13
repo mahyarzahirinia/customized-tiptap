@@ -30,7 +30,7 @@ import { Image } from "@tiptap/extension-image";
 import { TextAlign } from "@tiptap/extension-text-align";
 import { Document } from "@tiptap/extension-document";
 import { FontFamily } from "@tiptap/extension-font-family";
-import { CustomTextBlock } from "./TipTapComponents/extensions/CustomHeadings";
+// import { CustomTextBlock } from "./TipTapComponents/extensions/CustomHeadings";
 import { FontSize } from "./TipTapComponents/extensions/FontSize";
 import { OrderedList } from "./TipTapComponents/extensions/Lists/OrderedList";
 import { BulletList } from "./TipTapComponents/extensions/Lists/BulletList";
@@ -38,6 +38,7 @@ import LinkComponent from "./TipTapComponents/components/LinkComponent.vue";
 import { CustomLink } from "./TipTapComponents/extensions/Link";
 import { ListItem } from "./TipTapComponents/extensions/Lists/ListItem";
 import { Text } from "@tiptap/extension-text";
+import { Heading } from "@tiptap/extension-heading";
 import { Paragraph } from "@tiptap/extension-paragraph";
 import RowResizeExtension from "./TipTapComponents/extensions/RowResizeExtension";
 import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
@@ -185,7 +186,8 @@ const editor = useEditor({
     BulletList,
     FontSize,
     TextStyle,
-    CustomTextBlock,
+    Heading,
+    Paragraph,
     // TextAlign.configure({ types: ["heading", "paragraph"] }),
     Image,
     Table.configure({ resizable: true }),
@@ -203,7 +205,7 @@ const editor = useEditor({
     FontFamily,
     StarterKit.configure({
       // paragraph: false,
-      heading: false,
+      // heading: false,
       bulletList: false,
       orderedList: false,
     }),

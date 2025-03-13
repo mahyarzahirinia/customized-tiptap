@@ -50,7 +50,7 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
 </script>
 
 <template>
-  <div class="toolbar">
+  <div class="toolbar-container toolbar">
     <GroupButtons>
       <Button
         :disabled="!props.editor.can().chain().focus().undo().run()"
@@ -247,6 +247,9 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
 </template>
 
 <style lang="scss">
+.toolbar-container {
+  @apply m-2;
+}
 .toolbar {
   @apply flex gap-4 flex-wrap items-center pb-1;
   @apply w-full;
