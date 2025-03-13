@@ -6,7 +6,7 @@ import {
   type SingleCommands,
 } from "@tiptap/core";
 
-export const Anchor = Node.create({
+export const AnchorExtension = Node.create({
   name: "idSetter",
   content: "inline*",
   group: "block",

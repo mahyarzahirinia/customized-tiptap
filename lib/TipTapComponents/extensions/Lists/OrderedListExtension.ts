@@ -13,7 +13,7 @@ const styling = (value: string) => {
   }[value];
 };
 
-export const OrderedList = Node.create({
+export const OrderedListExtension = Node.create({
   name: "orderedList", // name of the node
   group: "block list", // what group is part of
   content: "listItem*", // what content is allowed

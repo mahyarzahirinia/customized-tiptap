@@ -1,6 +1,6 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 
-export const ListItem = Node.create({
+export const ListItemExtension = Node.create({
   name: "listItem",
   content: "block*",
   parseHTML() {

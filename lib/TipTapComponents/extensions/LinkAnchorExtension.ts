@@ -20,7 +20,7 @@ declare module "@tiptap/core" {
   }
 }
 
-export const LinkAnchor = Mark.create<LinkAnchorOptions>({
+export const LinkAnchorExtension = Mark.create<LinkAnchorOptions>({
   name: "linkAnchor",
 
   addOptions() {

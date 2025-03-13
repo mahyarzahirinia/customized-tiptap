@@ -16,7 +16,7 @@ import {
 
 import { EditorView } from "prosemirror-view";
 import StarterKit from "@tiptap/starter-kit";
-import MergeField from "./TipTapComponents/extensions/MergeFields";
+import MergeField from "./TipTapComponents/extensions/MergeFieldsExtension";
 import Toolbar from "./TipTapComponents/Toolbar.vue";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
@@ -31,29 +31,29 @@ import { TextAlign } from "@tiptap/extension-text-align";
 import { Document } from "@tiptap/extension-document";
 import { FontFamily } from "@tiptap/extension-font-family";
 // import { CustomTextBlock } from "./TipTapComponents/extensions/CustomHeadings";
-import { FontSize } from "./TipTapComponents/extensions/FontSize";
-import { OrderedList } from "./TipTapComponents/extensions/Lists/OrderedList";
-import { BulletList } from "./TipTapComponents/extensions/Lists/BulletList";
+import { FontSizeExtension } from "./TipTapComponents/extensions/FontSizeExtension";
+import { OrderedListExtension } from "./TipTapComponents/extensions/Lists/OrderedListExtension";
+import { BulletListExtension } from "./TipTapComponents/extensions/Lists/BulletListExtension";
 import LinkComponentComponent from "./TipTapComponents/components/LinkComponentComponent.vue";
-import { CustomLink } from "./TipTapComponents/extensions/Link";
-import { ListItem } from "./TipTapComponents/extensions/Lists/ListItem";
+import { CustomLink } from "./TipTapComponents/extensions/LinkExtension";
+import { ListItemExtension } from "./TipTapComponents/extensions/Lists/ListItemExtension";
 import { Text } from "@tiptap/extension-text";
 import { Heading } from "@tiptap/extension-heading";
 import { Paragraph } from "@tiptap/extension-paragraph";
 import RowResizeExtension from "./TipTapComponents/extensions/RowResizeExtension";
 import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
-import { DirectionWrapperExtension } from "./TipTapComponents/extensions/Direction";
+import { DirectionWrapperExtension } from "./TipTapComponents/extensions/DirectionExtension";
 import { LineHeight } from "./TipTapComponents/extensions/LineHeightExtension";
 import { Indentation } from "./TipTapComponents/extensions/IndentionExtension";
-import { ColorExtension } from "./TipTapComponents/extensions/ColorExtension";
+import { ColorExtensionExtension } from "./TipTapComponents/extensions/ColorExtensionExtension";
 import { HighlightExtension } from "./TipTapComponents/extensions/HighlightExtension";
-import { Fullscreen } from "./TipTapComponents/extensions/Fullscreen";
-import { PreviewExtension } from "./TipTapComponents/extensions/Preview";
-import { PrintExtension } from "./TipTapComponents/extensions/Print";
-import { PageBreak } from "./TipTapComponents/extensions/PageBreak";
-import { Anchor } from "./TipTapComponents/extensions/Anchor";
+import { FullscreenExtension } from "./TipTapComponents/extensions/FullscreenExtension";
+import { PreviewExtension } from "./TipTapComponents/extensions/PreviewExtension";
+import { PrintExtension } from "./TipTapComponents/extensions/PrintExtension";
+import { PageBreakExtension } from "./TipTapComponents/extensions/PageBreakExtension";
+import { AnchorExtension } from "./TipTapComponents/extensions/AnchorExtension";
 import { ExtendedTextAlign } from "./TipTapComponents/extensions/AlignmentExtension";
-import { LinkAnchor } from "./TipTapComponents/extensions/LinkAnchor";
+import { LinkAnchorExtension } from "./TipTapComponents/extensions/LinkAnchorExtension";
 
 // initializing lowlight
 const lowlight = createLowlight(all);
@@ -154,26 +154,26 @@ const editor = useEditor({
     },
   },
   extensions: [
-    // Color.configure({ types: [TextStyle.name, ListItem.name] }),
-    // TextStyle.configure({ types: [ListItem.name] }),
+    // Color.configure({ types: [TextStyle.name, ListItemExtension.name] }),
+    // TextStyle.configure({ types: [ListItemExtension.name] }),
 
     // we need to add prose utility class from tailwind typography to customize
     // our own tags p, h1 through h6
     // Text,
     // Paragraph,
-    // ListItem,
+    // ListItemExtension,
     // Document,
     // DirectionWrapperExtension,
     // CodeBlockLowlight.configure({ lowlight }),
     ExtendedTextAlign,
-    LinkAnchor,
-    Anchor,
-    PageBreak,
+    LinkAnchorExtension,
+    AnchorExtension,
+    PageBreakExtension,
     PrintExtension,
     PreviewExtension,
-    Fullscreen,
+    FullscreenExtension,
     HighlightExtension,
-    ColorExtension,
+    ColorExtensionExtension,
     DirectionWrapperExtension,
     Indentation.configure({
       types: ["paragraph", "heading"], // apply to paragraphs and headings
@@ -182,9 +182,9 @@ const editor = useEditor({
     }),
     LineHeight.configure({ types: ["paragraph", "heading"] }),
     // Color,
-    OrderedList,
-    BulletList,
-    FontSize,
+    OrderedListExtension,
+    BulletListExtension,
+    FontSizeExtension,
     TextStyle,
     Heading,
     Paragraph,

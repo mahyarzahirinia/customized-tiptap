@@ -14,7 +14,7 @@ declare module "@tiptap/core" {
   }
 }
 
-export const PageBreak = Node.create({
+export const PageBreakExtension = Node.create({
   name: "pageBreak",
   group: "pagebreak",
 

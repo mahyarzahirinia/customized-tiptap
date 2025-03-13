@@ -9,7 +9,7 @@ declare module "@tiptap/core" {
   }
 }
 
-export const ColorExtension = Extension.create({
+export const ColorExtensionExtension = Extension.create({
   name: "color",
 
   addGlobalAttributes() {

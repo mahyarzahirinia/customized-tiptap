@@ -8,7 +8,7 @@ const styling = (value: string) => {
   }[value];
 };
 
-export const BulletList = Node.create({
+export const BulletListExtension = Node.create({
   name: "bulletList",
   group: "block list",
   content: "listItem*",

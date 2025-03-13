@@ -8,7 +8,7 @@ declare module "@tiptap/core" {
   }
 }
 
-export const Fullscreen = Extension.create({
+export const FullscreenExtension = Extension.create({
   name: "fullscreen",
 
   addStorage() {

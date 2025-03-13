@@ -11,7 +11,7 @@ declare module "@tiptap/core" {
   }
 }
 
-export const FontSize = Mark.create({
+export const FontSizeExtension = Mark.create({
   name: "fontSize",
 
   addAttributes() {
