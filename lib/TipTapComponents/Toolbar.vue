@@ -246,7 +246,7 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .toolbar-container {
   @apply m-2;
 }

@@ -376,7 +376,7 @@ const handleClose = () => {
 }
 
 .merge-field-tool-box {
-  @apply mt-2 flex gap-4;
+  @apply m-2 flex;
 
   .merge-field {
     @apply max-w-36 max-h-16;
