@@ -104,9 +104,7 @@ const editor = useEditor({
   content: "",
   editorProps: {
     attributes: {
-      class:
-        "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none " +
-        "outline-none rounded !w-full !max-w-none p-4 max-h-60 h-60 overflow-y-auto",
+      class: "inside-editor",
     },
     handleClick(view, pos, event) {
       // if clicked on the last node was a table create a p tag after it
@@ -302,16 +300,16 @@ const handleClose = () => {
 </script>
 
 <template>
-  <div v-if="editor" class="container py-2 px-2 tiptap-editor">
+  <div v-if="editor" class="tiptap-editor">
     <Toolbar :editor="editor" />
 
-    <div class="merge-field-tool-box mt-2 flex gap-4">
+    <div class="merge-field-tool-box">
       <v-autocomplete
         v-model="selectedMergeField"
         :filter="() => true"
         :items="filteredMergeFields"
         :search="mergeFieldQuery"
-        class="max-w-36 max-h-16"
+        class="merge-field"
         clear-icon="mdi-close"
         clearable
         density="compact"
@@ -329,7 +327,7 @@ const handleClose = () => {
       <v-switch
         v-model="showValues"
         append-icon="mdi-information-outline"
-        class="ml-4"
+        class="c-switch"
         color="primary"
       />
     </div>
@@ -345,7 +343,7 @@ const handleClose = () => {
         left: `${mergeFieldDropdownPosition.x - 160}px`,
       }"
       autofocus
-      class="autocomplete absolute bg-transparent border rounded shadow p-1 w-[150px]"
+      class="m-autocomplete"
       density="compact"
       item-title="title"
       item-value="label"
@@ -364,8 +362,32 @@ const handleClose = () => {
   <editor-content :editor="editor" />
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.inside-editor {
+  @apply prose prose-sm sm:prose lg:prose-lg xl:prose-2xl;
+  @apply focus:outline-none;
+  @apply w-full max-w-full;
+  @apply rounded p-4 mx-auto max-h-60 h-60 overflow-y-auto;
+}
+.m-autocomplete {
+  @apply absolute bg-transparent border rounded shadow p-1 w-[150px];
+}
+
+.merge-field-tool-box {
+  @apply mt-2 flex gap-4;
+
+  .merge-field {
+    @apply max-w-36 max-h-16;
+  }
+
+  .c-switch {
+    @apply ml-4;
+  }
+}
+
 .tiptap-editor {
+  font-family: "yekan", "Roboto", sans-serif;
+
   &.normal-mode {
     @apply block;
   }

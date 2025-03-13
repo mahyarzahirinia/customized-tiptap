@@ -39,7 +39,7 @@ const applyFontSize = (value: string) => {
       :item-value="'size'"
       :items="fontSizes"
       :label="!selectedFontSize ? 'اندازه' : ''"
-      class="w-16 relative bottom-1"
+      class="font-size-box"
       density="compact"
       hide-details
       menu-icon=""
@@ -49,4 +49,8 @@ const applyFontSize = (value: string) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.font-size-box {
+  @apply w-16 relative bottom-1;
+}
+</style>

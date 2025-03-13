@@ -5,7 +5,7 @@
 
   <v-dialog v-model="dialog" max-width="800px">
     <v-card>
-      <v-card-title class="text-h6 !font-[yekan]">کاراکترهای خاص </v-card-title>
+      <v-card-title class="text-h6">کاراکترهای خاص </v-card-title>
       <v-card-text>
         <v-container class="pa-0" fluid>
           <v-row>
@@ -27,12 +27,9 @@
               <div>
                 <v-text-field v-model="search" dense label="جستجو" />
               </div>
-              <div class="flex flex-wrap items-end justify-end">
+              <div class="chars-container">
                 <div v-for="char in filteredCharacters" :key="char.value">
-                  <button
-                    class="h-8 w-8 d-flex justify-center items-center text-2xl m-2 p-2 hover:bg-gray-200 hover:rounded-sm hover:duration-300 hover:transition-all"
-                    @click="insertCharacter(char.value)"
-                  >
+                  <button class="char-btn" @click="insertCharacter(char.value)">
                     {{ char.value }}
                   </button>
                 </div>
@@ -322,6 +319,12 @@ const insertCharacter = (character: string) => {
 </script>
 
 <style scoped>
+.chars-container {
+  @apply flex flex-wrap items-end justify-end;
+}
+.char-btn {
+  @apply h-8 w-8 flex justify-center items-center text-2xl m-2 p-2 hover:bg-gray-200 hover:rounded-sm hover:duration-300 hover:transition-all;
+}
 .bg-grey-lighten-4 {
   background-color: #f5f5f5;
 }

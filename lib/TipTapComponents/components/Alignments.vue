@@ -24,7 +24,7 @@ const applyAlignment = (value: string) => {
   <v-select
     v-model="selectedAlignment"
     :items="textAlignments"
-    class="relative bottom-1 right-1"
+    class="a-select"
     density="compact"
     hide-details
     item-value="value"
@@ -33,7 +33,7 @@ const applyAlignment = (value: string) => {
     @update:modelValue="applyAlignment"
   >
     <template v-slot:selection="{ item }">
-      <div class="flex gap-1 items-center justify-center">
+      <div class="a-select-item">
         <v-icon :icon="item.raw.icon"></v-icon>
       </div>
     </template>
@@ -48,6 +48,12 @@ const applyAlignment = (value: string) => {
 </template>
 
 <style scoped>
+.a-select {
+  @apply relative bottom-1 right-1;
+}
+.a-select-item {
+  @apply flex gap-1 items-center justify-center;
+}
 :deep(.v-field__append-inner) {
   @apply translate-x-[14px];
 }

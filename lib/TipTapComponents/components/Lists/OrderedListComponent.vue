@@ -59,7 +59,7 @@ const applyAction = (value: string) => {
   <v-select
     v-model="selectedAction"
     :items="orderedLists"
-    class="relative bottom-1"
+    class="ol-select"
     density="compact"
     hide-details
     item-value="value"
@@ -69,7 +69,7 @@ const applyAction = (value: string) => {
     @update:modelValue="applyAction"
   >
     <template v-slot:selection="{ item }">
-      <div class="flex gap-1 items-center justify-center">
+      <div class="ol-select-item">
         <v-icon :icon="item.raw.icon"></v-icon>
       </div>
     </template>
@@ -83,6 +83,12 @@ const applyAction = (value: string) => {
 </template>
 
 <style lang="scss" scoped>
+.ol-select {
+  @apply relative bottom-1;
+}
+.ol-select-item {
+  @apply flex gap-1 items-center justify-center;
+}
 :deep(.v-field__append-inner) {
   @apply translate-x-[14px];
 }

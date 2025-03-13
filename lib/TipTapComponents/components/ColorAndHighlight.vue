@@ -84,7 +84,7 @@ const applyAdvancedColor = (color: string | null | undefined) => {
 </script>
 
 <template>
-  <div class="flex">
+  <div class="ch-container">
     <!-- Buttons -->
     <Button color="#eee" text="رنگ متن" @click="togglePicker('color')">
       <v-icon icon="mdi-format-color-text" />
@@ -92,7 +92,7 @@ const applyAdvancedColor = (color: string | null | undefined) => {
         :style="[
           selectedButton === 'color' ? { color: `${selectedColor}` } : '',
         ]"
-        class="absolute -bottom-2 -right-[18px]"
+        class="btn-line-under"
         icon="mdi-minus"
       />
     </Button>
@@ -102,7 +102,7 @@ const applyAdvancedColor = (color: string | null | undefined) => {
         :style="[
           selectedButton === 'highlight' ? { color: `${selectedColor}` } : '',
         ]"
-        class="absolute -bottom-2 -right-[18px]"
+        class="btn-line-under"
         icon="mdi-minus"
       />
     </Button>
@@ -119,28 +119,22 @@ const applyAdvancedColor = (color: string | null | undefined) => {
       activator="parent"
       location="bottom"
     >
-      <v-sheet class="bg-white rounded-md shadow-md">
+      <v-sheet class="color-container">
         <!-- Color grid -->
-        <div class="grid grid-cols-5">
+        <div class="color-grid">
           <button
             v-for="color in colors"
             :key="color.value"
             :style="{ backgroundColor: color.value }"
-            class="w-ful h-8 order"
+            class="color-button"
             @click="applyColor(color.value)"
           />
         </div>
-        <div class="flex justify-between items-center mt-2">
-          <button
-            class="h-8 w-8 m-1 flex items-center justify-center"
-            @click="applyColor('remove')"
-          >
+        <div class="last-row-container">
+          <button class="action-btn" @click="applyColor('remove')">
             <v-icon icon="mdi-close" />
           </button>
-          <button
-            class="h-8 w-8 m-1 flex items-center justify-center"
-            @click="openAdvancedModal"
-          >
+          <button class="action-btn" @click="openAdvancedModal">
             <v-icon icon="mdi-palette" />
           </button>
         </div>
@@ -157,6 +151,28 @@ const applyAdvancedColor = (color: string | null | undefined) => {
 </template>
 
 <style scoped>
+.ch-container {
+  @apply flex;
+}
+.btn-line-under {
+  @apply absolute bottom-0 right-[22px];
+}
+.color-container {
+  @apply bg-white rounded-md shadow-md;
+}
+.color-grid {
+  @apply grid grid-cols-5;
+}
+.color-button {
+  @apply w-full h-8 order-1;
+}
+
+.last-row-container {
+  @apply flex justify-between items-center;
+}
+.action-btn {
+  @apply h-8 w-8 m-1 flex items-center justify-center;
+}
 .v-dialog {
   z-index: 100;
 }

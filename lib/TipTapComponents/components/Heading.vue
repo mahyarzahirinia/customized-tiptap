@@ -34,7 +34,7 @@ const applyHeading = (value: string | number) => {
     v-model="selectedHeading"
     :items="headingOptions"
     :label="!selectedHeading ? 'سر تیتر' : ''"
-    class="w-36 relative bottom-1 right-2"
+    class="heading-box"
     density="compact"
     hide-details
     item-title="title"
@@ -45,4 +45,8 @@ const applyHeading = (value: string | number) => {
   />
 </template>
 
-<style scoped></style>
+<style scoped>
+.heading-box {
+  @apply w-36 relative bottom-1 right-2;
+}
+</style>

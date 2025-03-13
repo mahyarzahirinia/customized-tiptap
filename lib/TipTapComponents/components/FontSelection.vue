@@ -22,7 +22,7 @@ const applyFontFamily = (value: string) => {
     v-model="selectedFont"
     :items="fontFamilies"
     :label="!selectedFont ? 'فونت' : ''"
-    class="w-40 relative bottom-1"
+    class="font-box"
     density="compact"
     hide-details
     item-text="title"
@@ -33,4 +33,8 @@ const applyFontFamily = (value: string) => {
   />
 </template>
 
-<style scoped></style>
+<style scoped>
+.font-box {
+  @apply w-40 relative bottom-1;
+}
+</style>

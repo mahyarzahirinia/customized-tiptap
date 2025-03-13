@@ -148,6 +148,8 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
       <div v-if="showModal.showPanel" class="toolbar">
         <GroupButtons>
           <LineHeight :editor="editor" />
+        </GroupButtons>
+        <GroupButtons>
           <Indention :editor="editor" />
         </GroupButtons>
 
@@ -246,7 +248,7 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
 
 <style lang="scss">
 .toolbar {
-  @apply mt-2 flex gap-4 flex-wrap items-center pb-1;
+  @apply flex gap-4 flex-wrap items-center pb-1;
   @apply w-full;
 
   .tools-group {

@@ -7,11 +7,11 @@ const props = defineProps<{ editor: Editor }>();
 
 // line height options
 const lineHeights = [
-  { title: "1", value: "1" },
-  { title: "1.5", value: "1.5" },
-  { title: "2", value: "2" },
-  { title: "2.5", value: "2.5" },
-  { title: "3", value: "3" },
+  { title: "۱", value: "1" },
+  { title: "۱.۵", value: "1.5" },
+  { title: "۲", value: "2" },
+  { title: "۲.۵", value: "2.5" },
+  { title: "۳", value: "3" },
 ];
 
 const selectedLineHeight = ref<string | undefined>("1");
@@ -29,7 +29,7 @@ const applyLineHeight = (value: string) => {
       <v-select
         v-model="selectedLineHeight"
         :items="lineHeights"
-        class="relative right-5"
+        class="lh-select"
         density="compact"
         hide-details
         item-value="value"
@@ -44,10 +44,14 @@ const applyLineHeight = (value: string) => {
 </template>
 
 <style scoped>
+.lh-select {
+  @apply relative right-5 ml-4;
+}
 :deep(.v-field__append-inner) {
   @apply translate-x-[14px];
 }
 
 :deep(.v-input__prepend) {
+  @apply relative left-1.5 ml-4;
 }
 </style>
