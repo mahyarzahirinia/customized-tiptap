@@ -1,0 +1,114 @@
+/*english numbers*/
+@font-face {
+    font-family: vazir-medium;
+    src: url('fonts/Vazir/Vazir-Medium.eot');
+    src: url('fonts/Vazir/Vazir-Medium.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Vazir/Vazir-Medium.woff') format('woff'),
+    url('fonts/Vazir/Vazir-Medium.woff2') format('woff2'),
+    url('fonts/Vazir/Vazir-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: vazir-thin;
+    src: url('fonts/Vazir/Vazir-Thin.eot');
+    src: url('fonts/Vazir/Vazir-Thin.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Vazir/Vazir-Thin.woff') format('woff'),
+    url('fonts/Vazir/Vazir-Thin.woff2') format('woff2'),
+    url('fonts/Vazir/Vazir-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: vazir-bold;
+    src: url('fonts/Vazir/Vazir-Bold.eot');
+    src: url('fonts/Vazir/Vazir-Bold.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Vazir/Vazir-Bold.woff') format('woff'),
+    url('fonts/Vazir/Vazir-Bold.woff2') format('woff2'),
+    url('fonts/Vazir/Vazir-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/*persian numbers only*/
+@font-face {
+    font-family: vazir-medium-farsi-num;
+    src: url('fonts/Vazir/Vazir-Medium-FD-WOL.eot');
+    src: url('fonts/Vazir/Vazir-Medium-FD-WOL.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Vazir/Vazir-Medium-FD-WOL.woff') format('woff'),
+    url('fonts/Vazir/Vazir-Medium-FD-WOL.woff2') format('woff2'),
+    url('fonts/Vazir/Vazir-Medium-FD-WOL.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: vazir-thin-farsi-num;
+    src: url('fonts/Vazir/Vazir-Thin-FD-WOL.eot');
+    src: url('fonts/Vazir/Vazir-Thin-FD-WOL.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Vazir/Vazir-Thin-FD-WOL.woff') format('woff'),
+    url('fonts/Vazir/Vazir-Thin-FD-WOL.woff2') format('woff2'),
+    url('fonts/Vazir/Vazir-Thin-FD-WOL.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: vazir-bold-farsi-num;
+    src: url('fonts/Vazir/Vazir-Bold-FD-WOL.eot');
+    src: url('fonts/Vazir/Vazir-Bold-FD-WOL.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Vazir/Vazir-Bold-FD-WOL.woff') format('woff'),
+    url('fonts/Vazir/Vazir-Bold-FD-WOL.woff2') format('woff2'),
+    url('fonts/Vazir/Vazir-Bold-FD-WOL.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Yekan */
+@font-face {
+    font-family: yekan-regular;
+    src: url('fonts/Yekan/yekan-regular.eot');
+    src: url('fonts/Yekan/yekan-regular.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Yekan/yekan-regular.woff') format('woff'),
+    url('fonts/Yekan/yekan-regular.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: yekan;
+    src: url('fonts/Yekan/Yekan.eot');
+    src: url('fonts/Yekan/Yekan.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Yekan/Yekan.woff') format('woff'),
+    url('fonts/Yekan/Yekan.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+/* Sahel */
+@font-face {
+    font-family: sahel;
+    src: url('fonts/Sahel/Sahel.eot');
+    src: url('fonts/Sahel/Sahel.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Sahel/Sahel.woff') format('woff'),
+    url('fonts/Sahel/Sahel.woff2') format('woff2'),
+    url('fonts/Sahel/Sahel.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Samim */
+@font-face {
+    font-family: samim;
+    src: url('fonts/Samim/Samim.eot');
+    src: url('fonts/Samim/Samim.eot?#iefix') format('FontName-opentype'),
+    url('fonts/Samim/Samim.woff') format('woff'),
+    url('fonts/Samim/Samim.woff2') format('woff2'),
+    url('fonts/Samim/Samim.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+
