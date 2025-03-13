@@ -1,26 +1,26 @@
 <script lang="ts" setup="">
 import { defineProps, reactive, ref } from "vue";
 import { type Editor } from "@tiptap/core";
-import Table from "./components/Table.vue";
+import TableComponent from "./components/TableComponent.vue";
 import Button from "./components/Button.vue";
-import Heading from "./components/Heading.vue";
-import FontSelection from "./components/FontSelection.vue";
-import FontSizeSelection from "./components/FontSizeSelection.vue";
-import Alignments from "./components/Alignments.vue";
-import HeadingButtons from "./components/HeadingButtons.vue";
+import HeadingComponent from "./components/HeadingComponent.vue";
+import FontSelectionComponent from "./components/FontSelectionComponent.vue";
+import FontSizeSelectionComponent from "./components/FontSizeSelectionComponent.vue";
+import AlignmentsComponent from "./components/AlignmentsComponent.vue";
+import HeadingButtonsComponent from "./components/HeadingButtonsComponent.vue";
 import OrderedOrderedListComponent from "./components/Lists/OrderedListComponent.vue";
 import UnOrderedOrderedListComponent from "./components/Lists/UnOrderedListComponent.vue";
-import LinkComponent from "./components/LinkComponent.vue";
+import LinkComponentComponent from "./components/LinkComponentComponent.vue";
 import HTMLExportModal from "./modals/HTMLExportModal.vue";
 import ColorModal from "./modals/ColorModal.vue";
 import GroupButtons from "./components/GroupButtons.vue";
-import LineHeight from "./components/LineHeight.vue";
-import Indention from "./components/Indention.vue";
-import ColorAndHighlight from "./components/ColorAndHighlight.vue";
-import SpecialCharacters from "./components/SpecialCharacters.vue";
-import Emojis from "./components/Emojis.vue";
-import CodeExport from "./components/CodeExport.vue";
-import Fullscreen from "./components/Fullscreen.vue";
+import LineHeightComponent from "./components/LineHeightComponent.vue";
+import IndentionComponent from "./components/IndentionComponent.vue";
+import ColorAndHighlightComponent from "./components/ColorAndHighlightComponent.vue";
+import SpecialCharactersComponent from "./components/SpecialCharactersComponent.vue";
+import EmojisComponent from "./components/EmojisComponent.vue";
+import CodeExportComponent from "./components/CodeExportComponent.vue";
+import FullscreenComponent from "./components/FullscreenComponent.vue";
 import Preview from "./components/PreviewComponent.vue";
 import AnchorComponent from "./components/AnchorComponent.vue";
 
@@ -84,9 +84,9 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
     </GroupButtons>
 
     <div class="tools-group">
-      <Heading :editor="editor" />
-      <FontSelection :editor="editor" />
-      <FontSizeSelection :editor="editor" />
+      <HeadingComponent :editor="editor" />
+      <FontSelectionComponent :editor="editor" />
+      <FontSizeSelectionComponent :editor="editor" />
     </div>
 
     <GroupButtons>
@@ -126,14 +126,14 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
     </GroupButtons>
 
     <div class="tools-group">
-      <Alignments :editor="editor" />
+      <AlignmentsComponent :editor="editor" />
       <OrderedOrderedListComponent :editor="editor" />
       <UnOrderedOrderedListComponent :editor="editor" />
     </div>
 
     <GroupButtons>
-      <LinkComponent :editor="editor" />
-      <Table :editor="editor" />
+      <LinkComponentComponent :editor="editor" />
+      <TableComponent :editor="editor" />
     </GroupButtons>
 
     <!-- toggle transition -->
@@ -147,24 +147,24 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
     <v-expand-transition>
       <div v-if="showModal.showPanel" class="toolbar">
         <GroupButtons>
-          <LineHeight :editor="editor" />
+          <LineHeightComponent :editor="editor" />
         </GroupButtons>
         <GroupButtons>
-          <Indention :editor="editor" />
-        </GroupButtons>
-
-        <GroupButtons>
-          <ColorAndHighlight :editor="editor" />
+          <IndentionComponent :editor="editor" />
         </GroupButtons>
 
         <GroupButtons>
-          <SpecialCharacters :editor="editor" />
-          <Emojis :editor="editor" />
+          <ColorAndHighlightComponent :editor="editor" />
         </GroupButtons>
 
         <GroupButtons>
-          <CodeExport :editor="editor" />
-          <Fullscreen :editor="editor" />
+          <SpecialCharactersComponent :editor="editor" />
+          <EmojisComponent :editor="editor" />
+        </GroupButtons>
+
+        <GroupButtons>
+          <CodeExportComponent :editor="editor" />
+          <FullscreenComponent :editor="editor" />
           <Preview :editor="editor" />
         </GroupButtons>
 
@@ -202,7 +202,7 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
         <!--        >-->
         <!--          <v-icon icon="mdi-format-paragraph" />-->
         <!--        </Button>-->
-        <!--        <HeadingButtons :editor="editor" />-->
+        <!--        <HeadingButtonsComponent :editor="editor" />-->
 
         <!--        <Button-->
         <!--          :class="{ 'is-active': editor.isActive('codeBlock') }"-->

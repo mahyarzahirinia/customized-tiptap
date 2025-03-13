@@ -34,7 +34,7 @@ import { FontFamily } from "@tiptap/extension-font-family";
 import { FontSize } from "./TipTapComponents/extensions/FontSize";
 import { OrderedList } from "./TipTapComponents/extensions/Lists/OrderedList";
 import { BulletList } from "./TipTapComponents/extensions/Lists/BulletList";
-import LinkComponent from "./TipTapComponents/components/LinkComponent.vue";
+import LinkComponentComponent from "./TipTapComponents/components/LinkComponentComponent.vue";
 import { CustomLink } from "./TipTapComponents/extensions/Link";
 import { ListItem } from "./TipTapComponents/extensions/Lists/ListItem";
 import { Text } from "@tiptap/extension-text";
