@@ -10,7 +10,7 @@ const fontFamilies = ref([
   { title: "صمیم", value: "samim" },
   { title: "وزیر", value: "vazir-medium" },
 ]);
-const selectedFont = ref<string | undefined>("vazir-medium");
+const selectedFont = ref<string | null>(null);
 
 const applyFontFamily = (value: string) => {
   props.editor.chain().focus().setFontFamily(value).run();
