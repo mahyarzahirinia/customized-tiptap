@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { defineProps, ref } from "vue";
+import { defineProps, ref, watch } from "vue";
 import { type Editor } from "@tiptap/core";
 import { type Level } from "@tiptap/extension-heading";
 
@@ -27,6 +27,13 @@ const applyHeading = (value: Levels) => {
   }
   props.editor.chain().focus().toggleHeading({ level: value }).run();
 };
+
+watch(
+  () => props.editor.getAttributes("heading").level,
+  (value) => {
+    selectedHeading.value = value;
+  },
+);
 </script>
 
 <template>
@@ -46,6 +53,10 @@ const applyHeading = (value: Levels) => {
 </template>
 
 <style scoped>
+:deep(.v-field-label) {
+  @apply bg-white;
+}
+
 .heading-box {
   @apply w-36 relative bottom-1 right-2;
 }

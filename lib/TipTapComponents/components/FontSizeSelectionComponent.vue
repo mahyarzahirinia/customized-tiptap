@@ -1,34 +1,40 @@
 <script lang="ts" setup="">
-import { defineProps, ref } from "vue";
+import { defineProps, ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
-import Button from "../components/Button.vue";
 
 const props = defineProps<{ editor: Editor }>();
 
 const fontSizes = ref([
-  { size: "8px", label: "۸" },
-  { size: "9px", label: "۹" },
-  { size: "10px", label: "۱۰" },
-  { size: "11px", label: "۱۱" },
-  { size: "12px", label: "۱۲" },
-  { size: "14px", label: "۱۴" },
-  { size: "16px", label: "۱۶" },
-  { size: "18px", label: "۱۸" },
-  { size: "20px", label: "۲۰" },
-  { size: "22px", label: "۲۲" },
-  { size: "24px", label: "۲۴" },
-  { size: "26px", label: "۲۶" },
-  { size: "28px", label: "۲۸" },
-  { size: "36px", label: "۳۶" },
-  { size: "48px", label: "۴۸" },
-  { size: "72px", label: "۷۲" },
+  { size: "8pt", label: "۸" },
+  { size: "9pt", label: "۹" },
+  { size: "10pt", label: "۱۰" },
+  { size: "11pt", label: "۱۱" },
+  { size: "12pt", label: "۱۲" },
+  { size: "14pt", label: "۱۴" },
+  { size: "16pt", label: "۱۶" },
+  { size: "18pt", label: "۱۸" },
+  { size: "20pt", label: "۲۰" },
+  { size: "22pt", label: "۲۲" },
+  { size: "24pt", label: "۲۴" },
+  { size: "26pt", label: "۲۶" },
+  { size: "28pt", label: "۲۸" },
+  { size: "36pt", label: "۳۶" },
+  { size: "48pt", label: "۴۸" },
+  { size: "72pt", label: "۷۲" },
 ]);
 
-const selectedFontSize = ref<string | undefined>("16px");
+const selectedFontSize = ref<string | undefined>();
 
 const applyFontSize = (value: string) => {
   props.editor.chain().focus().setFontSize(value).run();
 };
+
+watch(
+  () => props.editor.getAttributes("textStyle").fontSize,
+  (value) => {
+    selectedFontSize.value = value;
+  },
+);
 </script>
 
 <template>
@@ -50,7 +56,10 @@ const applyFontSize = (value: string) => {
 </template>
 
 <style scoped>
+:deep(.v-field-label) {
+  @apply bg-white;
+}
 .font-size-box {
-  @apply w-16 relative bottom-1;
+  @apply w-20 relative bottom-1;
 }
 </style>

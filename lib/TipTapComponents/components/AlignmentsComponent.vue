@@ -1,13 +1,13 @@
 <script lang="ts" setup="">
-import { defineProps, ref } from "vue";
+import { defineProps, ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
 
 const props = defineProps<{ editor: Editor }>();
 
 const textAlignments = [
-  { title: "چپ چین", value: "left", icon: "mdi-format-align-left" },
-  { title: "وسط چین", value: "center", icon: "mdi-format-align-center" },
   { title: "راست چین", value: "right", icon: "mdi-format-align-right" },
+  { title: "وسط چین", value: "center", icon: "mdi-format-align-center" },
+  { title: "چپ چین", value: "left", icon: "mdi-format-align-left" },
   { title: "خود چین", value: "justify", icon: "mdi-format-align-justify" },
 ];
 
@@ -18,6 +18,15 @@ const applyAlignment = (value: string) => {
 
   props.editor.chain().focus().setTextAlign(value).run();
 };
+
+watch(
+  () =>
+    props.editor.getAttributes("paragraph").textAlign ||
+    props.editor.getAttributes("heading").textAlign,
+  (value) => {
+    selectedAlignment.value = value;
+  },
+);
 </script>
 
 <template>

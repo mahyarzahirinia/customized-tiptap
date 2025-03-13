@@ -1,7 +1,6 @@
 <script lang="ts" setup="">
-import { defineProps, ref, computed } from "vue";
+import { defineProps, ref, computed, watch } from "vue";
 import type { Editor } from "@tiptap/core";
-import { NodeViewWrapper } from "@tiptap/vue-3";
 
 const props = defineProps<{ editor: Editor }>();
 
@@ -13,27 +12,6 @@ const orderedLists = [
   { title: "", value: "upper-alpha", icon: "mdi-alphabetical-variant" },
 ];
 const selectedAction = ref<string | undefined>("numbered");
-
-const isActionActive = (value: string) => {
-  if (!props.editor) return false;
-  return props.editor.isActive(
-    value === "ordered" ? "orderedList" : "listItem",
-  );
-};
-
-// const isActionDisabled = (value: string) => {
-//   if (!props.editor) return true;
-//   switch (value) {
-//     case "split":
-//       return !props.editor.can().splitListItem("listItem");
-//     case "indent-increase":
-//       return !props.editor.can().sinkListItem("listItem");
-//     case "indent-decrease":
-//       return !props.editor.can().liftListItem("listItem");
-//     default:
-//       return false;
-//   }
-// };
 
 const applyAction = (value: string) => {
   if (!props.editor) return;
@@ -47,12 +25,12 @@ const applyAction = (value: string) => {
   }
 };
 
-//
-// :class="{
-// 'is-active': isActionActive(item.raw.value),
-//     'is-disabled': isActionDisabled(item.raw.value),
-// }"
-// :disabled="isActionDisabled(item.raw.value)"
+watch(
+  () => props.editor.getAttributes("textStyle").fontSize,
+  (value) => {
+    selectedFontSize.value = value;
+  },
+);
 </script>
 
 <template>
