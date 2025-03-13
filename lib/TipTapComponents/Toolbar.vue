@@ -195,43 +195,6 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
             <v-icon icon="mdi-format-pilcrow-arrow-right" />
           </Button>
         </GroupButtons>
-        <!--        -->
-        <!--        <Button-->
-        <!--          :class="{ 'is-active': props.editor.isActive('paragraph') }"-->
-        <!--          @click="props.editor.chain().focus().setParagraph().run()"-->
-        <!--        >-->
-        <!--          <v-icon icon="mdi-format-paragraph" />-->
-        <!--        </Button>-->
-        <!--        <HeadingButtonsComponent :editor="editor" />-->
-
-        <!--        <Button-->
-        <!--          :class="{ 'is-active': editor.isActive('codeBlock') }"-->
-        <!--          @click="props.editor.chain().focus().toggleCodeBlock().run()"-->
-        <!--        >-->
-        <!--          <v-icon icon="mdi-code-braces" />-->
-        <!--        </Button>-->
-        <!--        <Button-->
-        <!--          :class="{ 'is-active': props.editor.isActive('codeBlock') }"-->
-        <!--          @click="exportHtml"-->
-        <!--        >-->
-        <!--          <v-icon icon="mdi-xml" />-->
-        <!--        </Button>-->
-        <!--        <Button-->
-        <!--          :class="{ 'is-active': props.editor.isActive('blockquote') }"-->
-        <!--          @click="props.editor.chain().focus().toggleBlockquote().run()"-->
-        <!--        >-->
-        <!--          <v-icon icon="mdi-format-quote-close" />-->
-        <!--        </Button>-->
-        <!--        <Button @click="props.editor.chain().focus().setHorizontalRule().run()">-->
-        <!--          <v-icon icon="mdi-minus" />-->
-        <!--        </Button>-->
-
-        <!--      :class="{-->
-        <!--        'is-active': props.editor.isActive('textStyle', { color: '#958DF1' }),-->
-        <!--      }"-->
-        <!--        <Button @click="showModal.colorModal = true">-->
-        <!--          <v-icon icon="mdi-palette" />-->
-        <!--        </Button>-->
       </div>
     </v-expand-transition>
   </div>
