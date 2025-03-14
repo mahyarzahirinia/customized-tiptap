@@ -12,7 +12,7 @@ import OrderedOrderedListComponent from "./components/Lists/OrderedListComponent
 import UnOrderedOrderedListComponent from "./components/Lists/UnOrderedListComponent.vue";
 import LinkComponentComponent from "./components/LinkComponentComponent.vue";
 import HTMLExportModal from "./modals/HTMLExportModal.vue";
-import ColorModal from "./modals/ColorModal.vue";
+// import ColorModal from "./modals/ColorModal.vue";
 import GroupButtons from "./components/GroupButtons.vue";
 import LineHeightComponent from "./components/LineHeightComponent.vue";
 import IndentionComponent from "./components/IndentionComponent.vue";
@@ -23,30 +23,17 @@ import CodeExportComponent from "./components/CodeExportComponent.vue";
 import FullscreenComponent from "./components/FullscreenComponent.vue";
 import Preview from "./components/PreviewComponent.vue";
 import AnchorComponent from "./components/AnchorComponent.vue";
+import DirectionComponent from "./components/DirectionComponent.vue";
 
 const props = defineProps<{ editor: Editor }>();
 
 const showModal = reactive<{
   exportModal: boolean;
-  colorModal: boolean;
   showPanel: boolean;
 }>({
   exportModal: false,
-  colorModal: false,
   showPanel: true,
 });
-const selectedColor = ref("#000000");
-
-// color -----------------------
-const applyColor = () => {
-  props.editor.chain().focus().setColor(selectedColor.value).run();
-  showModal.colorModal = false;
-};
-
-// directions ------------------
-const setTextDirection = (direction: "ltr" | "rtl") => {
-  props.editor.commands.setDirection(direction);
-};
 </script>
 
 <template>
@@ -188,12 +175,7 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
         </GroupButtons>
 
         <GroupButtons>
-          <Button text="راست به چپ" @click="setTextDirection('rtl')">
-            <v-icon icon="mdi-format-pilcrow-arrow-left" />
-          </Button>
-          <Button text="چپ به راست" @click="setTextDirection('ltr')">
-            <v-icon icon="mdi-format-pilcrow-arrow-right" />
-          </Button>
+          <DirectionComponent :editor="editor" />
         </GroupButtons>
       </div>
     </v-expand-transition>
@@ -201,11 +183,11 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
 
   <!--  modals-->
   <div>
-    <ColorModal
-      v-model:selected="selectedColor"
-      v-model:showColorModal="showModal.colorModal"
-      :applyColor="applyColor"
-    />
+    <!--    <ColorModal-->
+    <!--      v-model:selected="selectedColor"-->
+    <!--      v-model:showColorModal="showModal.colorModal"-->
+    <!--      :applyColor="applyColor"-->
+    <!--    />-->
   </div>
 </template>
 
