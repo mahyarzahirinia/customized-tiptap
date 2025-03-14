@@ -81,6 +81,14 @@ const applyAdvancedColor = (color: string | null | undefined) => {
   applyColor(color);
   showAdvancedModal.value = false;
 };
+
+// unset all marks and close pickers
+const unsetAllMarks = () => {
+  props.editor.chain().focus().unsetAllMarks().run();
+  showColorPicker.value = false;
+  showHighlightPicker.value = false;
+  selectedColor.value = null;
+};
 </script>
 
 <template>
@@ -106,10 +114,7 @@ const applyAdvancedColor = (color: string | null | undefined) => {
         icon="mdi-minus"
       />
     </Button>
-    <Button
-      text="پاک کردن فرمت"
-      @click="props.editor.chain().focus().unsetAllMarks().run()"
-    >
+    <Button text="پاک کردن فرمت" @click="unsetAllMarks">
       <v-icon icon="mdi-format-clear" />
     </Button>
 

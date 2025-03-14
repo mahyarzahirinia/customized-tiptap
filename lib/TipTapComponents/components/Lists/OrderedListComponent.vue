@@ -28,7 +28,7 @@ const applyAction = (value: string) => {
 watch(
   () => props.editor.getAttributes("textStyle").fontSize,
   (value) => {
-    selectedFontSize.value = value;
+    selectedAction.value = value;
   },
 );
 </script>
