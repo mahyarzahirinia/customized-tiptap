@@ -2,7 +2,7 @@ import { Node, mergeAttributes } from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import MergeFieldComponent from "../components/MergeFieldComponent.vue";
 
-export default Node.create({
+export const MergeFieldsExtension = Node.create({
   name: "mergeField",
   group: "inline",
   inline: true,

@@ -18,11 +18,11 @@ const decreaseIndent = () => {
 </script>
 
 <template>
-  <Button text="افزایش تورفتگی" @click="increaseIndent">
-    <v-icon icon="mdi-format-indent-increase" />
-  </Button>
   <Button text="کاهش تورفتگی" @click="decreaseIndent">
     <v-icon icon="mdi-format-indent-decrease" />
+  </Button>
+  <Button text="افزایش تورفتگی" @click="increaseIndent">
+    <v-icon icon="mdi-format-indent-increase" />
   </Button>
 </template>
 

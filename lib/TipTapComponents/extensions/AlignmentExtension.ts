@@ -1,6 +1,6 @@
 import TextAlign from "@tiptap/extension-text-align";
 
-export const ExtendedTextAlign = TextAlign.extend({
+export const TextAlignExtension = TextAlign.extend({
   addOptions() {
     return {
       ...this.parent?.(),

@@ -1,7 +1,7 @@
 import Link from "@tiptap/extension-link";
 import { mergeAttributes } from "@tiptap/core";
 
-export const CustomLink = Link.extend({
+export const CustomLinkExtension = Link.extend({
   renderHTML({ HTMLAttributes }) {
     return [
       "a",

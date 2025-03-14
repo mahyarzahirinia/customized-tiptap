@@ -1,6 +1,6 @@
-import { mergeAttributes, Node } from "@tiptap/core";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
-import OrderedListComponent from "../../components/Lists/OrderedListComponent.vue";
+import { mergeAttributes, type RawCommands } from "@tiptap/core";
+import OrderedList from "@tiptap/extension-ordered-list";
+import { type Editor } from "@tiptap/vue-3";
 
 const styling = (value: string) => {
   return {
@@ -13,32 +13,49 @@ const styling = (value: string) => {
   }[value];
 };
 
-export const OrderedListExtension = Node.create({
-  name: "orderedList", // name of the node
-  group: "block list", // what group is part of
-  content: "listItem*", // what content is allowed
-  selectable: true,
-  draggable: true,
-
+export const OrderedListExtension = OrderedList.extend({
   addAttributes() {
     return {
+      ...this.parent?.(),
       typeOfList: {
-        default: "numbered",
         rendered: true,
       },
     };
   },
+
   parseHTML() {
-    return [{ tag: "ol[typeOfList]" }];
+    return [
+      {
+        tag: "ol",
+        getAttrs: (dom) => ({
+          typeOfList: dom.getAttribute("typeOfList"),
+        }),
+      },
+    ];
   },
+
   renderHTML({ node, HTMLAttributes }) {
-    const typeOfList = node.attrs.typeOfList;
     return [
       "ol",
       mergeAttributes(HTMLAttributes, {
-        class: `ps-10 ${styling(typeOfList)}`,
+        class: `ps-10 ${styling(node.attrs.typeOfList)}`,
       }),
       0,
     ];
+  },
+
+  addCommands() {
+    return {
+      toggleOrderedList:
+        (type: string) =>
+        ({ editor }: { editor: Editor }) => {
+          console.log("toggleOrderedList", type);
+          return editor
+            .chain()
+            .toggleList("orderedList", "listItem") // specify both list and item type
+            .updateAttributes("orderedList", { typeOfList: type }) // update attributes
+            .run(); // execute the chain
+        },
+    } as Partial<any>;
   },
 });

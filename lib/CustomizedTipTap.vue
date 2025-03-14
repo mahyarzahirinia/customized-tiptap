@@ -7,44 +7,46 @@ import html from "highlight.js/lib/languages/xml";
 // load all languages with "all" or common languages with "common"
 import { all, createLowlight } from "lowlight";
 
-import {
-  type EditorOptions,
-  Editor,
-  useEditor,
-  EditorContent,
-} from "@tiptap/vue-3";
+import { useEditor, EditorContent } from "@tiptap/vue-3";
 
 import { EditorView } from "prosemirror-view";
-import StarterKit from "@tiptap/starter-kit";
-import MergeField from "./TipTapComponents/extensions/MergeFieldsExtension";
 import Toolbar from "./TipTapComponents/Toolbar.vue";
-import { Color } from "@tiptap/extension-color";
-import TextStyle from "@tiptap/extension-text-style";
-import { Underline } from "@tiptap/extension-underline";
+
+// default nodes
 import { Table } from "@tiptap/extension-table";
 import { TableRow } from "@tiptap/extension-table-row";
 import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
-// import { Link } from "@tiptap/extension-link";
 import { Image } from "@tiptap/extension-image";
-import { TextAlign } from "@tiptap/extension-text-align";
 import { Document } from "@tiptap/extension-document";
 import { FontFamily } from "@tiptap/extension-font-family";
-// import { CustomTextBlock } from "./TipTapComponents/extensions/CustomHeadings";
-import { FontSizeExtension } from "./TipTapComponents/extensions/FontSizeExtension";
-import { OrderedListExtension } from "./TipTapComponents/extensions/Lists/OrderedListExtension";
-import { BulletListExtension } from "./TipTapComponents/extensions/Lists/BulletListExtension";
-import LinkComponentComponent from "./TipTapComponents/components/LinkComponentComponent.vue";
-import { CustomLink } from "./TipTapComponents/extensions/LinkExtension";
-import { ListItemExtension } from "./TipTapComponents/extensions/Lists/ListItemExtension";
 import { Text } from "@tiptap/extension-text";
 import { Heading } from "@tiptap/extension-heading";
 import { Paragraph } from "@tiptap/extension-paragraph";
-import RowResizeExtension from "./TipTapComponents/extensions/RowResizeExtension";
-import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
-import { DirectionWrapperExtension } from "./TipTapComponents/extensions/DirectionExtension";
 import { LineHeight } from "./TipTapComponents/extensions/LineHeightExtension";
 import { Indentation } from "./TipTapComponents/extensions/IndentionExtension";
+import { Blockquote } from "@tiptap/extension-blockquote";
+import { HorizontalRule } from "@tiptap/extension-horizontal-rule";
+import { HardBreak } from "@tiptap/extension-hard-break";
+import { ListItem } from "@tiptap/extension-list-item";
+// default marks
+import { TextStyle } from "@tiptap/extension-text-style";
+import { Underline } from "@tiptap/extension-underline";
+import { Bold } from "@tiptap/extension-bold";
+import { Italic } from "@tiptap/extension-italic";
+import { Strike } from "@tiptap/extension-strike";
+import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
+// default extensions
+import { Dropcursor } from "@tiptap/extension-dropcursor";
+import { Gapcursor } from "@tiptap/extension-gapcursor";
+import { History } from "@tiptap/extension-history";
+// custom extensions
+import { FontSizeExtension } from "./TipTapComponents/extensions/FontSizeExtension";
+import { OrderedListExtension } from "./TipTapComponents/extensions/Lists/OrderedListExtension";
+import { BulletListExtension } from "./TipTapComponents/extensions/Lists/BulletListExtension";
+import { CustomLinkExtension } from "./TipTapComponents/extensions/LinkExtension";
+import { DirectionWrapperExtension } from "./TipTapComponents/extensions/DirectionExtension";
+import { RowResizeExtension } from "./TipTapComponents/extensions/RowResizeExtension";
 import { ColorExtensionExtension } from "./TipTapComponents/extensions/ColorExtensionExtension";
 import { HighlightExtension } from "./TipTapComponents/extensions/HighlightExtension";
 import { FullscreenExtension } from "./TipTapComponents/extensions/FullscreenExtension";
@@ -52,8 +54,10 @@ import { PreviewExtension } from "./TipTapComponents/extensions/PreviewExtension
 import { PrintExtension } from "./TipTapComponents/extensions/PrintExtension";
 import { PageBreakExtension } from "./TipTapComponents/extensions/PageBreakExtension";
 import { AnchorExtension } from "./TipTapComponents/extensions/AnchorExtension";
-import { ExtendedTextAlign } from "./TipTapComponents/extensions/AlignmentExtension";
+import { TextAlignExtension } from "./TipTapComponents/extensions/AlignmentExtension";
 import { LinkAnchorExtension } from "./TipTapComponents/extensions/LinkAnchorExtension";
+import { MergeFieldsExtension } from "./TipTapComponents/extensions/MergeFieldsExtension";
+import { ListItemExtension } from "./TipTapComponents/extensions/Lists/ListItemExtension";
 
 // initializing lowlight
 const lowlight = createLowlight(all);
@@ -154,18 +158,13 @@ const editor = useEditor({
     },
   },
   extensions: [
-    // Color.configure({ types: [TextStyle.name, ListItemExtension.name] }),
-    // TextStyle.configure({ types: [ListItemExtension.name] }),
-
-    // we need to add prose utility class from tailwind typography to customize
-    // our own tags p, h1 through h6
     // Text,
-    // Paragraph,
     // ListItemExtension,
     // Document,
     // DirectionWrapperExtension,
-    // CodeBlockLowlight.configure({ lowlight }),
-    ExtendedTextAlign,
+    // TextAlign.configure({ types: ["heading", "paragraph"] }),
+    // custom extensions
+    TextAlignExtension,
     LinkAnchorExtension,
     AnchorExtension,
     PageBreakExtension,
@@ -175,20 +174,21 @@ const editor = useEditor({
     HighlightExtension,
     ColorExtensionExtension,
     DirectionWrapperExtension,
+    OrderedListExtension,
+    BulletListExtension,
+    FontSizeExtension,
+    RowResizeExtension,
+    CustomLinkExtension,
+    MergeFieldsExtension.configure({ showValues }),
+    // ResizableTableCell,
+    // ListItemExtension,
+    // default extensions
     Indentation.configure({
       types: ["paragraph", "heading"], // apply to paragraphs and headings
       step: 2, // 2em per indent step
       maxIndent: 10, // max 10em indent
     }),
     LineHeight.configure({ types: ["paragraph", "heading"] }),
-    // Color,
-    OrderedListExtension,
-    BulletListExtension,
-    FontSizeExtension,
-    TextStyle,
-    Heading,
-    Paragraph,
-    // TextAlign.configure({ types: ["heading", "paragraph"] }),
     Image,
     Table.configure({ resizable: true }),
     TableHeader.extend({
@@ -198,18 +198,26 @@ const editor = useEditor({
     TableCell.extend({
       content: "text*",
     }),
-    RowResizeExtension, // extension
-    // ResizableTableCell,
-    CustomLink,
-    Underline,
     FontFamily,
-    StarterKit.configure({
-      // paragraph: false,
-      // heading: false,
-      bulletList: false,
-      orderedList: false,
-    }),
-    MergeField.configure({ showValues }),
+    Italic,
+    Strike,
+    CodeBlockLowlight.configure({ lowlight }), // use this instead of default
+    Underline,
+    Dropcursor,
+    Gapcursor,
+    History,
+    TextStyle,
+    Blockquote,
+    Bold,
+    Document,
+    Heading,
+    Paragraph,
+    Text,
+    // BulletList, // customized
+    HardBreak,
+    HorizontalRule,
+    ListItem, // customized
+    // OrderedList, // customized
   ],
 });
 

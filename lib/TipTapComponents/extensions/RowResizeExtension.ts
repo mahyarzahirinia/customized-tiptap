@@ -4,7 +4,7 @@ import { EditorView } from "prosemirror-view";
 
 const rowResizePluginKey = new PluginKey("rowResize");
 
-const RowResizeExtension = Extension.create({
+export const RowResizeExtension = Extension.create({
   name: "rowResize",
 
   addProseMirrorPlugins() {
@@ -93,5 +93,3 @@ const RowResizeExtension = Extension.create({
     ];
   },
 });
-
-export default RowResizeExtension;
