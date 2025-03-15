@@ -173,7 +173,6 @@ const editor = useEditor({
     TextAlignExtension,
     LinkAnchorExtension,
     AnchorExtension,
-    PageBreakExtension,
     PrintExtension,
     PreviewExtension,
     FullscreenExtension,
@@ -218,7 +217,7 @@ const editor = useEditor({
     Text,
     // BulletList, // customized
     HardBreak,
-    // HorizontalRule, // customized
+    HorizontalRule, // customized
     ListItem, // customized
     // OrderedList, // customized
   ],

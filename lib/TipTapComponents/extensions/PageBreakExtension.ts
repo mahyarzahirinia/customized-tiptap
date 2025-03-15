@@ -1,15 +1,25 @@
-import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import { Node, mergeAttributes } from "@tiptap/core";
 import { type Editor } from "@tiptap/core";
 import "../styles/pagebreak.css";
 
-export const PageBreakExtension = HorizontalRule.extend({
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    pageBreak: {
+      insertPageBreak: () => ReturnType;
+    };
+  }
+}
+
+export const PageBreakExtension = Node.create({
+  name: "pageBreak",
+  group: "block",
+  atom: true,
+
   addAttributes() {
     return {
       type: {
         default: null,
-        // Customize the HTML parsing (for example, to load the initial content)
         parseHTML: (element) => element.getAttribute("data-type"),
-        // … and customize the HTML rendering.
         renderHTML: (attributes) => {
           if (attributes.type) {
             return {
@@ -20,17 +30,19 @@ export const PageBreakExtension = HorizontalRule.extend({
       },
     };
   },
-  addCommands() {
-    return {
-      insertPageBreak:
-        () =>
-        ({ editor }: { editor: Editor }) => {
-          return editor
-            .chain()
-            .focus()
-            .insertContent('<hr data-type="pagebreak" /><p></p>')
-            .run();
-        },
-    } as Partial<any>;
+
+  parseHTML() {
+    return [
+      {
+        tag: 'hr[data-type="pagebreak"]',
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "hr",
+      mergeAttributes(HTMLAttributes, { "data-type": "pagebreak" }),
+    ];
   },
 });

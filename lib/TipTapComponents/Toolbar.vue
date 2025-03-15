@@ -24,6 +24,7 @@ import FullscreenComponent from "./components/FullscreenComponent.vue";
 import Preview from "./components/PreviewComponent.vue";
 import AnchorComponent from "./components/AnchorComponent.vue";
 import DirectionComponent from "./components/DirectionComponent.vue";
+import PageBreakComponent from "./components/PageBreakComponent.vue";
 
 const props = defineProps<{ editor: Editor }>();
 
@@ -165,9 +166,7 @@ const showModal = reactive<{
         </GroupButtons>
 
         <GroupButtons>
-          <Button text="شکست صفحه" @click="editor.commands.insertPageBreak()">
-            <v-icon icon="mdi-format-page-break" />
-          </Button>
+          <PageBreakComponent :editor="editor" />
           <AnchorComponent :editor="editor" />
           <!--          <Button text="JSON" @click="">-->
           <!--            <v-icon icon="mdi-code-json" />-->
