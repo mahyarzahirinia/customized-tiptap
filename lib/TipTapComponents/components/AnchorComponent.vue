@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import Button from "../components/Button.vue";
+import AnchorModal from "../modals/AnchorModal.vue";
 
 const props = defineProps<{ editor: any }>();
 
@@ -9,7 +10,7 @@ const url = ref<string>(""); // Fixed missing `url` reference
 const textToDisplay = ref<string>("");
 
 const toggleLink = () => {
-  if (props.editor.isActive("link")) {
+  if (props.editor.isActive("idSetter")) {
     unsetLink();
   } else {
     openDialog();
@@ -36,32 +37,22 @@ const applyLink = () => {
 };
 
 const unsetLink = () => {
-  props.editor.chain().focus().unsetLink().run();
+  props.editor.chain().focus().unsetID().run();
   dialog.value = false;
 };
 </script>
 
 <template>
-  <Button text="نشانه‌گذاری" @click="openDialog()">
+  <Button text="نشانه‌گذاری" @click="toggleLink()">
     <v-icon
       :icon="editor.isActive('idSetter') ? 'mdi-bookmark-off' : 'mdi-bookmark'"
     />
   </Button>
 
   <!-- Dialog -->
-  <v-dialog v-model="dialog" max-width="400">
-    <v-card>
-      <v-card-title> افزودن نشانه</v-card-title>
-      <v-card-text>
-        <v-text-field v-model="url" autofocus label="لینک نشانه" type="url" />
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer />
-        <Button color="primary" @click="applyLink()"> اعمال</Button>
-        <Button color="red" @click="dialog = false"> لغو</Button>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+  <AnchorModal
+    :apply-link="applyLink"
+    v-model:dialog="dialog"
+    v-model:url="url"
+  />
 </template>
-
-<style scoped></style>
