@@ -380,7 +380,7 @@ const handleClose = () => {
   @apply prose prose-sm sm:prose lg:prose-lg xl:prose-2xl;
   @apply focus:outline-none;
   @apply w-full max-w-full;
-  @apply rounded p-4 mx-auto h-96 overflow-y-auto;
+  @apply rounded mx-auto h-96 overflow-y-auto;
 }
 .m-autocomplete {
   @apply absolute bg-transparent border rounded shadow p-1 w-[150px];
@@ -399,14 +399,18 @@ const handleClose = () => {
 }
 
 .tiptap-editor {
-  font-family: "yekan", "Roboto", sans-serif;
+  & * {
+    font-family: "yekan", ".AppleSystemUIFont", sans-serif;
+  }
+
+  @apply p-4 border border-gray-200 border-solid rounded-md shadow-sm;
 
   &.normal-mode {
     @apply block;
   }
 
   &.fullscreen-mode {
-    @apply fixed w-[100vw] h-[100vh] bg-white z-[5000] p-1 overflow-y-auto;
+    @apply fixed top-0 right-0 w-full h-full bg-white z-50 overflow-auto;
   }
 }
 </style>
