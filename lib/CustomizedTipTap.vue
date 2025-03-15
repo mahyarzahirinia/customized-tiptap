@@ -180,6 +180,7 @@ const editor = useEditor({
     RowResizeExtension,
     CustomLinkExtension,
     MergeFieldsExtension.configure({ showValues }),
+    PageBreakExtension,
     // ResizableTableCell,
     // ListItemExtension,
     // default extensions
@@ -215,7 +216,7 @@ const editor = useEditor({
     Text,
     // BulletList, // customized
     HardBreak,
-    HorizontalRule,
+    // HorizontalRule, // customized
     ListItem, // customized
     // OrderedList, // customized
   ],

@@ -1,38 +1,36 @@
-import {
-  Node,
-  mergeAttributes,
-  type RawCommands,
-  type Editor,
-} from "@tiptap/core";
+import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import { type Editor } from "@tiptap/core";
 import "../styles/pagebreak.css";
 
-declare module "@tiptap/core" {
-  interface Commands<ReturnType> {
-    PageBreak: {
-      insertPageBreak: () => ReturnType;
+export const PageBreakExtension = HorizontalRule.extend({
+  addAttributes() {
+    return {
+      type: {
+        default: null,
+        // Customize the HTML parsing (for example, to load the initial content)
+        parseHTML: (element) => element.getAttribute("data-type"),
+        // … and customize the HTML rendering.
+        renderHTML: (attributes) => {
+          if (attributes.type) {
+            return {
+              "data-type": attributes.type,
+            };
+          }
+        },
+      },
     };
-  }
-}
-
-export const PageBreakExtension = Node.create({
-  name: "pageBreak",
-  group: "pagebreak",
-
-  parseHTML() {
-    return [{ tag: "hr.page-break" }];
   },
-
-  renderHTML({ HTMLAttributes }) {
-    return ["hr", mergeAttributes(HTMLAttributes, { class: "page-break" })];
-  },
-
   addCommands() {
     return {
       insertPageBreak:
         () =>
         ({ editor }: { editor: Editor }) => {
-          return editor.chain().insertContent({ type: this.name }).run();
+          return editor
+            .chain()
+            .focus()
+            .insertContent('<hr data-type="pagebreak" /><p></p>')
+            .run();
         },
-    } as Partial<RawCommands>;
+    } as Partial<any>;
   },
 });
