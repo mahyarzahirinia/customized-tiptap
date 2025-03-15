@@ -22,5 +22,3 @@ const openPreview = () => {
 
   <PreviewModal v-model="showModal" :preview-content="previewContent" />
 </template>
-
-<style scoped></style>

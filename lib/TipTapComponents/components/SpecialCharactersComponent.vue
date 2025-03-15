@@ -318,7 +318,7 @@ const insertCharacter = (character: string) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .chars-container {
   @apply flex flex-wrap items-end justify-end;
 }

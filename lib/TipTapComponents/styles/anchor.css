@@ -1,23 +1,16 @@
-.anchor-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
 /* Style the anchor icon */
-.anchor-icon {
-    color: gray;
-    font-size: 14px;
-    margin-left: 5px;
-    cursor: pointer;
+p[id] {
+    @apply text-blue-700 mx-2 cursor-pointer !important;
+    @apply relative;
 }
 
 /* Hide the icon in print & exports */
 @media print {
-    .anchor-icon {
-        display: none;
+    p[id] {
+        @apply pl-0 pr-0;
     }
-}
 
-.export-mode .anchor-icon {
-    display: none;
+    p[id]::before {
+        content: none;
+    }
 }

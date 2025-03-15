@@ -6,6 +6,12 @@ import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 // load all languages with "all" or common languages with "common"
 import { all, createLowlight } from "lowlight";
+// styles
+import "./TipTapComponents/styles/tables.css";
+import "./TipTapComponents/styles/anchor.css";
+import "./TipTapComponents/styles/direction.css";
+import "./TipTapComponents/styles/pagebreak.css";
+import "./TipTapComponents/styles/mergefields.css";
 
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 
@@ -109,7 +115,7 @@ const editor = useEditor({
   content: "",
   editorProps: {
     attributes: {
-      class: "inside-editor",
+      class: "tiptap-editor-inside",
     },
     handleClick(view, pos, event) {
       // if clicked on the last node was a table create a p tag after it
@@ -177,10 +183,10 @@ const editor = useEditor({
     OrderedListExtension,
     BulletListExtension,
     FontSizeExtension,
-    RowResizeExtension,
     CustomLinkExtension,
     MergeFieldsExtension.configure({ showValues }),
     PageBreakExtension,
+    // RowResizeExtension,
     // ResizableTableCell,
     // ListItemExtension,
     // default extensions
@@ -192,13 +198,9 @@ const editor = useEditor({
     LineHeight.configure({ types: ["paragraph", "heading"] }),
     Image,
     Table.configure({ resizable: true }),
-    TableHeader.extend({
-      content: "text*",
-    }),
+    TableHeader,
     TableRow,
-    TableCell.extend({
-      content: "text*",
-    }),
+    TableCell,
     FontFamily,
     Italic,
     Strike,
@@ -320,7 +322,7 @@ const handleClose = () => {
         :filter="() => true"
         :items="filteredMergeFields"
         :search="mergeFieldQuery"
-        class="merge-field"
+        class=""
         clear-icon="mdi-close"
         clearable
         density="compact"
@@ -368,17 +370,17 @@ const handleClose = () => {
       @keydown.escape="handleClose"
       @keydown.delete="() => mergeFieldQuery === '' && handleClose()"
     />
-  </div>
 
-  <editor-content :editor="editor" />
+    <editor-content :editor="editor" />
+  </div>
 </template>
 
 <style lang="scss">
-.inside-editor {
+.tiptap-editor-inside {
   @apply prose prose-sm sm:prose lg:prose-lg xl:prose-2xl;
   @apply focus:outline-none;
   @apply w-full max-w-full;
-  @apply rounded p-4 mx-auto max-h-60 h-60 overflow-y-auto;
+  @apply rounded p-4 mx-auto h-96 overflow-y-auto;
 }
 .m-autocomplete {
   @apply absolute bg-transparent border rounded shadow p-1 w-[150px];
