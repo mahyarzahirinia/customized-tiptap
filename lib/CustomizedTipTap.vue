@@ -64,6 +64,7 @@ import { TextAlignExtension } from "./TipTapComponents/extensions/AlignmentExten
 import { LinkAnchorExtension } from "./TipTapComponents/extensions/LinkAnchorExtension";
 import { MergeFieldsExtension } from "./TipTapComponents/extensions/MergeFieldsExtension";
 import { ListItemExtension } from "./TipTapComponents/extensions/Lists/ListItemExtension";
+import { CharacterCountExtension } from "./TipTapComponents/extensions/CharacterCountExtension";
 
 // initializing lowlight
 const lowlight = createLowlight(all);
@@ -188,6 +189,7 @@ const editor = useEditor({
     // RowResizeExtension,
     // ResizableTableCell,
     // ListItemExtension,
+    CharacterCountExtension,
     // default extensions
     Indentation.configure({
       types: ["paragraph", "heading"], // apply to paragraphs and headings
