@@ -12,7 +12,7 @@ const unorderedLists = [
   { title: "", value: "square", icon: "mdi-square-medium" },
 ];
 
-const selectedAction = ref<string | undefined>("disc");
+const selectedUnorderedListType = ref<string | undefined>("disc");
 
 const isActionActive = (value: string) => {
   if (!props.editor) return false;
@@ -34,7 +34,7 @@ const applyAction = (value: string) => {
 
 <template>
   <v-select
-    v-model="selectedAction"
+    v-model="selectedUnorderedListType"
     :items="unorderedLists"
     class="ul-select"
     density="compact"
@@ -53,7 +53,10 @@ const applyAction = (value: string) => {
 
     <template v-slot:item="{ item, props }">
       <v-list-item v-bind="{ ...props, title: undefined }">
-        <v-icon :icon="item.raw.icon"></v-icon>
+        <v-icon
+          :icon="item.raw.icon"
+          :disabled="item.value === selectedUnorderedListType"
+        ></v-icon>
       </v-list-item>
     </template>
   </v-select>
@@ -61,12 +64,12 @@ const applyAction = (value: string) => {
 
 <style lang="scss" scoped>
 .ul-select {
-  @apply relative bottom-1;
+  @apply relative bottom-1 left-0;
 }
 .ul-select-item {
   @apply flex gap-1 items-center justify-center;
 }
 :deep(.v-field__append-inner) {
-  @apply translate-x-[14px];
+  @apply translate-x-[0.5rem];
 }
 </style>

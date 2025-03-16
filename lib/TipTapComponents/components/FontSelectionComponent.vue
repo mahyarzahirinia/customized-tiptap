@@ -38,7 +38,15 @@ watch(
     menu-icon=""
     variant="plain"
     @update:model-value="applyFontFamily"
-  />
+  >
+    <template v-slot:item="{ props, item }">
+      <v-list-item
+        v-bind="{ ...props, title: undefined }"
+        :disabled="item.value === selectedFont"
+        >{{ item.title }}
+      </v-list-item>
+    </template>
+  </v-autocomplete>
 </template>
 
 <style scoped>

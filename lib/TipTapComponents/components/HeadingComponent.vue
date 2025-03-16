@@ -49,7 +49,15 @@ watch(
     menu-icon=""
     variant="plain"
     @update:modelValue="applyHeading"
-  />
+  >
+    <template v-slot:item="{ props, item }">
+      <v-list-item
+        v-bind="{ ...props, title: undefined }"
+        :disabled="item.value === selectedHeading"
+        >{{ item.title }}
+      </v-list-item>
+    </template>
+  </v-autocomplete>
 </template>
 
 <style scoped>

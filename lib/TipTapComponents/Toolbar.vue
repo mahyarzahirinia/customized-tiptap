@@ -199,7 +199,7 @@ const showModal = reactive<{
   @apply w-full;
 
   .tools-group {
-    @apply w-64 flex gap-1;
+    @apply w-60 flex gap-1;
     @apply p-0.5 border-2 border-solid border-gray-200 rounded-md;
   }
 }

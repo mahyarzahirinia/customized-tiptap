@@ -51,7 +51,14 @@ watch(
       menu-icon=""
       variant="plain"
       @update:model-value="applyFontSize"
-    />
+      ><template v-slot:item="{ props, item }">
+        <v-list-item
+          v-bind="{ ...props, title: undefined }"
+          :disabled="item.value === selectedFontSize"
+          >{{ item.title }}
+        </v-list-item>
+      </template>
+    </v-autocomplete>
   </div>
 </template>
 

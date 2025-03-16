@@ -11,7 +11,7 @@ const orderedLists = [
   { title: "", value: "lower-roman", icon: "mdi-roman-numeral-4" },
   { title: "", value: "upper-alpha", icon: "mdi-alphabetical-variant" },
 ];
-const selectedAction = ref<string | undefined>("numbered");
+const selectedOrderedListType = ref<string | undefined>("numbered");
 
 const applyAction = (value: string) => {
   if (!props.editor) return;
@@ -28,14 +28,14 @@ const applyAction = (value: string) => {
 watch(
   () => props.editor.getAttributes("textStyle").fontSize,
   (value) => {
-    selectedAction.value = value;
+    selectedOrderedListType.value = value;
   },
 );
 </script>
 
 <template>
   <v-select
-    v-model="selectedAction"
+    v-model="selectedOrderedListType"
     :items="orderedLists"
     class="ol-select"
     density="compact"
@@ -54,7 +54,10 @@ watch(
 
     <template v-slot:item="{ item, props }">
       <v-list-item v-bind="{ ...props, title: undefined }">
-        <v-icon :icon="item.raw.icon"></v-icon>
+        <v-icon
+          :icon="item.raw.icon"
+          :disabled="item.value === selectedOrderedListType"
+        ></v-icon>
       </v-list-item>
     </template>
   </v-select>
@@ -62,12 +65,12 @@ watch(
 
 <style lang="scss" scoped>
 .ol-select {
-  @apply relative bottom-1;
+  @apply relative bottom-1 left-0;
 }
 .ol-select-item {
   @apply flex gap-1 items-center justify-center;
 }
 :deep(.v-field__append-inner) {
-  @apply translate-x-[14px];
+  @apply translate-x-[0.5rem];
 }
 </style>

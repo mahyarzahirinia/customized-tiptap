@@ -50,7 +50,10 @@ watch(
     <!-- Dropdown list icon display -->
     <template v-slot:item="{ item, props }">
       <v-list-item v-bind="{ ...props, title: undefined }">
-        <v-icon :icon="item.raw.icon"></v-icon>
+        <v-icon
+          :icon="item.raw.icon"
+          :disabled="item.value === selectedAlignment"
+        ></v-icon>
       </v-list-item>
     </template>
   </v-select>
@@ -58,12 +61,12 @@ watch(
 
 <style scoped>
 .a-select {
-  @apply relative bottom-1 right-1;
+  @apply relative bottom-1 left-0;
 }
 .a-select-item {
   @apply flex gap-1 items-center justify-center;
 }
 :deep(.v-field__append-inner) {
-  @apply translate-x-[14px];
+  @apply translate-x-[0.5rem];
 }
 </style>
