@@ -7,7 +7,7 @@ const config: Config = {
   theme: {
     extend: {},
   },
-  corePlugins: { preflight: false },
+  corePlugins: { preflight: true },
   plugins: [typography],
 };
 
