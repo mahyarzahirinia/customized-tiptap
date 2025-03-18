@@ -189,7 +189,7 @@ const editor = useEditor({
     // RowResizeExtension,
     // ResizableTableCell,
     // ListItemExtension,
-    CharacterCountExtension,
+    // CharacterCountExtension,
     // default extensions
     Indentation.configure({
       types: ["paragraph", "heading"], // apply to paragraphs and headings
