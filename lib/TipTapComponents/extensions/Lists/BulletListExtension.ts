@@ -1,13 +1,5 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 
-const styling = (value: string) => {
-  return {
-    disc: "list-disc",
-    circle: "!list-[circle]",
-    square: "!list-[square]",
-  }[value];
-};
-
 export const BulletListExtension = Node.create({
   name: "bulletList",
   group: "block list",
@@ -29,7 +21,7 @@ export const BulletListExtension = Node.create({
     return [
       "ul",
       mergeAttributes(HTMLAttributes, {
-        class: `ps-10 ${styling(typeOfList)}`,
+        style: `list-style-type: ${node.attrs.typeOfList}`,
       }),
       0,
     ];
