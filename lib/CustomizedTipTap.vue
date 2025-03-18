@@ -323,7 +323,7 @@ const handleClose = () => {
         :filter="() => true"
         :items="filteredMergeFields"
         :search="mergeFieldQuery"
-        class=""
+        class="merge-field-input"
         clear-icon="mdi-close"
         clearable
         density="compact"
@@ -331,18 +331,17 @@ const handleClose = () => {
         item-value="label"
         label="افزودن فیلدها"
         return-object
-        variant="underlined"
+        variant="plain"
         @update:search="handleSearchUpdate"
         @update:model-value="(obj: any) => insertManually(obj)"
         @keydown.enter="handleEnterPress"
         @keydown.escape="handleClose"
       />
-
       <v-switch
         v-model="showValues"
-        append-icon="mdi-information-outline"
         class="c-switch"
         color="primary"
+        hide-details
       />
     </div>
 
@@ -388,14 +387,14 @@ const handleClose = () => {
 }
 
 .merge-field-tool-box {
-  @apply m-2 flex;
+  @apply flex items-center max-w-56 m-2 flex max-h-12;
 
-  .merge-field {
-    @apply max-w-36 max-h-16;
+  .merge-field-input {
+    @apply max-h-10;
   }
 
   .c-switch {
-    @apply ml-4;
+    @apply mx-4;
   }
 }
 
