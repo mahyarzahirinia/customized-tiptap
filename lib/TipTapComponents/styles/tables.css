@@ -38,11 +38,21 @@
         }
 
         .column-resize-handle {
-            @apply bg-purple-500;
+            @apply bg-purple-500 cursor-col-resize;
             bottom: -2px;
-            pointer-events: none;
+            /*pointer-events: none;*/
             position: absolute;
             right: -2px;
+            top: 0;
+            width: 4px;
+        }
+
+        .row-resize-handle {
+            @apply bg-purple-500 cursor-row-resize;
+            left: -2px;
+            /*pointer-events: none;*/
+            position: absolute;
+            top: -2px;
             top: 0;
             width: 4px;
         }
