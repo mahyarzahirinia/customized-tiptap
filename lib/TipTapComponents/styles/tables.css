@@ -52,9 +52,8 @@
             left: -2px;
             /*pointer-events: none;*/
             position: absolute;
-            top: -2px;
             top: 0;
-            width: 4px;
+            height: 4px;
         }
     }
 

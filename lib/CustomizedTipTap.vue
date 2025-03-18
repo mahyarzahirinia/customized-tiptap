@@ -52,7 +52,7 @@ import { OrderedListExtension } from "./TipTapComponents/extensions/Lists/Ordere
 import { BulletListExtension } from "./TipTapComponents/extensions/Lists/BulletListExtension";
 import { CustomLinkExtension } from "./TipTapComponents/extensions/LinkExtension";
 import { DirectionWrapperExtension } from "./TipTapComponents/extensions/DirectionExtension";
-import { RowResizeExtension } from "./TipTapComponents/extensions/RowResizeExtension";
+import { CustomTableExtension } from "./TipTapComponents/extensions/CustomTableExtension";
 import { ColorExtensionExtension } from "./TipTapComponents/extensions/ColorExtensionExtension";
 import { HighlightExtension } from "./TipTapComponents/extensions/HighlightExtension";
 import { FullscreenExtension } from "./TipTapComponents/extensions/FullscreenExtension";
@@ -186,7 +186,7 @@ const editor = useEditor({
     CustomLinkExtension,
     MergeFieldsExtension.configure({ showValues }),
     PageBreakExtension,
-    // RowResizeExtension,
+    CustomTableExtension.configure({ resizable: true }),
     // ResizableTableCell,
     // ListItemExtension,
     // CharacterCountExtension,
@@ -198,7 +198,7 @@ const editor = useEditor({
     }),
     LineHeight.configure({ types: ["paragraph", "heading"] }),
     Image,
-    Table.configure({ resizable: true }),
+    // Table,
     TableHeader,
     TableRow,
     TableCell,
