@@ -24,11 +24,7 @@ const saveHtml = () => {
 </script>
 
 <template>
-  <Button
-    :class="{ 'is-active': props.editor.isActive('codeBlock') }"
-    text="خروجی کد"
-    @click="exportHtml"
-  >
+  <Button text="خروجی کد" @click="exportHtml">
     <v-icon icon="mdi-code-tags" />
   </Button>
 

@@ -25,6 +25,7 @@ import Preview from "./components/PreviewComponent.vue";
 import AnchorComponent from "./components/AnchorComponent.vue";
 import DirectionComponent from "./components/DirectionComponent.vue";
 import PageBreakComponent from "./components/PageBreakComponent.vue";
+import CodeBlockComponent from "./components/CodeBlockComponent.vue";
 
 const props = defineProps<{ editor: Editor }>();
 
@@ -142,6 +143,7 @@ const showModal = reactive<{
         </GroupButtons>
 
         <GroupButtons>
+          <CodeBlockComponent :editor="editor" />
           <ColorAndHighlightComponent :editor="editor" />
         </GroupButtons>
 
@@ -178,15 +180,6 @@ const showModal = reactive<{
         </GroupButtons>
       </div>
     </v-expand-transition>
-  </div>
-
-  <!--  modals-->
-  <div>
-    <!--    <ColorModal-->
-    <!--      v-model:selected="selectedColor"-->
-    <!--      v-model:showColorModal="showModal.colorModal"-->
-    <!--      :applyColor="applyColor"-->
-    <!--    />-->
   </div>
 </template>
 
