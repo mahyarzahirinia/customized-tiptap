@@ -1,6 +1,6 @@
 /* Style the anchor icon */
 p[id] {
-    @apply text-blue-700 mx-2 cursor-pointer !important;
+    @apply text-blue-700 mx-2 cursor-default !important;
     @apply relative;
 }
 
