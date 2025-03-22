@@ -16,7 +16,7 @@ const openPreview = () => {
 </script>
 
 <template>
-  <Button text="پیش ‌نمایش" @click="openPreview">
+  <Button text="پیش ‌نمایش کد" @click="openPreview">
     <v-icon icon="mdi-eye-outline" />
   </Button>
 
