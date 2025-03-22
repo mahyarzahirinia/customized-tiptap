@@ -3,11 +3,11 @@
     <v-icon icon="mdi-omega" />
   </Button>
 
-  <v-dialog v-model="dialog" max-width="800px">
+  <v-dialog v-model="dialog" max-width="600px">
     <v-card>
       <v-card-title class="text-h6">کاراکترهای خاص </v-card-title>
       <v-card-text>
-        <v-container class="pa-0" fluid>
+        <v-container class="" fluid>
           <v-row>
             <v-col cols="3">
               <v-list>
@@ -320,10 +320,10 @@ const insertCharacter = (character: string) => {
 
 <style lang="scss" scoped>
 .chars-container {
-  @apply flex flex-wrap items-end justify-end;
+  @apply flex flex-wrap items-end justify-start;
 }
 .char-btn {
-  @apply h-8 w-8 flex justify-center items-center text-2xl m-2 p-2 hover:bg-gray-200 hover:rounded-sm hover:duration-300 hover:transition-all;
+  @apply flex justify-center items-center text-xl m-2;
 }
 .bg-grey-lighten-4 {
   background-color: #f5f5f5;
