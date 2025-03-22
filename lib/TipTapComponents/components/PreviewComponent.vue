@@ -10,7 +10,7 @@ const props = defineProps<{ editor: Editor }>();
 
 const openPreview = () => {
   // @ts-ignore
-  previewContent.value = props.editor.commands.generateHTML();
+  previewContent.value = props.editor.getHTML();
   showModal.value = true;
 };
 </script>
