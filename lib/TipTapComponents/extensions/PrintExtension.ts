@@ -23,8 +23,23 @@ export const PrintExtension = Extension.create({
               <head>
                 <title>چاپ</title>
                 <style>
-                  body { font-family: yekan, sahel,serif; padding: 20px; }
+                  body { font-family: yekan, sahel, serif; padding: 20px; }
                   .prose { max-width: 100%; }
+                  hr[data-type="pagebreak"] {
+                    border-top: 2px dashed;
+                    margin-top: 2.5rem;
+                    margin-bottom: 2.5rem;
+                  }
+                  @media print {
+                    hr[data-type="pagebreak"] {
+                      padding: 0;
+                      margin-top: 0;
+                      margin-bottom: 0;
+                      border: 0;
+                      break-before: page;
+                      page-break-before: always;
+                    }
+                  }
                 </style>
               </head>
               <body class="prose">
