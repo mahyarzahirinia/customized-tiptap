@@ -19,7 +19,7 @@
                   }"
                   @click="selectCategory(category.value)"
                 >
-                  <v-list-item-label>{{ category.label }}</v-list-item-label>
+                  <v-list-item-title>{{ category.label }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-col>
