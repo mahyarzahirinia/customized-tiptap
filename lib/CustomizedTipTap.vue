@@ -118,23 +118,6 @@ const editor = useEditor({
     attributes: {
       class: "tiptap-editor-inside",
     },
-    handleClick(view, pos, event) {
-      // if clicked on the last node was a table create a p tag after it
-      const { doc } = view.state;
-      const lastNode = doc.content.lastChild;
-
-      if (lastNode?.type.name === "table") {
-        view.dispatch(
-          view.state.tr.insert(
-            doc.content.size,
-            view.state.schema.nodes.paragraph.create(),
-          ),
-        );
-        return true;
-      }
-
-      return false;
-    },
     handleDOMEvents: {
       keyup: (view: EditorView, event: KeyboardEvent) => {
         const cursorPos = view.state.selection.from;

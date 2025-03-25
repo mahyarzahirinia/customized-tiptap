@@ -3,7 +3,13 @@ import { rowResizing } from "./table/rowresizing";
 
 export const CustomTableExtension = Table.extend({
   addProseMirrorPlugins() {
-    console.log("RowResizeExtension loaded and working");
-    return [rowResizing()];
+    const parentPlugins = this.parent?.() || [];
+
+    return [
+      ...parentPlugins,
+      rowResizing({
+        View: this.options.View,
+      }),
+    ];
   },
 });
