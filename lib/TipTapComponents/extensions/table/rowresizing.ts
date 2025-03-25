@@ -559,55 +559,81 @@ export function handleDecorations(
   }
 
   const map = TableMap.get(table);
-
   const start = $cell.start(-1);
 
-  // determines the column index of the target cell in the table:
-  // map.colCount(...): how many columns are before this cell
-  // colspan - 1: adjusts if the cell spans multiple columns
-  const colIndex =
-    map.colCount($cell.pos - start) + $cell.nodeAfter!.attrs.colspan - 1;
+  // Get absolute position within the table
+  const posInTable = $cell.pos - start;
 
-  for (let rowIndex = 0; rowIndex < map.height; rowIndex++) {
-    // the index of the cell in the TableMap
-    const index = colIndex + rowIndex * map.width;
-
-    // checks if the cell needs a row resize handle:
-    // Column condition:
-    // col == map.width - 1: Last column of the table.
-    // map.map[index] != map.map[index + 1]: This cell has a different adjacent cell to its right.
-    //
-    // Row condition:
-    // row == 0: First row of the table.
-    // map.map[index] != map.map[index - map.width]: This cell has a different adjacent cell above it.
+  // Find the cell's row and column
+  let row = 0;
+  let col = 0;
+  for (let i = 0; i < map.map.length; i++) {
     if (
-      (colIndex == map.width - 1 || map.map[index] != map.map[index + 1]) &&
-      (rowIndex == 0 || map.map[index] != map.map[index - map.width])
+      map.map[i] <= posInTable &&
+      posInTable < map.map[i] + table.nodeAt(map.map[i])!.nodeSize
     ) {
-      // cellPos: the position of the cell inside the table.
-      const cellPos = map.map[index];
-      // pos: the position at the end of the cell (where the handle should be placed).
-      const pos = start + cellPos + table.nodeAt(cellPos)!.nodeSize - 1;
+      row = Math.floor(i / map.width);
+      col = i % map.width;
+      break;
+    }
+  }
 
-      // create the handle
+  // Special handling for first row
+  if (row === 0) {
+    for (let c = 0; c < map.width; c++) {
+      const index = c; // First row has indices 0 to width-1
+      const cellPos = map.map[index];
+      const cellNode = table.nodeAt(cellPos);
+      if (!cellNode) continue;
+
+      // Always show handle for first row cells
+      const pos = start + cellPos + cellNode.nodeSize - 1;
       const dom = document.createElement("div");
-      dom.className = "row-resize-handle";
+      dom.className = "row-resize-handle first-row-handle"; // Added special class
+
       if (rowResizingPluginKey.getState(state)?.dragging) {
-        // adds a widget decoration:
-        // the resize handle (dom) is attached at pos.
         decorations.push(
           Decoration.node(
             start + cellPos,
-            start + cellPos + table.nodeAt(cellPos)!.nodeSize,
+            start + cellPos + cellNode.nodeSize,
             {
               class: "row-resize-dragging",
             },
           ),
         );
       }
-
       decorations.push(Decoration.widget(pos, dom));
     }
   }
+
+  // Original handling for other rows
+  for (let colIndex = 0; colIndex < map.width; colIndex++) {
+    const index = row * map.width + colIndex;
+    if (index >= map.map.length || row === 0) continue; // Skip if first row (already handled)
+
+    const cellPos = map.map[index];
+    const cellNode = table.nodeAt(cellPos);
+    if (!cellNode) continue;
+
+    if (colIndex === map.width - 1 || map.map[index] !== map.map[index + 1]) {
+      const pos = start + cellPos + cellNode.nodeSize - 1;
+      const dom = document.createElement("div");
+      dom.className = "row-resize-handle";
+
+      if (rowResizingPluginKey.getState(state)?.dragging) {
+        decorations.push(
+          Decoration.node(
+            start + cellPos,
+            start + cellPos + cellNode.nodeSize,
+            {
+              class: "row-resize-dragging",
+            },
+          ),
+        );
+      }
+      decorations.push(Decoration.widget(pos, dom));
+    }
+  }
+
   return DecorationSet.create(state.doc, decorations);
 }
