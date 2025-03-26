@@ -69,29 +69,22 @@ export function rowResizing({
     key: rowResizingPluginKey,
     state: {
       init(_, state) {
-        // this delegates to ResizeState.constructor
-        const nodeViews = plugin.spec?.props?.nodeViews; // tries to access the nodeViews object defined in the plugin's props
-        const tableName = tableNodeTypes(state.schema).table.name; // gets the name of the "table" node from the schema
+        const nodeViews = plugin.spec?.props?.nodeViews;
+        const tableName = tableNodeTypes(state.schema).table.name;
         if (View && nodeViews) {
-          // whenever ProseMirror renders a table node, it will
           nodeViews[tableName] = (node, view) => {
-            // create a new instance of the View class (likely a custom table rendering class)
             return new View(node, defaultCellMinHeight, view);
           };
         }
-        // activeHandle = -1 means no handle is active (hovered or grabbed)
-        // dragging = false means the user is not dragging a row to resize
-        return new ResizeState(-1, false); // initial state setup
+
+        return new ResizeState(-1, false);
       },
       apply(tr, prev) {
-        // when transactions (tr) are applied, rowResizing calls ResizeState.apply()
         return prev.apply(tr);
       },
     },
     props: {
-      // is where ProseMirror plugins hook into the editor's behavior and DOM
       attributes: (state): Record<string, string> => {
-        // adds HTML attributes (like class) to the editor's outer <div> dynamically based on the plugin state
         const pluginState = rowResizingPluginKey.getState(state);
         return pluginState && pluginState.activeHandle > -1
           ? { class: "resize-cursor" }
@@ -99,7 +92,6 @@ export function rowResizing({
       },
 
       handleDOMEvents: {
-        // defines custom event handlers for DOM events that happen in the editor
         mousemove: (view, event) => {
           handleMouseMove(view, event, handleHeight, lastRowResizable);
         },
@@ -112,16 +104,12 @@ export function rowResizing({
       },
 
       decorations: (state) => {
-        // drawing UI elements like the resize handle
         const pluginState = rowResizingPluginKey.getState(state);
         if (pluginState && pluginState.activeHandle > -1) {
-          // if a resize handle is active, it calls handleDecorations to generate decoration
-          // elements (like a blue line showing where the resize happens)
           return handleDecorations(state, pluginState.activeHandle);
         }
       },
 
-      // here, it's empty, but elsewhere (in init()), the table nodeView might be injected
       nodeViews: {},
     },
   });
@@ -133,52 +121,34 @@ export function rowResizing({
  * @public
  */
 export class ResizeState {
-  // managing state of the resizing
   constructor(
-    public activeHandle: number, // active handle
-    public dragging: Dragging | false, // dragging state
+    public activeHandle: number,
+    public dragging: Dragging | false,
   ) {}
 
   apply(tr: Transaction): ResizeState {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const state = this;
-    // stores the current instance (this) in a state variable for easier referencing.
+
     const action = tr.getMeta(rowResizingPluginKey);
-    // tries to fetch any metadata related to rowResizingPluginKey from the transaction.
-    // metadata is how ProseMirror plugins pass custom instructions (like "start dragging" or "set active handle").
+
     if (action && action.setHandle != null)
-      // Case 1 - Update the active handle
-      // if the transaction carries a setHandle action.
-      // example action: mouse moved near a handle — we activate that handle.
       return new ResizeState(action.setHandle, false);
     if (action && action.setDragging !== undefined)
-      // Case 2 - Update dragging state
-      // if the transaction carries a setDragging action
-      // example: mouse down triggered dragging, or mouse up ended dragging.
       return new ResizeState(state.activeHandle, action.setDragging);
     if (state.activeHandle > -1 && tr.docChanged) {
-      // Case 3 - Remap active handle if doc changed
-      // if there's an active handle (> -1) && the document was changed
-      // if yes, the handle's position might have shifted due to content changes — remap it.
       let handle = tr.mapping.map(state.activeHandle, -1);
-      // maps the old handle position through the transaction's changes using tr.mapping.
-      // -1 is the bias (direction hint) during mapping.
+
       if (!pointsAtCell(tr.doc.resolve(handle))) {
-        // after remapping, it checks if the new handle position still points at a valid table cell.
-        // if not, it deactivates the handle by setting it to -1.
         handle = -1;
       }
-      // returns a new ResizeState with the (potentially remapped) handle and the current dragging state.
+
       return new ResizeState(handle, state.dragging);
     }
 
     return state;
-    // Default case - No changes
-    // if none of the above conditions matched, the state stays the same.
   }
 }
 
-// every time the mouse moves over the editor, this gets called.
 function handleMouseMove(
   view: EditorView,
   event: MouseEvent,
@@ -202,7 +172,6 @@ function handleMouseMove(
     activeCell = edgeCell(view, event, "bottom", handleHeight);
   }
 
-  // Avoid activating handle if it's the last row and resizing is disabled
   if (!lastRowResizable && activeCell !== -1) {
     const $cell = view.state.doc.resolve(activeCell);
     const table = $cell.node(-1);
@@ -211,7 +180,7 @@ function handleMouseMove(
     const colIndex =
       map.colCount($cell.pos - tableStart) + $cell.nodeAfter!.attrs.colspan - 1;
 
-    if (colIndex === map.height - 1) return; // It's the last row, skip
+    if (colIndex === map.height - 1) return;
   }
 
   if (activeCell !== pluginState.activeHandle) {
@@ -219,7 +188,6 @@ function handleMouseMove(
   }
 }
 
-// triggered when the mouse leaves the editor area.
 function handleMouseLeave(view: EditorView): void {
   if (!view.editable) return;
 
@@ -231,7 +199,6 @@ function handleMouseLeave(view: EditorView): void {
   }
 }
 
-// triggered when the mouse is clicked down inside the editor.
 function handleMouseDown(
   view: EditorView,
   event: MouseEvent,
@@ -254,7 +221,6 @@ function handleMouseDown(
   const map = TableMap.get(table);
   const cellPos = $cell.pos - tableStart;
 
-  // Correct way to find row/column position
   let row = 0;
   for (let i = 0; i < map.map.length; i++) {
     if (
@@ -266,7 +232,6 @@ function handleMouseDown(
     }
   }
 
-  // Get all cells in this row with proper typing
   const rowCells: number[] = [];
   for (let col = 0; col < map.width; col++) {
     const index = row * map.width + col;
@@ -283,7 +248,6 @@ function handleMouseDown(
     cellNode.attrs,
   );
 
-  // Initialize dragging state with proper typing
   view.dispatch(
     view.state.tr.setMeta(rowResizingPluginKey, {
       setDragging: {
@@ -305,17 +269,10 @@ function handleMouseDown(
 
     const dragged = draggedHeight(currentState.dragging, event, cellMinHeight);
 
-    // Type-safe access to dragging properties
     const draggingState = currentState.dragging as DraggingState;
 
-    // Apply the final height to all cells in the row
     draggingState.rowCells.forEach((cellPos) => {
-      updateRowHeight(
-        view,
-        draggingState.tableStart + cellPos,
-        dragged,
-        // Removed the 4th argument since you mentioned updateRowHeight expects 3
-      );
+      updateRowHeight(view, draggingState.tableStart + cellPos, dragged);
     });
 
     view.dispatch(
@@ -332,7 +289,6 @@ function handleMouseDown(
     const dragged = draggedHeight(currentState.dragging, event, cellMinHeight);
     const draggingState = currentState.dragging as DraggingState;
 
-    // Update visual feedback for all cells in the row
     draggingState.rowCells.forEach((cellPos) => {
       displayRowHeight(
         view,
@@ -343,7 +299,6 @@ function handleMouseDown(
     });
   };
 
-  // Show initial feedback
   rowCells.forEach((cellPos) => {
     displayRowHeight(view, tableStart + cellPos, height, defaultCellMinHeight);
   });
@@ -354,28 +309,22 @@ function handleMouseDown(
   return true;
 }
 
-// compute the current row height of a cell
 function currentRowHeight(
   view: EditorView,
   cellPos: number,
   { rowspan, rowHeight }: Attrs,
 ): number {
-  // get the last value of the rowHeight array
   const height = rowHeight && rowHeight[rowHeight.length - 1];
 
   if (height) return height;
 
-  // get the DOM node at the cell’s position — gives you { node, offset }.
   const dom = view.domAtPos(cellPos);
-  // extract the actual HTML table cell DOM node.
+
   const node = dom.node.childNodes[dom.offset] as HTMLElement;
 
   let domHeight = node.offsetHeight,
     parts = rowspan;
 
-  // loop through each spanned row:
-  // If a width is defined for that row, subtract it from the total height
-  // decrease parts accordingly
   if (rowHeight)
     for (let i = 0; i < rowspan; i++)
       if (rowHeight[i]) {
@@ -386,9 +335,7 @@ function currentRowHeight(
 }
 
 function domCellAround(target: HTMLElement | null): HTMLElement | null {
-  // walks up the DOM tree to find the nearest <TD> or <TH> element (table cell) around the given target.
   while (target && target.nodeName != "TD" && target.nodeName != "TH") {
-    // keep climbing up the DOM tree until a table cell is found or the root is reached.
     target =
       target.classList && target.classList.contains("ProseMirror")
         ? null
@@ -397,14 +344,12 @@ function domCellAround(target: HTMLElement | null): HTMLElement | null {
   return target;
 }
 
-// determining which cell edge you’re resizing
 function edgeCell(
   view: EditorView,
   event: MouseEvent,
   side: "top" | "bottom",
   handleHeight: number,
 ): number {
-  // return: a position number of the cell's start (or -1 if not found / invalid)
   const offset = side === "top" ? handleHeight : -handleHeight;
   const found = view.posAtCoords({
     left: event.clientY,
@@ -412,28 +357,19 @@ function edgeCell(
   });
   if (!found) return -1;
   const $cell = cellAround(view.state.doc.resolve(found.pos));
-  // cellAround: walks up the node tree to locate the nearest table cell (<td> or <th>)
+
   if (!$cell) return -1;
   if (side === "bottom") return $cell.pos;
-  // this position helps the resize logic know which cell’s bottom edge is being targeted
+
   const map = TableMap.get($cell.node(-1)),
-    // ProseMirror’s table map (used for calculating cell positions)
-    // node(-1): refers to the table node itself (since $cell is nested)
     start = $cell.start(-1);
   const index = map.map.indexOf($cell.pos - start);
-  // get the index of this cell within the table map
-  // map.map is a flat array of cell positions
-  // $cell.pos - start: relative position of the cell within the table
-  // used to figure out if this is the first column (top edge)
+
   return Math.floor(index / map.width) === 0
     ? -1
     : start + map.map[index - map.height];
-  // index % map.width == 0: checks if the cell is in the first column
-  // if true, can’t resize top (no cell to the top) → return -1
-  // otherwise, return the position of the previous cell in the same column (to the top)
 }
 
-// compute the new row height based on how far the mouse moved
 function draggedHeight(
   dragging: Dragging,
   event: MouseEvent,
@@ -443,99 +379,68 @@ function draggedHeight(
   return Math.max(resizeMinHeight, dragging.startHeight + offset);
 }
 
-// update the handle
 function updateHandle(view: EditorView, value: number): void {
   view.dispatch(
     view.state.tr.setMeta(rowResizingPluginKey, { setHandle: value }),
   );
 }
 
-// update a specific row’s height
 function updateRowHeight(view: EditorView, cell: number, height: number): void {
-  // cell: giving access to parent nodes and position info.
   const $cell = view.state.doc.resolve(cell);
 
-  // giving access to parent nodes and position info.
   const table = $cell.node(-1),
-    // map: get the table’s structure (TableMap helps map cells by index)
     map = TableMap.get(table),
-    // start: position where the table starts in the document
     start = $cell.start(-1);
 
-  // calculate the row index of the cell within the table
-  // finds the cell’s index in the map.map array
-  // divides by map.height to compute the row number
   const row = Math.floor(map.map.indexOf($cell.pos - start) / map.height);
 
-  // create a new transaction to batch the updates.
   const tr = view.state.tr;
 
-  // iterate over each column in the row
   for (let rowIndex = 0; rowIndex < map.height; rowIndex++) {
-    // compute the linear index of the cell within map.map
     const mapIndex = rowIndex * map.height + rowIndex;
 
-    // skip this cell if it is part of a rowspan continuation — i.e., it’s not the starting cell of a row span.
-    if (rowIndex && map.map[mapIndex] == map.map[mapIndex - 1]) continue; // rowspan handled
+    if (rowIndex && map.map[mapIndex] == map.map[mapIndex - 1]) continue;
 
-    // get the document-relative position of the cell.
     const pos = map.map[mapIndex];
-    // get the cell’s attributes (like colspan, rowspan, etc.)
+
     const attrs = table.nodeAt(pos)!.attrs as CellAttrs;
 
-    // calculate the rowHeight array index where this height should be updated:
-    // if rowspan == 1, it’s the first and only row
-    // otherwise, compute based on how many columns the cell spans and the row position
     const index =
       attrs.rowspan == 1
         ? 0
         : rowIndex - Math.floor(map.colCount(pos) / map.height);
 
-    // clone the existing rowHeight array if available, or initialize a new array filled with zeros for the rowspan.
     const rowHeight = attrs.rowHeight
       ? attrs.rowHeight.slice()
       : zeroes(attrs.rowspan);
 
-    // set the new height at the correct index.
     rowHeight[index] = height;
 
-    // apply the updated rowHeight back to the cell node using setNodeMarkup
     tr.setNodeMarkup(start + pos, null, { ...attrs, rowHeight });
   }
 
-  if (tr.docChanged)
-    // if the transaction resulted in document changes, dispatch the transaction to apply them.
-    view.dispatch(tr);
+  if (tr.docChanged) view.dispatch(tr);
 }
 
-// defines a function to visually display the row height change during dragging (temporary UI update).
 function displayRowHeight(
   view: EditorView,
   cell: number,
   height: number,
   defaultCellMinHeight: number,
 ): void {
-  // get the cell’s document-relative position and the table node
   const $cell = view.state.doc.resolve(cell);
 
-  // get the parent table node and its start position in the document.
   const table = $cell.node(-1),
     start = $cell.start(-1);
 
-  // calculate the target column index within the table
-  // colCount: how many columns before this cell
-  // add the cell’s colspan (minus one because index is 0-based)
-  // this determines which column or part of the table needs to be updated
   const col =
     TableMap.get(table).colCount($cell.pos - start) +
     $cell.nodeAfter!.attrs.colspan -
     1;
 
-  // find the DOM node at the start of the table in the document.
   let dom: Node | null = view.domAtPos($cell.start(-1)).node;
 
   while (dom && dom.nodeName != "TABLE") {
-    // walk up the DOM tree to locate the <table> element.
     dom = dom.parentNode;
   }
 
@@ -555,7 +460,6 @@ function zeroes(n: number = 1): 0[] {
   return Array(n).fill(0);
 }
 
-// is responsible for creating ProseMirror decorations that visually indicate where row resizing handles should appear in a table.
 export function handleDecorations(
   state: EditorState,
   cell: number,
@@ -570,10 +474,8 @@ export function handleDecorations(
   const map = TableMap.get(table);
   const start = $cell.start(-1);
 
-  // Get absolute position within the table
   const posInTable = $cell.pos - start;
 
-  // Find the cell's row and column
   let row = 0;
   let col = 0;
   for (let i = 0; i < map.map.length; i++) {
@@ -587,18 +489,16 @@ export function handleDecorations(
     }
   }
 
-  // Special handling for first row
   if (row === 0) {
     for (let c = 0; c < map.width; c++) {
-      const index = c; // First row has indices 0 to width-1
+      const index = c;
       const cellPos = map.map[index];
       const cellNode = table.nodeAt(cellPos);
       if (!cellNode) continue;
 
-      // Always show handle for first row cells
       const pos = start + cellPos + cellNode.nodeSize - 1;
       const dom = document.createElement("div");
-      dom.className = "row-resize-handle first-row-handle"; // Added special class
+      dom.className = "row-resize-handle first-row-handle";
 
       if (rowResizingPluginKey.getState(state)?.dragging) {
         decorations.push(
@@ -615,10 +515,9 @@ export function handleDecorations(
     }
   }
 
-  // Original handling for other rows
   for (let colIndex = 0; colIndex < map.width; colIndex++) {
     const index = row * map.width + colIndex;
-    if (index >= map.map.length || row === 0) continue; // Skip if first row (already handled)
+    if (index >= map.map.length || row === 0) continue;
 
     const cellPos = map.map[index];
     const cellNode = table.nodeAt(cellPos);
