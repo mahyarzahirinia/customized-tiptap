@@ -47,6 +47,14 @@ export type RowResizingOptions = {
  */
 export type Dragging = { startY: number; startHeight: number };
 
+interface DraggingState {
+  startY: number;
+  startHeight: number;
+  rowCells: number[];
+  tableStart: number;
+  row: number;
+}
+
 /**
  * @public
  */
@@ -180,61 +188,34 @@ function handleMouseMove(
   if (!view.editable) return;
 
   const pluginState = rowResizingPluginKey.getState(view.state);
-  if (!pluginState) return;
+  if (!pluginState || pluginState.dragging) return;
 
-  if (!pluginState.dragging) {
-    // if editor was not in state of dragging
-    const target = domCellAround(event.target as HTMLElement);
-    // if mouse inside, the content of each cell and if outside the editor div
-    let cell = -1;
-    if (target) {
-      const { top, bottom } = target.getBoundingClientRect();
-      // getBoundingClientRect return the rectangle, including its padding and border-width.
-      // The left, top, right, bottom, x, y, width, and height
+  const target = domCellAround(event.target as HTMLElement);
+  if (!target) return;
 
-      if (event.clientY - top <= handleHeight)
-        // clientY: vertical position of the mouse relative to the viewport
-        // event.clientY - top: How far is the mouse from the top edge of the cell?
-        // basically: is the mouse pointer within the first handleHeight pixels from the top of the row or cell?
-        cell = edgeCell(view, event, "top", handleHeight); // if not found -1
-      else if (bottom - event.clientY <= handleHeight)
-        cell = edgeCell(view, event, "bottom", handleHeight);
-    }
+  const { top, bottom } = target.getBoundingClientRect();
+  let activeCell = -1;
 
-    if (cell != pluginState.activeHandle) {
-      // check if the detected cell has changed:
-      if (!lastRowResizable && cell !== -1) {
-        // lastRowResizable is a config flag
-        // cell !== -1: confirms we’re over a valid row edge
-        //
-        // check if the last row is not resizable and we’re hovering over a valid cell
-        // If the last row is locked and this might be the last row, we need to check if the cursor is near it
+  if (event.clientY - top <= handleHeight) {
+    activeCell = edgeCell(view, event, "top", handleHeight);
+  } else if (bottom - event.clientY <= handleHeight) {
+    activeCell = edgeCell(view, event, "bottom", handleHeight);
+  }
 
-        // turns the numeric position cell into a ProseMirror ResolvedPos for easy node inspection
-        const $cell = view.state.doc.resolve(cell);
-        // node(-1) moves up to the ancestor node that is a table
-        const table = $cell.node(-1);
-        // TableMap provides information about the structure of the table (rows, columns, cell spans, etc.)
-        const map = TableMap.get(table);
-        // calculate where the table starts in the document: start(-1) gives the start position of the parent node (table)
-        const tableStart = $cell.start(-1);
-        // calculate the cell’s column index within the table:
-        // map.colCount($cell.pos - tableStart): gets the column number of the cell
-        // add the cell’s colspan (how many columns it spans) minus 1 (because colspan is inclusive)
-        // this calculation determines the ending column of the current cell
-        const col =
-          map.colCount($cell.pos - tableStart) +
-          $cell.nodeAfter!.attrs.colspan -
-          1;
+  // Avoid activating handle if it's the last row and resizing is disabled
+  if (!lastRowResizable && activeCell !== -1) {
+    const $cell = view.state.doc.resolve(activeCell);
+    const table = $cell.node(-1);
+    const map = TableMap.get(table);
+    const tableStart = $cell.start(-1);
+    const colIndex =
+      map.colCount($cell.pos - tableStart) + $cell.nodeAfter!.attrs.colspan - 1;
 
-        if (col == map.height - 1) {
-          // check if the cell is in the last row:
-          return;
-        }
-      }
+    if (colIndex === map.height - 1) return; // It's the last row, skip
+  }
 
-      updateHandle(view, cell);
-    }
+  if (activeCell !== pluginState.activeHandle) {
+    updateHandle(view, activeCell);
   }
 }
 
@@ -243,8 +224,11 @@ function handleMouseLeave(view: EditorView): void {
   if (!view.editable) return;
 
   const pluginState = rowResizingPluginKey.getState(view.state);
-  if (pluginState && pluginState.activeHandle > -1 && !pluginState.dragging)
+  if (!pluginState) return;
+
+  if (pluginState.activeHandle > -1 && !pluginState.dragging) {
     updateHandle(view, -1);
+  }
 }
 
 // triggered when the mouse is clicked down inside the editor.
@@ -256,92 +240,117 @@ function handleMouseDown(
 ): boolean {
   if (!view.editable) return false;
 
-  // get the window object (handles cases where editor runs in an iframe).
   const win = view.dom.ownerDocument.defaultView ?? window;
-
-  // retrieve the plugin state which holds the active handle and dragging info.
   const pluginState = rowResizingPluginKey.getState(view.state);
-  if (!pluginState || pluginState.activeHandle == -1 || pluginState.dragging)
-    // early exit if:
-    // plugin state is missing
-    // no active handle detected (mouse isn’t near a resizable row)
-    // already dragging
-    return false;
 
-  // get the target cell node where the resizing started (by document position).
-  const cell = view.state.doc.nodeAt(pluginState.activeHandle)!;
-  // calculate the current "height"
-  const height = currentRowHeight(view, pluginState.activeHandle, cell.attrs);
-  // dispatch a transaction to update plugin state:
-  // sets the dragging mode active
+  if (!pluginState || pluginState.activeHandle === -1) return false;
+  if (pluginState.dragging) return false;
+
+  const $cell = view.state.doc.resolve(pluginState.activeHandle);
+  const table = $cell.node(-1);
+  if (!table) return false;
+
+  const tableStart = $cell.start(-1);
+  const map = TableMap.get(table);
+  const cellPos = $cell.pos - tableStart;
+
+  // Correct way to find row/column position
+  let row = 0;
+  for (let i = 0; i < map.map.length; i++) {
+    if (
+      map.map[i] <= cellPos &&
+      cellPos < map.map[i] + table.nodeAt(map.map[i])!.nodeSize
+    ) {
+      row = Math.floor(i / map.width);
+      break;
+    }
+  }
+
+  // Get all cells in this row with proper typing
+  const rowCells: number[] = [];
+  for (let col = 0; col < map.width; col++) {
+    const index = row * map.width + col;
+    if (index >= map.map.length) continue;
+    rowCells.push(map.map[index]);
+  }
+
+  const cellNode = $cell.nodeAfter;
+  if (!cellNode) return false;
+
+  const height = currentRowHeight(
+    view,
+    pluginState.activeHandle,
+    cellNode.attrs,
+  );
+
+  // Initialize dragging state with proper typing
   view.dispatch(
     view.state.tr.setMeta(rowResizingPluginKey, {
-      setDragging: { startY: event.clientY, startHeight: height },
+      setDragging: {
+        startY: event.clientY,
+        startHeight: height,
+        rowCells,
+        tableStart,
+        row,
+      } as DraggingState,
     }),
   );
 
-  // called when mouseup happens
-  function finish(event: MouseEvent) {
-    // remove event listeners (cleanup)
+  const finish = (event: MouseEvent) => {
     win.removeEventListener("mouseup", finish);
     win.removeEventListener("mousemove", move);
 
-    const pluginState = rowResizingPluginKey.getState(view.state);
-    if (pluginState?.dragging) {
-      // check if dragging is still active (might not be if canceled)
+    const currentState = rowResizingPluginKey.getState(view.state);
+    if (!currentState?.dragging) return;
 
-      // perform the actual height update:
+    const dragged = draggedHeight(currentState.dragging, event, cellMinHeight);
+
+    // Type-safe access to dragging properties
+    const draggingState = currentState.dragging as DraggingState;
+
+    // Apply the final height to all cells in the row
+    draggingState.rowCells.forEach((cellPos) => {
       updateRowHeight(
         view,
-        pluginState.activeHandle,
-        draggedHeight(pluginState.dragging, event, cellMinHeight),
+        draggingState.tableStart + cellPos,
+        dragged,
+        // Removed the 4th argument since you mentioned updateRowHeight expects 3
       );
+    });
 
-      // reset dragging state in the plugin
-      view.dispatch(
-        view.state.tr.setMeta(rowResizingPluginKey, { setDragging: null }),
-      );
-    }
-  }
+    view.dispatch(
+      view.state.tr.setMeta(rowResizingPluginKey, { setDragging: null }),
+    );
+  };
 
-  // called on mousemove
-  function move(event: MouseEvent): void {
-    // if the mouse button is released while moving, end the drag immediately.
-    if (!event.which) return finish(event);
+  const move = (event: MouseEvent) => {
+    if (!(event.buttons & 1)) return finish(event);
 
-    const pluginState = rowResizingPluginKey.getState(view.state);
-    if (!pluginState) return;
+    const currentState = rowResizingPluginKey.getState(view.state);
+    if (!currentState?.dragging) return;
 
-    if (pluginState.dragging) {
-      // if dragging, compute the new dragged height based on the mouse Y movement.
-      const dragged = draggedHeight(pluginState.dragging, event, cellMinHeight);
+    const dragged = draggedHeight(currentState.dragging, event, cellMinHeight);
+    const draggingState = currentState.dragging as DraggingState;
 
-      // display the row height change visually while dragging.
+    // Update visual feedback for all cells in the row
+    draggingState.rowCells.forEach((cellPos) => {
       displayRowHeight(
         view,
-        pluginState.activeHandle,
+        draggingState.tableStart + cellPos,
         dragged,
         defaultCellMinHeight,
       );
-    }
-  }
+    });
+  };
 
-  // display initial resizer line (current position) before dragging starts.
-  displayRowHeight(
-    view,
-    pluginState.activeHandle,
-    height,
-    defaultCellMinHeight,
-  );
+  // Show initial feedback
+  rowCells.forEach((cellPos) => {
+    displayRowHeight(view, tableStart + cellPos, height, defaultCellMinHeight);
+  });
 
-  // attach global listeners to:
-  // end the drag when the mouse is released
-  // update the resizer line as the mouse moves
   win.addEventListener("mouseup", finish);
   win.addEventListener("mousemove", move);
-  // prevent default behavior (avoid text selection while dragging).
   event.preventDefault();
-
   return true;
 }
 
