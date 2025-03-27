@@ -67,6 +67,10 @@ import { MergeFieldsExtension } from "./TipTapComponents/extensions/MergeFieldsE
 import { ListItemExtension } from "./TipTapComponents/extensions/Lists/ListItemExtension";
 import { CharacterCountExtension } from "./TipTapComponents/extensions/CharacterCountExtension";
 import { useMergeFields } from "./TipTapComponents/components/MergeFields/useMergeFields";
+import {
+  CustomFloatingToolboxPlugin,
+  FloatingToolboxPlugin,
+} from "./TipTapComponents/extensions/FloatingToolBoxExtension";
 
 // initializing lowlight
 const lowlight = createLowlight(all);
@@ -113,6 +117,7 @@ const editor = useEditor({
     MergeFieldsExtension,
     PageBreakExtension,
     CustomTableExtension.configure({ resizable: true }),
+    CustomFloatingToolboxPlugin,
     // ResizableTableCell,
     // ListItemExtension,
     // CharacterCountExtension,
