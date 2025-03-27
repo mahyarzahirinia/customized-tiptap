@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ref, nextTick, computed } from "vue";
+import { ref, nextTick, computed, unref, onMounted, watch } from "vue";
+import { type Editor } from "@tiptap/core";
 import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
@@ -65,6 +66,7 @@ import { LinkAnchorExtension } from "./TipTapComponents/extensions/LinkAnchorExt
 import { MergeFieldsExtension } from "./TipTapComponents/extensions/MergeFieldsExtension";
 import { ListItemExtension } from "./TipTapComponents/extensions/Lists/ListItemExtension";
 import { CharacterCountExtension } from "./TipTapComponents/extensions/CharacterCountExtension";
+import { useMergeFields } from "./TipTapComponents/components/MergeFields/useMergeFields";
 
 // initializing lowlight
 const lowlight = createLowlight(all);
@@ -75,36 +77,6 @@ lowlight.register("css", css);
 lowlight.register("js", js);
 lowlight.register("ts", ts);
 
-// Types ------------------------
-type DataType = {
-  title: string;
-  label: string;
-  value: string;
-} | null;
-
-const delimiter = "{{";
-const showValues = ref(false);
-const isDropdownShown = ref(false);
-const selectedMergeField = ref();
-const mergeFieldQuery = ref();
-const isMergeFieldDropdownVisible = ref(false);
-const mergeFieldDropdownPosition = ref({ x: 0, y: 0 });
-const mergeFields = ref([
-  { title: "نام", label: "name", value: "محمد ظهیری نیا", group: "مشخصات" },
-  {
-    title: "ایمیل",
-    label: "email",
-    value: "zahiriniamahyar@gmail.com",
-    group: "اطلاعات تماس",
-  },
-  {
-    title: "شماره تلفن",
-    label: "phone",
-    value: "09391398416",
-    group: "اطلاعات تماس",
-  },
-]);
-
 const editor = useEditor({
   enableContentCheck: true,
   onContentError({ editor, error, disableCollaboration }) {
@@ -113,38 +85,9 @@ const editor = useEditor({
   onCreate({ editor }) {
     console.log("Editor content:", editor.getJSON());
   },
-  content: "",
   editorProps: {
     attributes: {
       class: "tiptap-editor-inside",
-    },
-    handleDOMEvents: {
-      keyup: (view: EditorView, event: KeyboardEvent) => {
-        const cursorPos = view.state.selection.from;
-        if (cursorPos < 2) return false;
-
-        // grab 2 last chars
-        const textBeforeCursor = view.state.doc.textBetween(
-          cursorPos - 2,
-          cursorPos,
-          "",
-        );
-
-        // check for every char when dropdown is open
-        if (isMergeFieldDropdownVisible.value) {
-          const lastTypedChar = event.key.length === 1 ? event.key : "";
-          handleSearchUpdate(lastTypedChar);
-        }
-
-        // if {{ show dropdown
-        if (textBeforeCursor === delimiter && !isDropdownShown.value) {
-          showMergeFieldDropdown(view);
-        } else {
-          // else close it
-          isMergeFieldDropdownVisible.value = false;
-          isDropdownShown.value = false;
-        }
-      },
     },
   },
   extensions: [
@@ -167,7 +110,7 @@ const editor = useEditor({
     BulletListExtension,
     FontSizeExtension,
     CustomLinkExtension,
-    MergeFieldsExtension.configure({ showValues }),
+    MergeFieldsExtension,
     PageBreakExtension,
     CustomTableExtension.configure({ resizable: true }),
     // ResizableTableCell,
@@ -208,152 +151,26 @@ const editor = useEditor({
   ],
 });
 
-const showMergeFieldDropdown = async (view: any) => {
-  //show dropdown
-  isMergeFieldDropdownVisible.value = true;
-  //to remove the value of the searched item before opening up again
-  selectedMergeField.value = "";
+const mergeFields = useMergeFields(editor);
 
-  //wait for the next tick to be synced and then set the coordinates accordingly
-  await nextTick();
-  const { from } = view.state.selection;
-  const pos = view.coordsAtPos(from);
-  mergeFieldDropdownPosition.value = { x: pos.left, y: pos.top + 20 };
-};
-
-const insertManually = (selected: DataType) => {
-  if (!selected) return;
-
-  editor.value
-    ?.chain()
-    .focus()
-    .insertContent({
-      type: "mergeField",
-      attrs: {
-        label: `${delimiter}${selected.label}}}`,
-        title: selected.title,
-        value: selected.value,
-        showValues,
-      },
-    })
-    .run();
-};
-
-const insertMergeField = (selected: DataType) => {
-  if (!selected) return;
-
-  editor.value
-    ?.chain()
-    .focus()
-    .deleteRange({
-      from: editor.value.state.selection.from - 2,
-      to: editor.value.state.selection.from,
-    }) // Remove "{{"
-    .insertContent({
-      type: "mergeField",
-      attrs: {
-        label: `${delimiter}${selected.label}}}`,
-        title: selected.title,
-        value: selected.value,
-        showValues,
-      },
-    })
-    .run();
-
-  isMergeFieldDropdownVisible.value = false;
-};
-
-const filteredMergeFields = computed(() =>
-  mergeFields.value.filter((field) =>
-    field.title.includes(mergeFieldQuery.value || ""),
-  ),
-);
-
-// to search
-const handleSearchUpdate = (query: string) => {
-  mergeFieldQuery.value = query;
-  // this logic is to select the first item from the menu if open
-  if (filteredMergeFields.value.length > 0) {
-    selectedMergeField.value = filteredMergeFields.value[0];
-  }
-  selectedMergeField.value = null; // clear the selected item
-};
-
-// to enter from the list
-const handleEnterPress = () => {
-  if (selectedMergeField.value) {
-    insertMergeField(selectedMergeField.value);
-  }
-};
-
-const handleClose = () => {
-  // a flag to show dropdown has opened
-  isDropdownShown.value = true;
-  isMergeFieldDropdownVisible.value = false;
+onMounted(() => {
   if (editor.value) {
-    editor.value.commands.focus();
+    editor.value.setOptions({
+      editorProps: {
+        handleDOMEvents: {
+          keyup: (view, event) => {
+            mergeFields.handleKeyUp(view, event);
+          },
+        },
+      },
+    });
   }
-};
+});
 </script>
 
 <template>
   <div v-if="editor" class="tiptap-editor">
-    <Toolbar :editor="editor" />
-
-    <div class="merge-field-tool-box">
-      <v-autocomplete
-        v-model="selectedMergeField"
-        :filter="() => true"
-        :items="filteredMergeFields"
-        :search="mergeFieldQuery"
-        class="merge-field-input"
-        clear-icon="mdi-close"
-        clearable
-        density="compact"
-        item-title="title"
-        item-value="label"
-        label="افزودن فیلدها"
-        return-object
-        variant="plain"
-        @update:search="handleSearchUpdate"
-        @update:model-value="(obj: any) => insertManually(obj)"
-        @keydown.enter="handleEnterPress"
-        @keydown.escape="handleClose"
-      />
-      <v-switch
-        v-model="showValues"
-        class="c-switch"
-        color="primary"
-        hide-details
-      />
-    </div>
-
-    <v-autocomplete
-      v-if="isMergeFieldDropdownVisible"
-      v-model="selectedMergeField"
-      :filter="() => true"
-      :items="filteredMergeFields"
-      :search="mergeFieldQuery"
-      :style="{
-        top: `${mergeFieldDropdownPosition.y - 10}px`,
-        left: `${mergeFieldDropdownPosition.x - 160}px`,
-      }"
-      autofocus
-      class="m-autocomplete"
-      density="compact"
-      item-title="title"
-      item-value="label"
-      label=""
-      menu
-      return-object
-      variant="underlined"
-      @update:search="handleSearchUpdate"
-      @update:model-value="(obj: any) => insertMergeField(obj)"
-      @keydown.enter="handleEnterPress"
-      @keydown.escape="handleClose"
-      @keydown.delete="() => mergeFieldQuery === '' && handleClose()"
-    />
-
+    <Toolbar :editor="editor" :mergeFields="mergeFields" />
     <editor-content :editor="editor" />
   </div>
 </template>
@@ -364,21 +181,6 @@ const handleClose = () => {
   @apply focus:outline-none;
   @apply w-full max-w-full;
   @apply rounded mx-auto h-96 overflow-y-auto;
-}
-.m-autocomplete {
-  @apply absolute bg-transparent border rounded shadow p-1 w-[150px];
-}
-
-.merge-field-tool-box {
-  @apply flex items-center max-w-56 m-2 flex max-h-12;
-
-  .merge-field-input {
-    @apply max-h-10;
-  }
-
-  .c-switch {
-    @apply mx-4;
-  }
 }
 
 .tiptap-editor {

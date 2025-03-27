@@ -26,8 +26,14 @@ import AnchorComponent from "./components/AnchorComponent.vue";
 import DirectionComponent from "./components/DirectionComponent.vue";
 import PageBreakComponent from "./components/PageBreakComponent.vue";
 import CodeBlockComponent from "./components/CodeBlockComponent.vue";
+import MergeFieldsToolbarSearch from "./components/MergeFields/MergeFieldsToolbarSearch.vue";
+import MergeFieldsHiddenInlineSearch from "./components/MergeFields/MergeFieldsHiddenInlineSearch.vue";
+import { useMergeFields } from "./components/MergeFields/useMergeFields";
 
-const props = defineProps<{ editor: Editor }>();
+const props = defineProps<{
+  editor: Editor;
+  mergeFields: ReturnType<typeof useMergeFields>;
+}>();
 
 const showModal = reactive<{
   exportModal: boolean;
@@ -178,6 +184,14 @@ const showModal = reactive<{
         <GroupButtons>
           <DirectionComponent :editor="editor" />
         </GroupButtons>
+        <MergeFieldsToolbarSearch
+          :editor="editor"
+          :mergeFields="props.mergeFields"
+        />
+        <MergeFieldsHiddenInlineSearch
+          :editor="editor"
+          :mergeFields="props.mergeFields"
+        />
       </div>
     </v-expand-transition>
   </div>
