@@ -17,8 +17,10 @@ export function handleDecorations(
   const map = TableMap.get(table);
   const start = $cell.start(-1);
 
+  // Get absolute position within the table
   const posInTable = $cell.pos - start;
 
+  // Find the cell's row and column
   let row = 0;
   let col = 0;
   for (let i = 0; i < map.map.length; i++) {
@@ -32,16 +34,18 @@ export function handleDecorations(
     }
   }
 
+  // Special handling for first row
   if (row === 0) {
     for (let c = 0; c < map.width; c++) {
-      const index = c;
+      const index = c; // First row has indices 0 to width-1
       const cellPos = map.map[index];
       const cellNode = table.nodeAt(cellPos);
       if (!cellNode) continue;
 
+      // Always show handle for first row cells
       const pos = start + cellPos + cellNode.nodeSize - 1;
       const dom = document.createElement("div");
-      dom.className = "row-resize-handle first-row-handle";
+      dom.className = "row-resize-handle first-row-handle"; // Added special class
 
       if (rowResizingPluginKey.getState(state)?.dragging) {
         decorations.push(
@@ -58,9 +62,10 @@ export function handleDecorations(
     }
   }
 
+  // Original handling for other rows
   for (let colIndex = 0; colIndex < map.width; colIndex++) {
     const index = row * map.width + colIndex;
-    if (index >= map.map.length || row === 0) continue;
+    if (index >= map.map.length || row === 0) continue; // Skip if first row (already handled)
 
     const cellPos = map.map[index];
     const cellNode = table.nodeAt(cellPos);

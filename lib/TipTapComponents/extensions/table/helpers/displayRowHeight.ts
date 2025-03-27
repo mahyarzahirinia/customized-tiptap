@@ -28,7 +28,6 @@ export function displayRowHeight(
 
   updateRowsOnResize(
     table,
-    dom.firstChild as HTMLTableRowElement,
     dom as HTMLTableElement,
     defaultCellMinHeight,
     col,
