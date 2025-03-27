@@ -24,7 +24,6 @@ export function FloatingToolboxPlugin() {
     props: {
       decorations(state) {
         const myState = this.getState(state);
-        console.log("myState", myState);
 
         return DecorationSet.empty;
       },
