@@ -32,5 +32,6 @@ export function displayRowHeight(
     defaultCellMinHeight,
     col,
     height,
+    view,
   );
 }

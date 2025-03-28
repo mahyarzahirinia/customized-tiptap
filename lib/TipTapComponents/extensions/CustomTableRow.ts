@@ -5,7 +5,7 @@ export const CustomTableRow = TableRow.extend({
     return {
       ...this.parent?.(),
       rowheight: {
-        default: 25,
+        default: 30,
         parseHTML: (element) => element.getAttribute("data-rowheight") || 25,
         renderHTML: (attributes) => ({
           "data-rowheight": attributes.rowheight,

@@ -1,4 +1,6 @@
 import { Node as ProseMirrorNode } from "prosemirror-model";
+import { EditorView } from "prosemirror-view";
+import { updateRowsOnTransaction } from "./updateRowsOnTransaction";
 
 export function updateRowsOnResize(
   node: ProseMirrorNode,
@@ -6,27 +8,29 @@ export function updateRowsOnResize(
   cellMinHeight: number,
   overrideRow?: number,
   overrideValue?: number,
+  view?: EditorView,
 ): void {
   let totalHeight = 0;
   const rows = table.rows;
   const calculatedHeights: number[] = [];
+  const tr = view?.state?.tr;
 
-  for (let row = 0; row < node.childCount; row++) {
-    const rowNode = node.child(row);
+  for (let rowIndex = 0; rowIndex < node.childCount; rowIndex++) {
+    const rowNode = node.child(rowIndex);
     const rowHeight =
-      overrideRow === row
-        ? (overrideValue ?? cellMinHeight) // Fallback if overrideValue is undefined
+      overrideRow === rowIndex
+        ? overrideValue
         : rowNode.attrs.rowheight || cellMinHeight;
-    calculatedHeights[row] = rowHeight;
+    calculatedHeights[rowIndex] = rowHeight;
+
+    if (view && tr && overrideRow === rowIndex) {
+      updateRowsOnTransaction(view, node, rowIndex, rowHeight);
+    }
   }
 
   calculatedHeights.forEach((height, index) => {
-    if (Array.isArray(rows) && index >= rows.length) return; // Bounds check
-    const row = rows[index];
-    const currentHeight = row.style.height;
-    // Only update if the height is different (ignoring units)
-    if (currentHeight !== `${height}px` && currentHeight !== `${height}`) {
-      row.style.height = `${height}px`;
+    if (rows[index] && rows[index].style.height !== `${height}px`) {
+      rows[index].style.height = `${height}px`;
     }
   });
 

@@ -32,13 +32,13 @@ export function updateRowHeight(
         ? 0
         : rowIndex - Math.floor(map.colCount(pos) / map.height);
 
-    const rowHeight = attrs.rowHeight
-      ? attrs.rowHeight.slice()
+    const rowheight = attrs.rowheight
+      ? attrs.rowheight.slice()
       : zeroes(attrs.rowspan);
 
-    rowHeight[index] = height;
+    rowheight[index] = height;
 
-    tr.setNodeMarkup(start + pos, null, { ...attrs, rowHeight });
+    tr.setNodeMarkup(start + pos, null, { ...attrs, rowheight });
   }
 
   if (tr.docChanged) view.dispatch(tr);

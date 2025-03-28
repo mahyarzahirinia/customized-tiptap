@@ -7,7 +7,7 @@ export type CellAttrs = {
   colspan?: number;
   rowspan?: number;
   colWidth?: number[];
-  rowHeight?: number[];
+  rowheight?: number[];
 };
 
 export type RowResizingOptions = {
