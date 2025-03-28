@@ -2,6 +2,14 @@ import { EditorView } from "prosemirror-view";
 import { cellAround } from "@tiptap/pm/tables";
 import { TableMap } from "@tiptap/pm/tables";
 
+/**
+ * Get the position of the edge cell in a table based on mouse event
+ * @param view - The ProseMirror editor view
+ * @param event - The mouse event
+ * @param side - The side of the cell (top or bottom)
+ * @param handleHeight - The height of the handle
+ * @returns The position of the edge cell or -1 if not found
+ */
 export function edgeCell(
   view: EditorView,
   event: MouseEvent,

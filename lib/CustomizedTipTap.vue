@@ -71,6 +71,7 @@ import {
   CustomFloatingToolboxPlugin,
   FloatingToolboxPlugin,
 } from "./TipTapComponents/extensions/FloatingToolBoxExtension";
+import { CustomTableRow } from "./TipTapComponents/extensions/CustomTableRow";
 
 // initializing lowlight
 const lowlight = createLowlight(all);
@@ -117,6 +118,7 @@ const editor = useEditor({
     MergeFieldsExtension,
     PageBreakExtension,
     CustomTableExtension.configure({ resizable: true }),
+    CustomTableRow,
     CustomFloatingToolboxPlugin,
     // ResizableTableCell,
     // ListItemExtension,
@@ -131,7 +133,7 @@ const editor = useEditor({
     Image,
     // Table,
     TableHeader,
-    TableRow,
+    // TableRow,
     TableCell,
     FontFamily,
     Italic,
