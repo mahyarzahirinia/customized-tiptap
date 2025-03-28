@@ -24,7 +24,7 @@ export type RowResizingOptions = {
     | null;
 };
 
-export type Dragging = { startY: number; startHeight: number };
+export type Dragging = { startY: number; startHeight: number; row?: number };
 
 interface DraggingState {
   startY: number;

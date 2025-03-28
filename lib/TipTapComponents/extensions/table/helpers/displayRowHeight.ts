@@ -6,7 +6,7 @@ export function displayRowHeight(
   view: EditorView,
   cell: number,
   height: number,
-  defaultCellMinHeight: number,
+  cellMinHeight: number,
 ): void {
   const $cell = view.state.doc.resolve(cell);
 
@@ -29,7 +29,7 @@ export function displayRowHeight(
   updateRowsOnResize(
     table,
     dom as HTMLTableElement,
-    defaultCellMinHeight,
+    cellMinHeight,
     col,
     height,
     view,
