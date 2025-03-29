@@ -94,20 +94,14 @@ export const CustomTextBlock = Node.create({
           const textContent = parentNode.textContent;
 
           // Get the selected text
-          console.log("$from.parentOffset", $from.parentOffset);
-          console.log("to", to);
-          console.log("$from.start()", $from.start());
           const selectedText = textContent.slice(
             $from.parentOffset,
             to - $from.start(),
           );
-          console.log("selectedText", selectedText);
 
           // Split the text into before, selected, and after
           const beforeText = textContent.slice(0, $from.parentOffset);
-          console.log("beforeText", beforeText);
           const afterText = textContent.slice(to - $from.start());
-          console.log("afterText", afterText);
 
           // Create the new node for the selected text
           const newNode = state.schema.nodes.customTextBlock.create(

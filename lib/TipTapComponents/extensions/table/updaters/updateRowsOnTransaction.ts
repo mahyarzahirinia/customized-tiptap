@@ -9,7 +9,6 @@ export function updateRowsOnTransaction(
 ): void {
   const { state, dispatch } = view;
   const { doc } = state;
-  console.log("rowIndex", rowIndex);
 
   // Step 1: Find the parent's position in the document
   let parentPos = -1;
