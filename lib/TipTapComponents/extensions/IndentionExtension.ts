@@ -66,11 +66,13 @@ export const Indentation = Extension.create({
         attributes: {
           lineIndent: {
             default: "0em",
-            parseHTML: (element) => element.style.marginRight || "0em",
+            parseHTML: (element) => element.style.marginInlineStart || "0em",
             renderHTML: (attributes) => {
               if (!attributes.lineIndent || attributes.lineIndent === "0em")
                 return {};
-              return { style: `margin-right: ${attributes.lineIndent}` };
+              return {
+                style: `margin-left: ${attributes.lineIndent}; margin-right: ${attributes.lineIndent};`,
+              };
             },
           },
         },
