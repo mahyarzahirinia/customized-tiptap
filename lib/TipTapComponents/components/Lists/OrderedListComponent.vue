@@ -12,13 +12,23 @@ const orderedLists = [
   { title: "", value: "upper-alpha", icon: "mdi-alphabetical-variant" },
 ];
 const selectedOrderedListType = ref<string | undefined>("numbered");
+const isActive = computed(() => props.editor.isActive("orderedList"));
+const isSinked = computed(() => {
+  return props.editor.can().sinkListItem("listItem");
+});
 
 const applyAction = (value: string) => {
   if (!props.editor) return;
+
+  if (isSinked) {
+    props.editor.chain().focus().liftListItem("listItem").run();
+  }
+
   if (value) {
     props.editor
       .chain()
       .focus()
+      .sinkListItem("listItem")
       .toggleList("orderedList", "listItem")
       .updateAttributes("orderedList", { typeOfList: value })
       .run();

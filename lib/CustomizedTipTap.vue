@@ -13,6 +13,7 @@ import "./TipTapComponents/styles/anchor.css";
 import "./TipTapComponents/styles/direction.css";
 import "./TipTapComponents/styles/pagebreak.css";
 import "./TipTapComponents/styles/mergefields.css";
+import "highlight.js/styles/atom-one-dark.css";
 
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 
@@ -188,10 +189,68 @@ onMounted(() => {
   @apply focus:outline-none;
   @apply w-full max-w-full;
   @apply rounded mx-auto h-96 overflow-y-auto;
+
+  & pre {
+    font-family: "JetBrainsMono", monospace;
+    direction: ltr;
+
+    /* Code styling */
+    .hljs-comment,
+    .hljs-quote {
+      color: #616161;
+    }
+
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-attribute,
+    .hljs-tag,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-link,
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: #f98181;
+    }
+
+    .hljs-number,
+    .hljs-meta,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-literal,
+    .hljs-type,
+    .hljs-params {
+      color: #fbbc88;
+    }
+
+    .hljs-string,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: #b9f18d;
+    }
+
+    .hljs-title,
+    .hljs-section {
+      color: #faf594;
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #70cff8;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: 700;
+    }
+  }
 }
 
 .tiptap-editor {
-  & * {
+  & {
     font-family: "yekan", ".AppleSystemUIFont", sans-serif;
   }
 
