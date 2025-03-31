@@ -16,7 +16,6 @@ type DataType = {
 } | null;
 
 export function useMergeFields(editorRef: any) {
-  const editor = editorRef.value;
   const delimiter = "{{";
   const showValues = ref(false);
   const isDropdownShown = ref(false);

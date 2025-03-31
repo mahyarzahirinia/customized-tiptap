@@ -73,6 +73,7 @@ import {
   FloatingToolboxPlugin,
 } from "./TipTapComponents/extensions/FloatingToolBoxExtension";
 import { CustomTableRow } from "./TipTapComponents/extensions/CustomTableRow";
+import { CustomTableHeader } from "./TipTapComponents/extensions/CustomTableHeader";
 
 // initializing lowlight
 const lowlight = createLowlight(all);
@@ -120,6 +121,7 @@ const editor = useEditor({
     PageBreakExtension,
     CustomTableExtension.configure({ resizable: true }),
     CustomTableRow,
+    CustomTableHeader,
     CustomFloatingToolboxPlugin,
     // ResizableTableCell,
     // ListItemExtension,
@@ -133,7 +135,7 @@ const editor = useEditor({
     LineHeight.configure({ types: ["paragraph", "heading"] }),
     Image,
     // Table,
-    TableHeader,
+    // TableHeader,
     // TableRow,
     TableCell,
     FontFamily,
@@ -251,7 +253,7 @@ onMounted(() => {
 
 .tiptap-editor {
   & {
-    font-family: "yekan", ".AppleSystemUIFont", sans-serif;
+    font-family: "yekan", sans-serif;
   }
 
   @apply p-4 border border-gray-200 border-solid rounded-md shadow-sm;

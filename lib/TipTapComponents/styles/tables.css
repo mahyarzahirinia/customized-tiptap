@@ -23,7 +23,7 @@
         }
 
         th {
-            @apply bg-gray-300;
+            @apply bg-gray-200;
             font-weight: bold;
             text-align: left;
         }
