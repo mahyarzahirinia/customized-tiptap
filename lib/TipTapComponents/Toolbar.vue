@@ -28,6 +28,7 @@ import PageBreakComponent from "./components/PageBreakComponent.vue";
 import CodeBlockComponent from "./components/CodeBlockComponent.vue";
 import MergeFieldsToolbarSearch from "./components/MergeFields/MergeFieldsToolbarSearch.vue";
 import MergeFieldsHiddenInlineSearch from "./components/MergeFields/MergeFieldsHiddenInlineSearch.vue";
+import Autocomplete from "./components/Autocomplete.vue";
 import { useMergeFields } from "./components/MergeFields/useMergeFields";
 
 const props = defineProps<{
@@ -42,6 +43,8 @@ const showModal = reactive<{
   exportModal: false,
   showPanel: true,
 });
+
+const { showValues } = props.mergeFields;
 </script>
 
 <template>
@@ -184,14 +187,25 @@ const showModal = reactive<{
         <GroupButtons>
           <DirectionComponent :editor="editor" />
         </GroupButtons>
-        <MergeFieldsToolbarSearch
-          :editor="editor"
-          :mergeFields="props.mergeFields"
-        />
+
+        <!--        <MergeFieldsToolbarSearch-->
+        <!--          :editor="editor"-->
+        <!--          :mergeFields="props.mergeFields"-->
+        <!--        />-->
         <MergeFieldsHiddenInlineSearch
           :editor="editor"
           :mergeFields="props.mergeFields"
         />
+
+        <div class="merge-field-tool-box">
+          <Autocomplete :editor="editor" :mergeFields="props.mergeFields" />
+          <v-switch
+            v-model="showValues"
+            class="c-switch"
+            color="primary"
+            hide-details
+          />
+        </div>
       </div>
     </v-expand-transition>
   </div>
@@ -208,6 +222,18 @@ const showModal = reactive<{
   .tools-group {
     @apply w-60 flex gap-1;
     @apply p-0.5 border border-solid border-gray-200 rounded-md;
+  }
+}
+
+.merge-field-tool-box {
+  @apply flex items-center w-56 m-2 flex max-h-12;
+
+  .merge-field-input {
+    @apply max-h-10;
+  }
+
+  .c-switch {
+    @apply mx-4;
   }
 }
 </style>
