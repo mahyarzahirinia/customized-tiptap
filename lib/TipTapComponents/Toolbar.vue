@@ -1,34 +1,63 @@
 <script lang="ts" setup="">
-import { defineProps, reactive, ref } from "vue";
+import { defineProps, reactive, ref, defineAsyncComponent } from "vue";
 import { type Editor } from "@tiptap/core";
+
 import TableComponent from "./components/TableComponent.vue";
 import Button from "./components/Button.vue";
 import HeadingComponent from "./components/HeadingComponent.vue";
 import FontSelectionComponent from "./components/FontSelectionComponent.vue";
 import FontSizeSelectionComponent from "./components/FontSizeSelectionComponent.vue";
 import AlignmentsComponent from "./components/AlignmentsComponent.vue";
-import HeadingButtonsComponent from "./components/HeadingButtonsComponent.vue";
 import OrderedOrderedListComponent from "./components/Lists/OrderedListComponent.vue";
 import UnOrderedOrderedListComponent from "./components/Lists/UnOrderedListComponent.vue";
 import LinkComponentComponent from "./components/LinkComponentComponent.vue";
-import HTMLExportModal from "./modals/HTMLExportModal.vue";
-// import ColorModal from "./modals/ColorModal.vue";
 import GroupButtons from "./components/GroupButtons.vue";
-import LineHeightComponent from "./components/LineHeightComponent.vue";
-import IndentionComponent from "./components/IndentionComponent.vue";
-import ColorAndHighlightComponent from "./components/ColorAndHighlightComponent.vue";
-import SpecialCharactersComponent from "./components/SpecialCharactersComponent.vue";
-import EmojisComponent from "./components/EmojisComponent.vue";
-import CodeExportComponent from "./components/CodeExportComponent.vue";
-import FullscreenComponent from "./components/FullscreenComponent.vue";
-import Preview from "./components/PreviewComponent.vue";
-import AnchorComponent from "./components/AnchorComponent.vue";
-import DirectionComponent from "./components/DirectionComponent.vue";
-import PageBreakComponent from "./components/PageBreakComponent.vue";
-import CodeBlockComponent from "./components/CodeBlockComponent.vue";
-import MergeFieldsToolbarSearch from "./components/MergeFields/MergeFieldsToolbarSearch.vue";
-import MergeFieldsHiddenInlineSearch from "./components/MergeFields/MergeFieldsHiddenInlineSearch.vue";
-import Autocomplete from "./components/Autocomplete.vue";
+// import MergeFieldsToolbarSearch from "./components/MergeFields/MergeFieldsToolbarSearch.vue";
+// import HeadingButtonsComponent from "./components/HeadingButtonsComponent.vue";
+
+const LineHeightComponent = defineAsyncComponent(
+  () => import("./components/LineHeightComponent.vue"),
+);
+const IndentionComponent = defineAsyncComponent(
+  () => import("./components/IndentionComponent.vue"),
+);
+const CodeBlockComponent = defineAsyncComponent(
+  () => import("./components/CodeBlockComponent.vue"),
+);
+const ColorAndHighlightComponent = defineAsyncComponent(
+  () => import("./components/ColorAndHighlightComponent.vue"),
+);
+const EmojisComponent = defineAsyncComponent(
+  () => import("./components/EmojisComponent.vue"),
+);
+const SpecialCharactersComponent = defineAsyncComponent(
+  () => import("./components/SpecialCharactersComponent.vue"),
+);
+const CodeExportComponent = defineAsyncComponent(
+  () => import("./components/CodeExportComponent.vue"),
+);
+const FullscreenComponent = defineAsyncComponent(
+  () => import("./components/FullscreenComponent.vue"),
+);
+const Preview = defineAsyncComponent(
+  () => import("./components/PreviewComponent.vue"),
+);
+const PageBreakComponent = defineAsyncComponent(
+  () => import("./components/PageBreakComponent.vue"),
+);
+const AnchorComponent = defineAsyncComponent(
+  () => import("./components/AnchorComponent.vue"),
+);
+const DirectionComponent = defineAsyncComponent(
+  () => import("./components/DirectionComponent.vue"),
+);
+const MergeFieldsHiddenInlineSearch = defineAsyncComponent(
+  () => import("./components/MergeFields/MergeFieldsHiddenInlineSearch.vue"),
+);
+const Autocomplete = defineAsyncComponent(
+  () => import("./components/Autocomplete.vue"),
+);
+
 import { useMergeFields } from "./components/MergeFields/useMergeFields";
 
 const props = defineProps<{
@@ -41,7 +70,7 @@ const showModal = reactive<{
   showPanel: boolean;
 }>({
   exportModal: false,
-  showPanel: true,
+  showPanel: false,
 });
 
 const { showValues } = props.mergeFields;
@@ -226,7 +255,7 @@ const { showValues } = props.mergeFields;
 }
 
 .merge-field-tool-box {
-  @apply flex items-center w-56 m-2 flex max-h-12;
+  @apply flex items-center w-56 mx-2 flex max-h-12;
 
   .merge-field-input {
     @apply max-h-10;
