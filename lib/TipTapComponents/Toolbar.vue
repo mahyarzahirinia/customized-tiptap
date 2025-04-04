@@ -58,12 +58,20 @@ const Autocomplete = defineAsyncComponent(
   () => import("./components/Autocomplete.vue"),
 );
 
-import { useMergeFields } from "./components/MergeFields/useMergeFields";
+import { type useMergeFields } from "./components/MergeFields/useMergeFields";
+import { type Module } from "../config";
 
 const props = defineProps<{
   editor: Editor;
   mergeFields: ReturnType<typeof useMergeFields>;
+  extensions: Module;
 }>();
+
+const extensionNames = new Set(props.extensions.map((ext) => ext.name));
+
+function hasExtension(name: string): boolean {
+  return extensionNames.has(name);
+}
 
 const showModal = reactive<{
   exportModal: boolean;
@@ -118,6 +126,7 @@ const { showValues } = props.mergeFields;
 
     <GroupButtons>
       <Button
+        v-if="hasExtension('bold')"
         :class="{ 'is-active': props.editor.isActive('bold') }"
         :disabled="!props.editor.can().chain().focus().toggleBold().run()"
         text="بولد"
@@ -126,6 +135,7 @@ const { showValues } = props.mergeFields;
         <v-icon icon="mdi-format-bold" />
       </Button>
       <Button
+        v-if="hasExtension('italic')"
         :class="{ 'is-active': props.editor.isActive('italic') }"
         :disabled="!props.editor.can().chain().focus().toggleItalic().run()"
         text="ایتالیک"
@@ -134,6 +144,7 @@ const { showValues } = props.mergeFields;
         <v-icon icon="mdi-format-italic" />
       </Button>
       <Button
+        v-if="hasExtension('underline')"
         :class="{ 'is-active': props.editor.isActive('underline') }"
         :disabled="!props.editor.can().chain().focus().toggleUnderline().run()"
         text="زیرخط‌دار"
@@ -143,6 +154,7 @@ const { showValues } = props.mergeFields;
       </Button>
 
       <Button
+        v-if="hasExtension('strike')"
         :class="{ 'is-active': props.editor.isActive('strike') }"
         :disabled="!props.editor.can().chain().focus().toggleStrike().run()"
         text="خط‌خورده"
@@ -153,14 +165,20 @@ const { showValues } = props.mergeFields;
     </GroupButtons>
 
     <div class="tools-group">
-      <AlignmentsComponent :editor="editor" />
-      <OrderedOrderedListComponent :editor="editor" />
-      <UnOrderedOrderedListComponent :editor="editor" />
+      <AlignmentsComponent :editor="editor" v-if="hasExtension('textAlign')" />
+      <OrderedOrderedListComponent
+        :editor="editor"
+        v-if="hasExtension('orderedList')"
+      />
+      <UnOrderedOrderedListComponent
+        :editor="editor"
+        v-if="hasExtension('bulletList')"
+      />
     </div>
 
     <GroupButtons>
-      <LinkComponentComponent :editor="editor" />
-      <TableComponent :editor="editor" />
+      <LinkComponentComponent :editor="editor" v-if="hasExtension('link')" />
+      <TableComponent :editor="editor" v-if="hasExtension('table')" />
     </GroupButtons>
 
     <!-- toggle transition -->
@@ -173,16 +191,22 @@ const { showValues } = props.mergeFields;
     <!-- transition section -->
     <v-expand-transition>
       <div v-if="showModal.showPanel" class="toolbar">
-        <GroupButtons>
+        <GroupButtons v-if="hasExtension('lineHeight')">
           <LineHeightComponent :editor="editor" />
         </GroupButtons>
-        <GroupButtons>
+        <GroupButtons v-if="hasExtension('indentation')">
           <IndentionComponent :editor="editor" />
         </GroupButtons>
 
         <GroupButtons>
-          <CodeBlockComponent :editor="editor" />
-          <ColorAndHighlightComponent :editor="editor" />
+          <CodeBlockComponent
+            :editor="editor"
+            v-if="hasExtension('codeBlock')"
+          />
+          <ColorAndHighlightComponent
+            :editor="editor"
+            v-if="hasExtension('color')"
+          />
         </GroupButtons>
 
         <GroupButtons>
@@ -192,29 +216,39 @@ const { showValues } = props.mergeFields;
 
         <GroupButtons>
           <CodeExportComponent :editor="editor" />
-          <FullscreenComponent :editor="editor" />
-          <Preview :editor="editor" />
+          <FullscreenComponent
+            :editor="editor"
+            v-if="hasExtension('fullscreen')"
+          />
+          <Preview :editor="editor" v-if="hasExtension('lineHeight')" />
         </GroupButtons>
 
         <GroupButtons>
           <Button disabled text="ذخیره" @click="">
             <v-icon icon="mdi-content-save-outline" />
           </Button>
-          <Button text="چاپ" @click="editor.commands.print()">
+          <Button
+            text="چاپ"
+            @click="editor.commands.print()"
+            v-if="hasExtension('print')"
+          >
             <v-icon icon="mdi-printer" />
           </Button>
         </GroupButtons>
 
         <GroupButtons>
-          <PageBreakComponent :editor="editor" />
-          <AnchorComponent :editor="editor" />
-          <!--          <Button text="JSON" @click="">-->
-          <!--            <v-icon icon="mdi-code-json" />-->
-          <!--          </Button>-->
+          <PageBreakComponent
+            :editor="editor"
+            v-if="hasExtension('pageBreak')"
+          />
+          <AnchorComponent :editor="editor" v-if="hasExtension('linkAnchor')" />
         </GroupButtons>
 
         <GroupButtons>
-          <DirectionComponent :editor="editor" />
+          <DirectionComponent
+            :editor="editor"
+            v-if="hasExtension('directionWrapper')"
+          />
         </GroupButtons>
 
         <!--        <MergeFieldsToolbarSearch-->
@@ -224,9 +258,10 @@ const { showValues } = props.mergeFields;
         <MergeFieldsHiddenInlineSearch
           :editor="editor"
           :mergeFields="props.mergeFields"
+          v-if="hasExtension('mergeFields')"
         />
 
-        <div class="merge-field-tool-box">
+        <div class="merge-field-tool-box" v-if="hasExtension('mergeFields')">
           <Autocomplete :editor="editor" :mergeFields="props.mergeFields" />
           <v-switch
             v-model="showValues"

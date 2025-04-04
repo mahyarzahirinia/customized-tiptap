@@ -3,7 +3,7 @@ import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import MergeFieldComponent from "../components/MergeFieldComponent.vue";
 
 export const MergeFieldsExtension = Node.create({
-  name: "mergeField",
+  name: "mergeFields",
   group: "inline",
   inline: true,
   atom: true,
