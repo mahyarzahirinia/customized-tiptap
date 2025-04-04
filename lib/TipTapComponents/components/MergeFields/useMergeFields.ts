@@ -39,13 +39,6 @@ export function useMergeFields(editorRef: any) {
     },
   ]);
 
-  watch(
-    () => selectedMergeField.value,
-    () => {
-      console.log("selectedMergeField.value", selectedMergeField.value);
-    },
-  );
-
   const showMergeFieldDropdown = async (view: EditorView) => {
     //show dropdown
     isMergeFieldDropdownVisible.value = true;
@@ -66,7 +59,7 @@ export function useMergeFields(editorRef: any) {
       ?.chain()
       .focus()
       .insertContent({
-        type: "mergeField",
+        type: "mergeFields",
         attrs: {
           label: `${delimiter}${selected.label}}}`,
           title: selected.title,
@@ -88,7 +81,7 @@ export function useMergeFields(editorRef: any) {
         to: editorRef.value.state.selection.from,
       }) // Remove "{{"
       .insertContent({
-        type: "mergeField",
+        type: "mergeFields",
         attrs: {
           label: `${delimiter}${selected.label}}}`,
           title: selected.title,

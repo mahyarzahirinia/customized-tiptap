@@ -27,7 +27,7 @@ export type TiptapExtensionName =
   | "tableRow"
   | "tableHeader"
   | "tableCell"
-  | "mergeField"
+  | "mergeFields"
   | "placeholder"
   | "characterCount"
   | "history"
