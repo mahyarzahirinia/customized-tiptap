@@ -23,8 +23,7 @@
   "scripts": {
     "dev": "vite",
     "clean": "rm -rf dist",
-    "copy:css": "cp src/style.css dist/style.css",
-    "build": "npm run clean && vue-tsc && tsc && npm run copy:css",
+    "build": "npm run clean && vite build && vue-tsc && tsc",
     "preview": "vite preview"
   },
   "peerDependencies": {
@@ -88,6 +87,6 @@
     "url": "https://github.com/mahyarzahirinia/customized-tiptap"
   },
   "bugs": {
-  "url": "https://github.com/mahyarzahirinia/customized-tiptap/issues"
-}
+    "url": "https://github.com/mahyarzahirinia/customized-tiptap/issues"
+  }
 }

@@ -4,6 +4,7 @@ import { all, createLowlight } from "lowlight";
 export type Module = Array<Extension | Mark | Node>;
 
 // استایل‌های مورد نیاز
+import "./assets/main.css";
 import "./TipTapComponents/styles/tables.css";
 import "./TipTapComponents/styles/anchor.css";
 import "./TipTapComponents/styles/direction.css";
