@@ -6,6 +6,7 @@ import { resolve } from "path";
 export default defineConfig({
   plugins: [vue(), vuetify()],
   build: {
+    target: "esnext",
     lib: {
       entry: resolve(__dirname, "lib/index.ts"),
       name: "CustomizedTipTap",
@@ -19,10 +20,13 @@ export default defineConfig({
           vue: "Vue",
           vuetify: "Vuetify",
         },
-        inlineDynamicImports: true,
-        manualChunks: undefined,
+        inlineDynamicImports: false,
+        manualChunks: undefined, // can be modified to customize chunking behavior
+        assetFileNames: "assets/[name].[hash].[ext]", // ensure assets have unique names
+        chunkFileNames: "chunks/[name].[hash].js", // split JS files into chunks
       },
     },
-    cssCodeSplit: false, // ← all CSS bundled into one file
+    cssCodeSplit: true, // CSS code splitting enabled
+    outDir: "dist", // output directory
   },
 });
