@@ -1,5 +1,5 @@
-import CustomizedTipTap from "./CustomizedTipTap.vue";
-export { CustomizedTipTap };
+export { default } from "./CustomizedTipTap.vue";
+
 export type {
   CustomizedTiptapProps,
   TiptapEditorCustomClasses,

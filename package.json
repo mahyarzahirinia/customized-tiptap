@@ -4,31 +4,33 @@
   "author": "Mohammad Zahirinia <zahiriniamahyar@gmail.com>",
   "license": "MIT",
   "private": false,
-  "version": "0.0.4",
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/customized-tiptap.umd.cjs",
-  "module": "./dist/customized-tiptap.js",
-  "types": "./dist/main.d.ts",
+  "version": "0.0.5",
   "exports": {
     ".": {
-      "import": "./dist/customized-tiptap.js",
-      "require": "./dist/customized-tiptap.umd.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./dist/style.css": "./dist/style.css"
   },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "clean": "rm -rf dist",
-    "build": "npm run clean && vite build -v && vue-tsc --emitDeclarationOnly",
+    "copy:css": "cp src/style.css dist/style.css",
+    "build": "npm run clean && vue-tsc && tsc && npm run copy:css",
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "vue" : ">=3.4.0",
-    "vuetify": ">=3.7.0",
-    "tailwindcss": ">=3.0.0"
+    "tailwindcss": ">=3.0.0",
+    "vue": ">=3.4.0",
+    "vuetify": ">=3.7.0"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -47,8 +49,9 @@
     "@tiptap/starter-kit": "^2.11.5",
     "@tiptap/vue-3": "^2.11.5",
     "lowlight": "^3.3.0",
-    "prosemirror-view": "^1.38.1",
-    "vue": "^3.5.13"
+    "prosemirror-model": "^1.25.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.38.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
@@ -64,5 +67,27 @@
     "vite-plugin-vuetify": "^2.1.0",
     "vue-tsc": "^2.2.8",
     "vuetify": "^3.7.15"
-  }
+  },
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "vue3",
+    "vue",
+    "vuejs",
+    "tiptap",
+    "prosemirror",
+    "element",
+    "element-ui",
+    "element-plus",
+    "element-tiptap",
+    "element-tiptap-vue3",
+    "element-tiptap vue3"
+  ],
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/mahyarzahirinia/customized-tiptap"
+  },
+  "bugs": {
+  "url": "https://github.com/mahyarzahirinia/customized-tiptap/issues"
+}
 }
