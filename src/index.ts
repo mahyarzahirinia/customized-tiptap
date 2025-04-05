@@ -4,4 +4,4 @@ export type {
   CustomizedTiptapProps,
   TiptapEditorCustomClasses,
   TiptapExtensionName,
-} from "./CustomizedTipTapProps";
+} from "./types/CustomizedTipTapProps";
