@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
-import Toolbar from "./TipTapComponents/Toolbar.vue";
+import Toolbar from "./Toolbar.vue";
 import { getExtensions, getExcludedExtensions } from "./config";
-import { useMergeFields } from "./TipTapComponents/components/MergeFields/useMergeFields";
-import { CustomizedTipTapProps } from "./types/CustomizedTipTapProps";
+import { useMergeFields } from "./components/MergeFields/useMergeFields";
+import { CustomizedTipTapProps } from "@/TipTapComponents/types/CustomizedTipTapProps";
 
 const props = withDefaults(defineProps<CustomizedTipTapProps>(), {
   readonly: false,

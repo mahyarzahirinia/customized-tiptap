@@ -59,7 +59,7 @@ const Autocomplete = defineAsyncComponent(
 );
 
 import { type useMergeFields } from "./components/MergeFields/useMergeFields";
-import { type Module } from "../config";
+import { type Module } from "./config";
 
 const props = defineProps<{
   editor: Editor;

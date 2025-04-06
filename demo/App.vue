@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CustomizedTipTap from "../src/CustomizedTipTap.vue";
+import CustomizedTipTap from "../src/TipTapComponents/CustomizedTipTap.vue";
 </script>
 
 <template>

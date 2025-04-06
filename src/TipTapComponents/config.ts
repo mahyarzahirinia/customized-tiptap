@@ -4,12 +4,12 @@ import { all, createLowlight } from "lowlight";
 export type Module = Array<Extension | Mark | Node>;
 
 // استایل‌های مورد نیاز
-import "./assets/main.css";
-import "./TipTapComponents/styles/tables.css";
-import "./TipTapComponents/styles/anchor.css";
-import "./TipTapComponents/styles/direction.css";
-import "./TipTapComponents/styles/pagebreak.css";
-import "./TipTapComponents/styles/mergefields.css";
+import "../assets/main.css";
+import "./styles/tables.css";
+import "./styles/anchor.css";
+import "./styles/direction.css";
+import "./styles/pagebreak.css";
+import "./styles/mergefields.css";
 import "highlight.js/styles/atom-one-dark.css";
 
 // تنظیمات `lowlight` برای CodeBlock
@@ -36,8 +36,8 @@ import { FontFamily } from "@tiptap/extension-font-family";
 import { Text } from "@tiptap/extension-text";
 import { Heading } from "@tiptap/extension-heading";
 import { Paragraph } from "@tiptap/extension-paragraph";
-import { LineHeight } from "./TipTapComponents/extensions/LineHeightExtension";
-import { Indentation } from "./TipTapComponents/extensions/IndentionExtension";
+import { LineHeight } from "./extensions/LineHeightExtension";
+import { Indentation } from "./extensions/IndentionExtension";
 import { Blockquote } from "@tiptap/extension-blockquote";
 import { HorizontalRule } from "@tiptap/extension-horizontal-rule";
 import { HardBreak } from "@tiptap/extension-hard-break";
@@ -54,27 +54,27 @@ import { Dropcursor } from "@tiptap/extension-dropcursor";
 import { Gapcursor } from "@tiptap/extension-gapcursor";
 import { History } from "@tiptap/extension-history";
 // custom extensions
-import { FontSizeExtension } from "./TipTapComponents/extensions/FontSizeExtension";
-import { OrderedListExtension } from "./TipTapComponents/extensions/Lists/OrderedListExtension";
-import { BulletListExtension } from "./TipTapComponents/extensions/Lists/BulletListExtension";
-import { CustomLinkExtension } from "./TipTapComponents/extensions/LinkExtension";
-import { DirectionWrapperExtension } from "./TipTapComponents/extensions/DirectionExtension";
-import { CustomTableExtension } from "./TipTapComponents/extensions/CustomTableExtension";
-import { ColorExtensionExtension } from "./TipTapComponents/extensions/ColorExtensionExtension";
-import { HighlightExtension } from "./TipTapComponents/extensions/HighlightExtension";
-import { FullscreenExtension } from "./TipTapComponents/extensions/FullscreenExtension";
-import { PreviewExtension } from "./TipTapComponents/extensions/PreviewExtension";
-import { PrintExtension } from "./TipTapComponents/extensions/PrintExtension";
-import { PageBreakExtension } from "./TipTapComponents/extensions/PageBreakExtension";
-import { AnchorExtension } from "./TipTapComponents/extensions/AnchorExtension";
-import { TextAlignExtension } from "./TipTapComponents/extensions/AlignmentExtension";
-import { LinkAnchorExtension } from "./TipTapComponents/extensions/LinkAnchorExtension";
-import { MergeFieldsExtension } from "./TipTapComponents/extensions/MergeFieldsExtension";
-import { ListItemExtension } from "./TipTapComponents/extensions/Lists/ListItemExtension";
-import { CharacterCountExtension } from "./TipTapComponents/extensions/CharacterCountExtension";
-import { CustomFloatingToolboxPlugin } from "./TipTapComponents/extensions/FloatingToolBoxExtension";
-import { CustomTableRow } from "./TipTapComponents/extensions/CustomTableRow";
-import { CustomTableHeader } from "./TipTapComponents/extensions/CustomTableHeader";
+import { FontSizeExtension } from "./extensions/FontSizeExtension";
+import { OrderedListExtension } from "./extensions/Lists/OrderedListExtension";
+import { BulletListExtension } from "./extensions/Lists/BulletListExtension";
+import { CustomLinkExtension } from "./extensions/LinkExtension";
+import { DirectionWrapperExtension } from "./extensions/DirectionExtension";
+import { CustomTableExtension } from "./extensions/CustomTableExtension";
+import { ColorExtensionExtension } from "./extensions/ColorExtensionExtension";
+import { HighlightExtension } from "./extensions/HighlightExtension";
+import { FullscreenExtension } from "./extensions/FullscreenExtension";
+import { PreviewExtension } from "./extensions/PreviewExtension";
+import { PrintExtension } from "./extensions/PrintExtension";
+import { PageBreakExtension } from "./extensions/PageBreakExtension";
+import { AnchorExtension } from "./extensions/AnchorExtension";
+import { TextAlignExtension } from "./extensions/AlignmentExtension";
+import { LinkAnchorExtension } from "./extensions/LinkAnchorExtension";
+import { MergeFieldsExtension } from "./extensions/MergeFieldsExtension";
+import { ListItemExtension } from "./extensions/Lists/ListItemExtension";
+import { CharacterCountExtension } from "./extensions/CharacterCountExtension";
+import { CustomFloatingToolboxPlugin } from "./extensions/FloatingToolBoxExtension";
+import { CustomTableRow } from "./extensions/CustomTableRow";
+import { CustomTableHeader } from "./extensions/CustomTableHeader";
 
 const defaultExtensions: Array<Extension | Mark | Node> = [
   // Text,
