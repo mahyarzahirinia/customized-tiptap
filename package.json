@@ -4,7 +4,7 @@
   "author": "Mohammad Zahirinia <zahiriniamahyar@gmail.com>",
   "license": "MIT",
   "private": false,
-  "version": "0.0.9",
+  "version": "0.0.10",
   "scripts": {
     "dev": "vite --mode development",
     "demo:preview": "vite preview",
@@ -14,9 +14,16 @@
     "lint:fix": "yarn lint --fix",
     "semantic-release": "semantic-release"
   },
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.d.ts",
+  "module": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/customized-tiptap.js",
+      "require": "./dist/customized-tiptap.umd.cjs"
+    }
+  },
   "files": [
     "dist/*"
   ],
