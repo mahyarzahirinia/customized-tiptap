@@ -66,7 +66,7 @@ export default ({ mode }) => {
           // https://rollupjs.org/guide/en/#big-list-of-options
           rollupOptions: {
             // Make sure to externalize dependencies that you don't want to bundle into your library.
-            external: ["vue"],
+            external: ["vue", "vuetify"],
             output: {
               exports: "named",
               // https://github.com/henriquehbr/svelte-typewriter/issues/21#issuecomment-968835822
@@ -74,6 +74,7 @@ export default ({ mode }) => {
               // In UMD build mode, provide a global variable for these externalized dependencies.
               globals: {
                 vue: "vue",
+                vuetify: "vuetify",
               },
             },
             plugins: [

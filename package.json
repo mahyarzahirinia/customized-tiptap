@@ -4,8 +4,7 @@
   "author": "Mohammad Zahirinia <zahiriniamahyar@gmail.com>",
   "license": "MIT",
   "private": false,
-  "version": "0.0.8",
-  "type": "module",
+  "version": "0.0.9",
   "scripts": {
     "dev": "vite --mode development",
     "demo:preview": "vite preview",
