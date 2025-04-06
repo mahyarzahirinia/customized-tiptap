@@ -65,9 +65,9 @@ export interface TiptapEditorCustomClasses {
 }
 
 /**
- * Props for CustomizedTiptap editor
+ * CustomizedTipTapProps for CustomizedTiptap editor
  */
-export interface CustomizedTiptapProps {
+export interface CustomizedTipTapProps {
   /**
    * read-only mode.
    */

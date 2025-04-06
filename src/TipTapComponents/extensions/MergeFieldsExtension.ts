@@ -1,6 +1,8 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import MergeFieldComponent from "../components/MergeFieldComponent.vue";
+import type { Component } from "vue";
+import type { NodeViewProps } from "@tiptap/vue-3";
 
 export const MergeFieldsExtension = Node.create({
   name: "mergeFields",
@@ -47,6 +49,8 @@ export const MergeFieldsExtension = Node.create({
   },
 
   addNodeView() {
-    return VueNodeViewRenderer(MergeFieldComponent);
+    return VueNodeViewRenderer(
+      MergeFieldComponent as unknown as Component<NodeViewProps>,
+    );
   },
 });

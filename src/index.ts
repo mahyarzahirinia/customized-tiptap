@@ -1,7 +1,7 @@
 export { default } from "./CustomizedTipTap.vue";
 
 export type {
-  CustomizedTiptapProps,
+  CustomizedTipTapProps,
   TiptapEditorCustomClasses,
   TiptapExtensionName,
 } from "./types/CustomizedTipTapProps";
