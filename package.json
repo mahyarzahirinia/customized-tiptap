@@ -4,7 +4,7 @@
   "author": "Mohammad Zahirinia <zahiriniamahyar@gmail.com>",
   "license": "MIT",
   "private": false,
-  "version": "0.0.11",
+  "version": "0.0.12",
   "scripts": {
     "dev": "vite --mode development",
     "demo:preview": "vite preview",
@@ -29,7 +29,7 @@
   ],
   "peerDependencies": {
     "vue": ">=3.4.0",
-    "vuetify": ">=3.7.0"
+    "vuetify": ">=3.5.2"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -98,7 +98,7 @@
     "vite-plugin-vuetify": "^2.1.1",
     "vue": ">=3.4.0",
     "vue-tsc": "^2.2.8",
-    "vuetify": "^3.7.15"
+    "vuetify": "^3.5.2"
   },
   "keywords": [
     "editor",
