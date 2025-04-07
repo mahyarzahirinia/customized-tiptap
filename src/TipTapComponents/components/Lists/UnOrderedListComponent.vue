@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, ref } from "vue";
+import { computed, defineProps, ref } from "vue";
 import type { Editor } from "@tiptap/core";
 import { NodeViewWrapper } from "@tiptap/vue-3";
 
@@ -13,18 +13,26 @@ const unorderedLists = [
 ];
 
 const selectedUnorderedListType = ref<string | undefined>("disc");
-
 const isActionActive = (value: string) => {
   if (!props.editor) return false;
   return props.editor.isActive("bulletList");
 };
+const isSinked = computed(() => {
+  return props.editor.can().sinkListItem("listItem");
+});
 
 const applyAction = (value: string) => {
   if (!props.editor) return;
+
+  if (isSinked) {
+    props.editor.chain().focus().liftListItem("listItem").run();
+  }
+
   if (value) {
     props.editor
       .chain()
       .focus()
+      .sinkListItem("listItem")
       .toggleList("bulletList", "listItem")
       .updateAttributes("bulletList", { typeOfList: value })
       .run();

@@ -34,13 +34,6 @@ const applyAction = (value: string) => {
       .run();
   }
 };
-
-watch(
-  () => props.editor.getAttributes("textStyle").fontSize,
-  (value) => {
-    selectedOrderedListType.value = value;
-  },
-);
 </script>
 
 <template>
