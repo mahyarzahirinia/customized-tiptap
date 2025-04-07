@@ -1,6 +1,6 @@
 {
   "name": "customized-tiptap-editor",
-  "description": "\uD83D\uDE80 a customized, rich-ui tiptap editor",
+  "description": "🚀 a customized, rich-ui tiptap editor",
   "author": "Mohammad Zahirinia <zahiriniamahyar@gmail.com>",
   "license": "MIT",
   "private": false,
@@ -9,7 +9,7 @@
     "dev": "vite --mode development",
     "clean": "rm -rf ./dist",
     "build": "VITE_BUILD_TARGET=production npm run clean && vite build",
-    "publish" : "npm run build && npm publish"
+    "publish": "npm run build && npm publish"
   },
   "main": "./dist/index.d.ts",
   "module": "./dist/index.d.ts",
@@ -112,5 +112,6 @@
   },
   "bugs": {
     "url": "https://github.com/mahyarzahirinia/customized-tiptap/issues"
-  }
+  },
+  "packageManager": "yarn"
 }

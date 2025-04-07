@@ -56,6 +56,7 @@ export default ({ mode }) => {
     build: IS_DEMO
       ? undefined
       : {
+          cssMinify: true,
           outDir: libDir,
           minify: "esbuild",
           lib: {
@@ -68,6 +69,12 @@ export default ({ mode }) => {
             // Make sure to externalize dependencies that you don't want to bundle into your library.
             external: ["vue", "vuetify"],
             output: {
+              assetFileNames: (assetInfo) => {
+                if (assetInfo.names?.some((name) => name.endsWith(".css"))) {
+                  return "style/[name][extname]";
+                }
+                return "assets/[name][extname]"; // fallback for other assets
+              },
               exports: "named",
               // https://github.com/henriquehbr/svelte-typewriter/issues/21#issuecomment-968835822
               inlineDynamicImports: true,
