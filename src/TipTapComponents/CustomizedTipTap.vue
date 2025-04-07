@@ -56,17 +56,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    v-if="editor"
-    :class="props.customClasses?.editorContainer ?? 'tiptap-editor'"
-  >
-    <Toolbar
-      :editor="editor"
-      :mergeFields="mergeFields"
-      :extensions="extensions"
-    />
-    <editor-content :editor="editor" />
-  </div>
+  <v-locale-provider rtl>
+    <div
+      v-if="editor"
+      :class="props.customClasses?.editorContainer ?? 'tiptap-editor'"
+    >
+      <Toolbar
+        :editor="editor"
+        :mergeFields="mergeFields"
+        :extensions="extensions"
+      />
+      <editor-content :editor="editor" />
+    </div>
+  </v-locale-provider>
 </template>
 
 <style lang="scss">

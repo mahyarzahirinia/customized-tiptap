@@ -3,17 +3,15 @@ import CustomizedTipTap from "../src/TipTapComponents/CustomizedTipTap.vue";
 </script>
 
 <template>
-  <v-locale-provider rtl>
-    <v-app>
-      <v-main>
-        <div class="middle">
-          <v-container fluid>
-            <CustomizedTipTap />
-          </v-container>
-        </div>
-      </v-main>
-    </v-app>
-  </v-locale-provider>
+  <v-app>
+    <v-main>
+      <div class="middle">
+        <v-container fluid>
+          <CustomizedTipTap />
+        </v-container>
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped>
