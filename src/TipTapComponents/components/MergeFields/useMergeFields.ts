@@ -1,21 +1,17 @@
-import {
-  computed,
-  nextTick,
-  ref,
-  shallowRef,
-  ShallowRef,
-  unref,
-  watch,
-} from "vue";
-import { type Editor } from "@tiptap/core";
+import { computed, nextTick, ref } from "vue";
 import { type EditorView } from "prosemirror-view";
-type DataType = {
+
+export type MergeFieldType = {
   title: string;
   label: string;
   value: string;
+  group?: string;
 } | null;
 
-export function useMergeFields(editorRef: any) {
+export function useMergeFields(
+  editorRef: any,
+  mergeFieldsInput: MergeFieldType[] = [],
+) {
   const delimiter = "{{";
   const showValues = ref(false);
   const isDropdownShown = ref(false);
@@ -23,21 +19,7 @@ export function useMergeFields(editorRef: any) {
   const mergeFieldQuery = ref();
   const isMergeFieldDropdownVisible = ref(false);
   const mergeFieldDropdownPosition = ref({ x: 0, y: 0 });
-  const mergeFields = ref([
-    { title: "نام", label: "name", value: "محمد ظهیری نیا", group: "مشخصات" },
-    {
-      title: "ایمیل",
-      label: "email",
-      value: "zahiriniamahyar@gmail.com",
-      group: "اطلاعات تماس",
-    },
-    {
-      title: "شماره تلفن",
-      label: "phone",
-      value: "09391398416",
-      group: "اطلاعات تماس",
-    },
-  ]);
+  const mergeFields = ref<MergeFieldType[]>(mergeFieldsInput);
 
   const showMergeFieldDropdown = async (view: EditorView) => {
     //show dropdown
@@ -52,7 +34,7 @@ export function useMergeFields(editorRef: any) {
     mergeFieldDropdownPosition.value = { x: pos.left, y: pos.top + 20 };
   };
 
-  const insertManually = (selected: DataType) => {
+  const insertManually = (selected: MergeFieldType) => {
     if (!selected) return;
 
     editorRef.value
@@ -70,7 +52,7 @@ export function useMergeFields(editorRef: any) {
       .run();
   };
 
-  const insertMergeField = (selected: DataType) => {
+  const insertMergeField = (selected: MergeFieldType) => {
     if (!selected) return;
 
     editorRef.value
@@ -96,7 +78,7 @@ export function useMergeFields(editorRef: any) {
 
   const filteredMergeFields = computed(() =>
     mergeFields.value.filter((field) =>
-      field.title.includes(mergeFieldQuery.value || ""),
+      field?.title.includes(mergeFieldQuery.value || ""),
     ),
   );
 

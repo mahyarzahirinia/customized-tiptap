@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<CustomizedTipTapProps>(), {
   editorProps: undefined,
   customClasses: undefined,
   editorOptions: undefined,
+  mergeFieldsData: undefined,
 });
 
 const extensions = props.excludedExtensions
@@ -38,7 +39,7 @@ const editor = useEditor({
   },
 });
 
-const mergeFields = useMergeFields(editor);
+const mergeFields = useMergeFields(editor, props.mergeFieldsData);
 
 onMounted(() => {
   if (editor.value) {
@@ -83,34 +84,6 @@ onMounted(() => {
   margin-right: auto;
   height: 24rem; /* h-96 */
   overflow-y: auto; /* overflow-y-auto */
-
-  ///* prose + size variations */
-  //color: #111827; /* default text color from prose */
-  //max-width: 65ch; /* default prose max width */
-  //font-size: 0.875rem; /* prose-sm */
-  //line-height: 1.25rem;
-  //
-  ///* responsive prose sizes (you'll need media queries for these) */
-  //@media (min-width: 640px) {
-  //  .tiptap-editor-inside {
-  //    font-size: 1rem; /* sm:prose */
-  //    line-height: 1.5rem;
-  //  }
-  //}
-  //
-  //@media (min-width: 1024px) {
-  //  .tiptap-editor-inside {
-  //    font-size: 1.125rem; /* lg:prose-lg */
-  //    line-height: 1.75rem;
-  //  }
-  //}
-  //
-  //@media (min-width: 1280px) {
-  //  .tiptap-editor-inside {
-  //    font-size: 1.5rem; /* xl:prose-2xl */
-  //    line-height: 2rem;
-  //  }
-  //}
 
   & pre {
     font-family: "JetBrainsMono", monospace;

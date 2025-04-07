@@ -1,5 +1,6 @@
 import { type EditorProps } from "prosemirror-view";
 import { type EditorOptions } from "@tiptap/vue-3";
+import { MergeFieldType } from "@/TipTapComponents/components/MergeFields/useMergeFields";
 
 export type TiptapExtensionName =
   | "bold"
@@ -103,4 +104,9 @@ export interface CustomizedTipTapProps {
    * Custom Editor Options for Tiptap.
    */
   editorOptions?: EditorOptions;
+
+  /**
+   * Merge Fields Data Array.
+   */
+  mergeFieldsData?: MergeFieldType[];
 }
