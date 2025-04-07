@@ -4,7 +4,7 @@
   "author": "Mohammad Zahirinia <zahiriniamahyar@gmail.com>",
   "license": "MIT",
   "private": false,
-  "version": "0.0.13",
+  "version": "0.0.14",
   "scripts": {
     "dev": "vite --mode development",
     "clean": "rm -rf ./dist",
@@ -19,7 +19,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/customized-tiptap.js",
       "require": "./dist/customized-tiptap.umd.cjs"
-    }
+    },
+    "./dist/style.css": "./dist/style.css"
   },
   "files": [
     "dist/*"

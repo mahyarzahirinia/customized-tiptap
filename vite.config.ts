@@ -67,11 +67,11 @@ export default ({ mode }) => {
           // https://rollupjs.org/guide/en/#big-list-of-options
           rollupOptions: {
             // Make sure to externalize dependencies that you don't want to bundle into your library.
-            external: ["vue", "vuetify"],
+            external: ["vue", "vuetify", "@mdi/font", "tailwindcss"],
             output: {
               assetFileNames: (assetInfo) => {
                 if (assetInfo.names?.some((name) => name.endsWith(".css"))) {
-                  return "style/[name][extname]";
+                  return "style[extname]";
                 }
                 return "assets/[name][extname]"; // fallback for other assets
               },
