@@ -1,7 +1,6 @@
 import { PluginKey } from "prosemirror-state";
 import { Node as ProsemirrorNode } from "prosemirror-model";
 import { EditorView, NodeView } from "prosemirror-view";
-import { ResizeState } from "./rowresizing";
 
 export type CellAttrs = {
   colspan?: number;
