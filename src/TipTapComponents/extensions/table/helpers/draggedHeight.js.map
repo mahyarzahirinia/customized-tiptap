@@ -1,1 +1,0 @@
-{"version":3,"file":"draggedHeight.js","sourceRoot":"","sources":["draggedHeight.ts"],"names":[],"mappings":"AAEA,MAAM,UAAU,aAAa,CAC3B,QAAkB,EAClB,KAAiB,EACjB,eAAuB;IAEvB,MAAM,MAAM,GAAG,KAAK,CAAC,OAAO,GAAG,QAAQ,CAAC,MAAM,CAAC;IAC/C,OAAO,IAAI,CAAC,GAAG,CAAC,eAAe,EAAE,QAAQ,CAAC,WAAW,GAAG,MAAM,CAAC,CAAC;AAClE,CAAC"}
