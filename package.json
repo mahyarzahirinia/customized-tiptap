@@ -1,14 +1,15 @@
 {
   "name": "customized-tiptap-editor",
-  "description": "customized, ui rich tiptap editor",
+  "description": "\uD83D\uDE80 a customized, rich-ui tiptap editor",
   "author": "Mohammad Zahirinia <zahiriniamahyar@gmail.com>",
   "license": "MIT",
   "private": false,
-  "version": "0.0.12",
+  "version": "0.0.13",
   "scripts": {
     "dev": "vite --mode development",
     "clean": "rm -rf ./dist",
-    "build": "VITE_BUILD_TARGET=production npm run clean && vite build"
+    "build": "VITE_BUILD_TARGET=production npm run clean && vite build",
+    "publish" : "npm run build && npm publish"
   },
   "main": "./dist/index.d.ts",
   "module": "./dist/index.d.ts",
