@@ -20,5 +20,3 @@ import type { NodeViewProps } from "@tiptap/vue-3";
 const isShowValue = ref(false);
 const props = defineProps<NodeViewProps>();
 </script>
-
-<style scoped></style>

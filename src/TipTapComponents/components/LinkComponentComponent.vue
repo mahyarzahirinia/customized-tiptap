@@ -147,5 +147,3 @@ const targetOptions = [
     </v-card>
   </v-dialog>
 </template>
-
-<style scoped></style>

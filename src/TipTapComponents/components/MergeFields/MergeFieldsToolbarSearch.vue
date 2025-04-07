@@ -39,5 +39,3 @@ const {
     @keydown.escape="handleClose"
   />
 </template>
-
-<style scoped></style>

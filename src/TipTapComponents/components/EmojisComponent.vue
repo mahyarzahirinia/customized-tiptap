@@ -1338,28 +1338,3 @@ const insertCharacter = (character: string) => {
   props.editor.commands.insertContent(character);
 };
 </script>
-
-<style lang="scss" scoped>
-.chars-container {
-  display: flex;
-  flex-wrap: wrap;
-  max-height: 20rem;
-  overflow-y: auto;
-}
-.char-btn {
-  display: flex;
-  font-size: 1.25rem;
-  margin: 0.5rem;
-}
-.bg-grey-lighten-4 {
-  background-color: #f5f5f5;
-}
-.card-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.75rem;
-}
-.button {
-  padding: 1rem;
-}
-</style>

@@ -21,5 +21,3 @@ const toggleCodeBlock = () => {
     />
   </Button>
 </template>
-
-<style scoped></style>

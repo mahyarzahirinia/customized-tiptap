@@ -25,5 +25,3 @@ const decreaseIndent = () => {
     <v-icon icon="mdi-format-indent-increase" />
   </Button>
 </template>
-
-<style scoped></style>

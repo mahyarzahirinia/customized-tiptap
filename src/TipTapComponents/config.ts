@@ -5,6 +5,7 @@ export type Module = Array<Extension | Mark | Node>;
 
 // استایل‌های مورد نیاز
 import "../assets/main.css";
+import "../assets/component-styles.css";
 import "./styles/tables.css";
 import "./styles/anchor.css";
 import "./styles/direction.css";

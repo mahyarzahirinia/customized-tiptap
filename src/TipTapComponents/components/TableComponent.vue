@@ -196,10 +196,3 @@ const goToPreviousCell = () =>
     </v-menu>
   </Button>
 </template>
-
-<style scoped>
-.menu-list {
-  cursor: pointer;
-  padding: 0;
-}
-</style>

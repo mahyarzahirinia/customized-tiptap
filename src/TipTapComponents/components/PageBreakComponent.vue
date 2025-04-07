@@ -22,5 +22,3 @@ const handlePageBreak = () => {
     <v-icon icon="mdi-format-page-break" />
   </Button>
 </template>
-
-<style scoped></style>

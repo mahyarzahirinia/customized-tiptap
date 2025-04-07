@@ -34,5 +34,3 @@ const saveHtml = () => {
     :save-html="saveHtml"
   />
 </template>
-
-<style scoped></style>

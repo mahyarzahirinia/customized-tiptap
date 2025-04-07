@@ -1,9 +1,11 @@
-.link-node {
-    color: #3b82f6;         /* text-blue-500 */
-    text-decoration: underline;
-    cursor: pointer;
+.tiptap-editor {
+    .link-node {
+        color: #3b82f6; /* text-blue-500 */
+        text-decoration: underline;
+        cursor: pointer;
 
-    &:hover {
-        color: #1d4ed8;       /* hover:text-blue-700 */
+        &:hover {
+            color: #1d4ed8; /* hover:text-blue-700 */
+        }
     }
 }

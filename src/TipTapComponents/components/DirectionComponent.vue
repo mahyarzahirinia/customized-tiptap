@@ -20,5 +20,3 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
     <v-icon icon="mdi-format-pilcrow-arrow-right" />
   </Button>
 </template>
-
-<style scoped></style>
