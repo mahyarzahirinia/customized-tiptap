@@ -38,7 +38,7 @@ watch(
 </script>
 
 <template>
-  <div class="flex items-center">
+  <div class="font-size-container">
     <v-autocomplete
       v-model="selectedFontSize"
       :item-title="'label'"
@@ -63,10 +63,16 @@ watch(
 </template>
 
 <style scoped>
+.font-size-container {
+  display: flex;
+  align-items: center;
+}
 :deep(.v-field-label) {
-  @apply bg-white;
+  background-color: #fff;
 }
 .font-size-box {
-  @apply w-20 relative bottom-1;
+  width: 5rem;
+  position: relative;
+  bottom: 0.25rem;
 }
 </style>

@@ -17,7 +17,6 @@ export const BulletListExtension = Node.create({
     return [{ tag: "ol[typeOfList]" }];
   },
   renderHTML({ node, HTMLAttributes }) {
-    const typeOfList = node.attrs.typeOfList;
     return [
       "ul",
       mergeAttributes(HTMLAttributes, {

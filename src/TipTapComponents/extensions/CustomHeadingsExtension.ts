@@ -2,14 +2,15 @@ import { Node, mergeAttributes, type RawCommands } from "@tiptap/core";
 import { type Level } from "@tiptap/extension-heading";
 
 const styling = (value: number) => {
+  // customize this if needed
   return {
-    0: "inline text-base",
-    1: "inline text-4xl",
-    2: "inline text-3xl",
-    3: "inline text-2xl",
-    4: "inline text-xl",
-    5: "inline text-lg",
-    6: "inline text-md",
+    0: "",
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+    5: "",
+    6: "",
   }[value];
 };
 

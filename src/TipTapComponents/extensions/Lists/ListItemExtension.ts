@@ -7,6 +7,6 @@ export const ListItemExtension = Node.create({
     return [{ tag: "li" }];
   },
   renderHTML({ HTMLAttributes }) {
-    return ["li", mergeAttributes(HTMLAttributes, { class: "mx-2" }), 0];
+    return ["li", mergeAttributes(HTMLAttributes, { class: "" }), 0];
   },
 });

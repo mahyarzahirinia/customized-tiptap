@@ -17,7 +17,7 @@ const showModal = defineModel<boolean>();
       <v-card-text>
         <v-textarea
           v-model="props.exportedHtml"
-          class="text-blue-500 h-full"
+          class="html-textarea"
           readonly
         />
       </v-card-text>
@@ -33,5 +33,9 @@ const showModal = defineModel<boolean>();
 <style scoped>
 :deep(.v-field__input) {
   direction: ltr;
+}
+.html-textarea {
+  color: #3b82f6;
+  height: 100%;
 }
 </style>

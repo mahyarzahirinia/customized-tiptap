@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="flex items-center border border-solid border-gray-200 rounded-lg">
+  <div class="group-buttons">
     <v-btn-group
       density="compact"
       divided
@@ -14,4 +14,11 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.group-buttons {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+</style>

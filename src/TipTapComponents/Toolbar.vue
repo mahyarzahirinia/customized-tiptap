@@ -277,27 +277,41 @@ const { showValues } = props.mergeFields;
 
 <style lang="scss" scoped>
 .toolbar-container {
-  @apply m-2;
+  margin: 0.5rem; /* m-2 */
 }
 .toolbar {
-  @apply flex gap-4 flex-wrap items-center pb-1;
-  @apply w-full;
+  display: flex; /* flex */
+  gap: 1rem; /* gap-4 */
+  flex-wrap: wrap; /* flex-wrap */
+  align-items: center; /* items-center */
+  padding-bottom: 0.25rem; /* pb-1 */
+  width: 100%; /* w-full */
 
   .tools-group {
-    @apply w-60 flex gap-1;
-    @apply p-0.5 border border-solid border-gray-200 rounded-md;
+    width: 15rem; /* w-60 */
+    display: flex; /* flex */
+    gap: 0.25rem; /* gap-1 */
+    padding: 0.125rem; /* p-0.5 */
+    border: 1px solid #e5e7eb; /* border + border-gray-200 */
+    border-radius: 0.375rem; /* rounded-md */
   }
 }
 
 .merge-field-tool-box {
-  @apply flex items-center w-56 mx-2 flex max-h-12;
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  width: 14rem; /* w-56 */
+  margin-left: 0.5rem; /* mx-2 => both left and right */
+  margin-right: 0.5rem;
+  max-height: 3rem; /* max-h-12 */
 
   .merge-field-input {
-    @apply max-h-10;
+    max-height: 2.5rem; /* max-h-10 */
   }
 
   .c-switch {
-    @apply mx-4;
+    margin-left: 1rem; /* mx-4 => both left and right */
+    margin-right: 1rem;
   }
 }
 </style>

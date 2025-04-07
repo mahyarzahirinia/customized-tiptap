@@ -10,6 +10,7 @@ import "./styles/anchor.css";
 import "./styles/direction.css";
 import "./styles/pagebreak.css";
 import "./styles/mergefields.css";
+import "./styles/link.css";
 import "highlight.js/styles/atom-one-dark.css";
 
 // تنظیمات `lowlight` برای CodeBlock

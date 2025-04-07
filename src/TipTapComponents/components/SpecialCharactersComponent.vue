@@ -5,7 +5,7 @@
 
   <v-dialog v-model="dialog" max-width="600px">
     <v-card>
-      <v-card-title class="text-h6">کاراکترهای خاص </v-card-title>
+      <v-card-title class="card-title">کاراکترهای خاص </v-card-title>
       <v-card-text>
         <v-container class="" fluid>
           <v-row>
@@ -40,7 +40,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <Button class="p-4" @click="dialog = false">بستن</Button>
+        <Button class="button" @click="dialog = false">بستن</Button>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -320,12 +320,25 @@ const insertCharacter = (character: string) => {
 
 <style lang="scss" scoped>
 .chars-container {
-  @apply flex flex-wrap items-end justify-start;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 20rem;
+  overflow-y: auto;
 }
 .char-btn {
-  @apply flex justify-center items-center text-xl m-2;
+  display: flex;
+  font-size: 1.25rem;
+  margin: 0.5rem;
 }
 .bg-grey-lighten-4 {
   background-color: #f5f5f5;
+}
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+}
+.button {
+  padding: 1rem;
 }
 </style>

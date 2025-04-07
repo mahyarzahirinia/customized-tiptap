@@ -6,7 +6,7 @@ export const CustomLinkExtension = Link.extend({
     return [
       "a",
       mergeAttributes(HTMLAttributes, {
-        class: "text-blue-500 underline hover:text-blue-700 cursor-pointer",
+        class: "link-node",
       }),
       0,
     ];

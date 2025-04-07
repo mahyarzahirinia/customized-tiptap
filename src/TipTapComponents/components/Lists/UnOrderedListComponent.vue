@@ -64,12 +64,17 @@ const applyAction = (value: string) => {
 
 <style lang="scss" scoped>
 .ul-select {
-  @apply relative bottom-1 left-0;
+  position: relative;
+  bottom: 0.25rem;
+  left: 0;
 }
 .ul-select-item {
-  @apply flex gap-1 items-center justify-center;
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
 }
 :deep(.v-field__append-inner) {
-  @apply translate-x-[0.5rem];
+  transform: translateX(0.5rem);
 }
 </style>

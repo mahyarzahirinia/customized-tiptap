@@ -157,26 +157,39 @@ const unsetAllMarks = () => {
 
 <style scoped>
 .ch-container {
-  @apply flex;
+  display: flex;
 }
 .btn-line-under {
-  @apply absolute bottom-0 right-[22px];
+  position: absolute;
+  bottom: 0;
+  right: 22px;
 }
 .color-container {
-  @apply bg-white rounded-md shadow-md;
+  background-color: #fff;
+  border-radius: 0.375rem;
 }
 .color-grid {
-  @apply grid grid-cols-5;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 .color-button {
-  @apply w-full h-8 order-1;
+  width: 100%;
+  height: 2rem;
+  order: 1;
 }
 
 .last-row-container {
-  @apply flex justify-between items-center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .action-btn {
-  @apply h-8 w-8 m-1 flex items-center justify-center;
+  height: 2rem;
+  width: 2rem;
+  margin: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .v-dialog {
   z-index: 100;

@@ -72,9 +72,43 @@ onMounted(() => {
 <style lang="scss">
 .tiptap-editor-inside {
   @apply prose prose-sm sm:prose lg:prose-lg xl:prose-2xl;
-  @apply focus:outline-none;
-  @apply w-full max-w-full;
-  @apply rounded mx-auto h-96 overflow-y-auto;
+
+  outline: none; /* focus:outline-none */
+  width: 100%; /* w-full */
+  max-width: 100%; /* max-w-full */
+  border-radius: 0.375rem; /* rounded */
+  margin-left: auto; /* mx-auto */
+  margin-right: auto;
+  height: 24rem; /* h-96 */
+  overflow-y: auto; /* overflow-y-auto */
+
+  ///* prose + size variations */
+  //color: #111827; /* default text color from prose */
+  //max-width: 65ch; /* default prose max width */
+  //font-size: 0.875rem; /* prose-sm */
+  //line-height: 1.25rem;
+  //
+  ///* responsive prose sizes (you'll need media queries for these) */
+  //@media (min-width: 640px) {
+  //  .tiptap-editor-inside {
+  //    font-size: 1rem; /* sm:prose */
+  //    line-height: 1.5rem;
+  //  }
+  //}
+  //
+  //@media (min-width: 1024px) {
+  //  .tiptap-editor-inside {
+  //    font-size: 1.125rem; /* lg:prose-lg */
+  //    line-height: 1.75rem;
+  //  }
+  //}
+  //
+  //@media (min-width: 1280px) {
+  //  .tiptap-editor-inside {
+  //    font-size: 1.5rem; /* xl:prose-2xl */
+  //    line-height: 2rem;
+  //  }
+  //}
 
   & pre {
     font-family: "JetBrainsMono", monospace;
@@ -137,14 +171,25 @@ onMounted(() => {
 
 .tiptap-editor {
   font-family: "yekan", sans-serif;
-  @apply p-4 border border-gray-200 border-solid rounded-md shadow-sm;
+  padding: 1rem; /* p-4 */
+  border: 1px solid #e5e7eb; /* border + border-gray-200 */
+  border-style: solid; /* border-solid */
+  border-radius: 0.375rem; /* rounded-md */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
 
   &.normal-mode {
-    @apply block;
+    display: block; /* block */
   }
 
   &.fullscreen-mode {
-    @apply fixed top-0 right-0 w-full h-full bg-white z-50 overflow-auto;
+    position: fixed; /* fixed */
+    top: 0; /* top-0 */
+    right: 0; /* right-0 */
+    width: 100%; /* w-full */
+    height: 100%; /* h-full */
+    background-color: white; /* bg-white */
+    z-index: 50; /* z-50 */
+    overflow: auto; /* overflow-auto */
   }
 }
 </style>

@@ -51,10 +51,12 @@ watch(
 
 <style scoped>
 :deep(.v-field-label) {
-  @apply bg-white;
+  background-color: #fff;
 }
 
 .font-box {
-  @apply w-40 relative bottom-1;
+  width: 10rem;
+  position: relative;
+  bottom: 0.25rem;
 }
 </style>

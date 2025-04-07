@@ -45,13 +45,18 @@ const applyLineHeight = (value: string) => {
 
 <style scoped>
 .lh-select {
-  @apply relative right-5 ml-4;
+  position: relative;
+  right: 1.25rem;
+  margin-left: 1rem;
 }
+
 :deep(.v-field__append-inner) {
-  @apply translate-x-[14px];
+  transform: translateX(0.875rem);
 }
 
 :deep(.v-input__prepend) {
-  @apply relative left-1.5 ml-4;
+  position: relative;
+  left: 0.375rem;
+  margin-left: 1rem;
 }
 </style>

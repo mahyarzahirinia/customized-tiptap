@@ -40,6 +40,7 @@ defineProps<{
 <style scoped>
 .v-btn {
   border-radius: 0 !important;
-  @apply text-gray-800 p-0 !important;
+  color: #1f2937 !important;
+  padding: 0 !important;
 }
 </style>

@@ -46,7 +46,7 @@ const goToPreviousCell = () =>
     <v-icon icon="mdi-table" />
 
     <v-menu activator="parent" location="start" transition="slide-x-transition">
-      <v-list class="cursor-pointer p-0" density="compact">
+      <v-list class="menu-list" density="compact">
         <v-list-item @click="insertTable">
           <template v-slot:prepend>
             <v-icon icon="mdi-table-plus" />
@@ -68,7 +68,7 @@ const goToPreviousCell = () =>
             open-on-hover
             transition="slide-x-transition"
           >
-            <v-list class="cursor-pointer" density="compact">
+            <v-list class="menu-list" density="compact">
               <v-list-item @click="addColumnBefore">
                 <template v-slot:prepend>
                   <v-icon icon="mdi-table-column-plus-before" />
@@ -103,7 +103,7 @@ const goToPreviousCell = () =>
             open-on-hover
             transition="slide-x-transition"
           >
-            <v-list class="cursor-pointer" density="compact">
+            <v-list class="menu-list" density="compact">
               <v-list-item @click="addRowBefore">
                 <template v-slot:prepend>
                   <v-icon icon="mdi-table-row-plus-before" />
@@ -138,7 +138,7 @@ const goToPreviousCell = () =>
             open-on-hover
             transition="slide-x-transition"
           >
-            <v-list class="cursor-pointer" density="compact">
+            <v-list class="menu-list" density="compact">
               <v-list-item @click="mergeCells">
                 <template v-slot:prepend>
                   <v-icon icon="mdi-table-merge-cells" />
@@ -196,3 +196,10 @@ const goToPreviousCell = () =>
     </v-menu>
   </Button>
 </template>
+
+<style scoped>
+.menu-list {
+  cursor: pointer;
+  padding: 0;
+}
+</style>

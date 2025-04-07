@@ -13,7 +13,7 @@ const selectedColor = defineModel<string | null>("selectedColor");
 <template>
   <v-dialog v-model="showModal" max-width="400px">
     <v-card>
-      <v-card-title class="text-h5">انتخاب رنگ</v-card-title>
+      <v-card-title class="card-title">انتخاب رنگ</v-card-title>
       <v-card-text class="color-container">
         <v-color-picker v-model="selectedColor" elevation="0"></v-color-picker>
       </v-card-text>
@@ -29,6 +29,14 @@ const selectedColor = defineModel<string | null>("selectedColor");
 
 <style lang="scss" scoped>
 .color-container {
-  @apply flex items-center justify-center p-0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.75rem;
 }
 </style>

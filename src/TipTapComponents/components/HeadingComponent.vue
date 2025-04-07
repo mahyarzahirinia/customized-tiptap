@@ -62,10 +62,13 @@ watch(
 
 <style scoped>
 :deep(.v-field-label) {
-  @apply bg-white;
+  background: #fff;
 }
 
 .heading-box {
-  @apply w-36 relative bottom-1 right-2;
+  width: 9rem;
+  position: relative;
+  bottom: 0.25rem;
+  right: 0.5rem;
 }
 </style>

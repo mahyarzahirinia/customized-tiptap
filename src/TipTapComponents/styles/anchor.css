@@ -1,13 +1,17 @@
 /* Style the anchor icon */
 p[id] {
-    @apply text-blue-700 mx-2 cursor-default !important;
-    @apply relative;
+    color: #1d4ed8 !important;     /* text-blue-700 */
+    margin-left: 0.5rem !important; /* mx-2 */
+    margin-right: 0.5rem !important;
+    cursor: default !important;
+    position: absolute;
 }
 
 /* Hide the icon in print & exports */
 @media print {
     p[id] {
-        @apply pl-0 pr-0;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
 
     p[id]::before {
