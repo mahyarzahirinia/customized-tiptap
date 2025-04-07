@@ -7,12 +7,8 @@
   "version": "0.0.12",
   "scripts": {
     "dev": "vite --mode development",
-    "demo:preview": "vite preview",
-    "build:demo": "VITE_BUILD_TARGET=demo vite build",
-    "build:dist": "vite build",
-    "lint": "eslint --ext .ts src",
-    "lint:fix": "yarn lint --fix",
-    "semantic-release": "semantic-release"
+    "clean": "rm -rf ./dist",
+    "build": "VITE_BUILD_TARGET=production npm run clean && vite build"
   },
   "main": "./dist/index.d.ts",
   "module": "./dist/index.d.ts",
