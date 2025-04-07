@@ -67,6 +67,7 @@ import the following styles into your consumer app.
 ```ts
 import '@mdi/font/css/materialdesignicons.css';
 import 'customized-tiptap-editor/dist/style.css';
+import "vuetify/styles";
 ```
 
 ### 4. Register the plugin
