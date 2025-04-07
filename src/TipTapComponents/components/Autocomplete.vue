@@ -70,6 +70,8 @@ const showDropdown = ref(false);
 const groupedMergeFields = computed(() => {
   const grouped: Record<string, any[]> = {};
   filteredMergeFields.value.forEach((field) => {
+    if (!field?.group) return; // Skip if group is nullish
+
     if (!grouped[field.group]) {
       grouped[field.group] = [];
     }
