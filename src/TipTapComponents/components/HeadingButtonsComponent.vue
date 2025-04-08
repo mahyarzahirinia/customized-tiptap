@@ -19,3 +19,9 @@ const levels = ref<Level[]>([1, 2, 3, 4, 5, 6]);
     <v-icon :icon="`mdi-format-header-${level}`" />
   </Button>
 </template>
+
+<style scoped>
+:deep(.v-field-label) {
+  background: #fff;
+}
+</style>

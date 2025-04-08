@@ -46,3 +46,15 @@ const {
     @keydown.delete="() => mergeFieldQuery === '' && handleClose()"
   />
 </template>
+
+<style scoped>
+.m-autocomplete {
+  position: absolute;
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 0.25rem;
+  width: 150px;
+}
+</style>

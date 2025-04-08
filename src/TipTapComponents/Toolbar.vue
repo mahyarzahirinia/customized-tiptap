@@ -293,4 +293,31 @@ const { showValues } = props.mergeFields;
     background-color: white;
   }
 }
+
+.merge-field-tool-box {
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  margin-left: 0.5rem; /* mx-2 => both left and right */
+  margin-right: 0.5rem;
+  max-height: 2rem; /* max-h-12 */
+
+  .merge-field-input {
+    max-height: 2rem; /* max-h-10 */
+  }
+
+  .c-switch-wrapper {
+    /*transform: translateY(-0.5rem);*/
+    /*transform: rotateZ(-90deg);*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7rem;
+  }
+
+  .c-switch {
+    /*height: 2.5rem;*/
+    margin-left: 1.5rem; /* mx-4 => both left and right */
+    margin-right: 1.5rem;
+  }
+}
 </style>

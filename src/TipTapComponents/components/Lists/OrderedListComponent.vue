@@ -65,3 +65,22 @@ const applyAction = (value: string) => {
     </template>
   </v-select>
 </template>
+
+<style lang="scss" scoped>
+.ol-select {
+  position: relative;
+  bottom: 0.25rem;
+  left: 0;
+}
+
+.ol-select-item {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+}
+
+:deep(.v-field__append-inner) {
+  transform: translateX(0.5rem);
+}
+</style>

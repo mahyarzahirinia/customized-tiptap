@@ -58,3 +58,22 @@ watch(
     </template>
   </v-select>
 </template>
+
+<style scoped>
+.a-select {
+  position: relative;
+  bottom: 0.25rem;
+  left: 0;
+}
+
+.a-select-item {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+}
+
+:deep(.v-field__append-inner) {
+  transform: translateX(0.5rem);
+}
+</style>

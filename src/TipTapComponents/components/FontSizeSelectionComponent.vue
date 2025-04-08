@@ -61,3 +61,20 @@ watch(
     </v-autocomplete>
   </div>
 </template>
+
+<style scoped>
+.font-size-container {
+  display: flex;
+  align-items: center;
+}
+
+:deep(.v-field-label) {
+  background-color: #fff;
+}
+
+.font-size-box {
+  width: 5rem;
+  position: relative;
+  bottom: 0.25rem;
+}
+</style>

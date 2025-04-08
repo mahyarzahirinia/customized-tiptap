@@ -48,3 +48,15 @@ watch(
     </template>
   </v-autocomplete>
 </template>
+
+<style scoped>
+:deep(.v-field-label) {
+  background-color: #fff;
+}
+
+.font-box {
+  width: 10rem;
+  position: relative;
+  bottom: 0.25rem;
+}
+</style>

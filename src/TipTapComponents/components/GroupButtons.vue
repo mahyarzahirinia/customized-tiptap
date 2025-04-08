@@ -13,3 +13,13 @@
     </v-btn-group>
   </div>
 </template>
+
+<style scoped>
+.group-buttons {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border: 1px solid #b3b7b8;
+  border-radius: 0.5rem;
+}
+</style>

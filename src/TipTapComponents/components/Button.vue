@@ -18,6 +18,7 @@ defineProps<{
           density="compact"
           v-bind="{ ...$attrs, ...props }"
           variant="text"
+          class="v-btn"
         >
           <slot />
         </v-btn>
@@ -36,3 +37,11 @@ defineProps<{
     </v-btn>
   </template>
 </template>
+
+<style scoped>
+.v-btn {
+  border-radius: 0 !important;
+  color: #1f2937 !important;
+  padding: 0 !important;
+}
+</style>

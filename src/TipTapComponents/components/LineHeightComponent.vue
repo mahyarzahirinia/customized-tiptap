@@ -42,3 +42,21 @@ const applyLineHeight = (value: string) => {
     </template>
   </v-tooltip>
 </template>
+
+<style scoped>
+.lh-select {
+  position: relative;
+  right: 1.25rem;
+  margin-left: 1rem;
+}
+
+:deep(.v-field__append-inner) {
+  transform: translateX(0.875rem);
+}
+
+:deep(.v-input__prepend) {
+  position: relative;
+  left: 0.375rem;
+  margin-left: 1rem;
+}
+</style>

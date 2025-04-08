@@ -94,3 +94,99 @@ const handleBlur = () => {
   setTimeout(() => (showDropdown.value = false), 200);
 };
 </script>
+
+<style scoped>
+.autocomplete {
+  position: relative;
+  width: 300px;
+  font-size: 0.875rem;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+  height: var(--v-btn-height, 36px);
+
+  &:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px #93c5fd;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  outline: none;
+  color: #111827;
+  font-size: 1rem;
+}
+
+.label {
+  position: absolute;
+  padding: 0 0.25rem;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-75%);
+  background-color: white;
+  color: #6b7280;
+  transition: all 0.2s;
+  pointer-events: none;
+  border-radius: 0.15rem;
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: 0.25rem;
+  font-size: 0.75rem;
+  color: #2563eb;
+}
+
+.dropdown {
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  margin-top: 0.25rem;
+  max-height: 12rem;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  transform-origin: top;
+  transform: scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropdown.show {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.group {
+  padding: 0.5rem 0.75rem;
+  background-color: #f3f4f6;
+  font-weight: bolder;
+  color: #4b5563;
+}
+
+.item {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: lighter;
+
+  &:hover {
+    background-color: #e5e7eb;
+  }
+}
+</style>
