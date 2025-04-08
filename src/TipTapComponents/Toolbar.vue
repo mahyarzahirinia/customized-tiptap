@@ -292,7 +292,7 @@ const { showValues } = props.mergeFields;
     display: flex; /* flex */
     gap: 0.25rem; /* gap-1 */
     padding: 0.125rem; /* p-0.5 */
-    border: 1px solid #e5e7eb; /* border + border-gray-200 */
+    border: 1px solid #b3b7b8; /* border + border-gray-200 */
     border-radius: 0.375rem; /* rounded-md */
   }
 }
