@@ -22,6 +22,7 @@ const extensions = props.excludedExtensions
   : getExtensions(props.includedExtensions);
 
 const editor = useEditor({
+  content: props.content,
   editable: !props.readonly,
   enableContentCheck: true,
   extensions,
@@ -76,7 +77,9 @@ onMounted(() => {
 .tiptap-editor-inside {
   @apply prose prose-sm sm:prose lg:prose-lg xl:prose-2xl;
 
-  outline: none; /* focus:outline-none */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  outline: 1px solid #b3b7b8; /* focus:outline-none */
   width: 100%; /* w-full */
   max-width: 100%; /* max-w-full */
   border-radius: 0.375rem; /* rounded */
@@ -147,7 +150,7 @@ onMounted(() => {
 .tiptap-editor {
   font-family: "yekan", sans-serif;
   padding: 1rem; /* p-4 */
-  border: 1px solid #e5e7eb; /* border + border-gray-200 */
+  border: 1px solid #b3b7b8; /* border + border-gray-200 */
   border-style: solid; /* border-solid */
   border-radius: 0.375rem; /* rounded-md */
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
