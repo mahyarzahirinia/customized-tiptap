@@ -17,6 +17,7 @@ const mergeFieldsData = ref([
     group: "اطلاعات تماس",
   },
 ]);
+const content = ref("<p>test string</p>");
 </script>
 
 <template>
@@ -24,7 +25,10 @@ const mergeFieldsData = ref([
     <v-main>
       <div class="middle">
         <v-container fluid>
-          <CustomizedTipTap :merge-fields-data="mergeFieldsData" />
+          <CustomizedTipTap
+            :content="content"
+            :merge-fields-data="mergeFieldsData"
+          />
         </v-container>
       </div>
     </v-main>
