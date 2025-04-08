@@ -1341,7 +1341,7 @@ const insertCharacter = (character: string) => {
 
 <style lang="scss" scoped>
 * {
-  font-family: "yekan", sans-serif;
+  font-family: var(--tiptap-editor-font);
 }
 .chars-container {
   display: flex;

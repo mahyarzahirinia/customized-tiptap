@@ -30,7 +30,7 @@ const showModal = defineModel<boolean>();
 
 <style scoped lang="scss">
 .v-card-title {
-  font-family: "yekan", sans-serif;
+  font-family: var(--tiptap-editor-font);
 }
 :deep(.v-field__input) {
   direction: ltr;

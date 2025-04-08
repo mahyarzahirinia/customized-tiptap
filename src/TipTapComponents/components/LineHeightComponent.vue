@@ -52,7 +52,7 @@ const applyLineHeight = (value: string) => {
 
 <style scoped lang="scss">
 .list-item {
-  font-family: "yekan", sans-serif;
+  font-family: var(--tiptap-editor-font);
 }
 
 .lh-select {

@@ -74,10 +74,12 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-.tiptap-editor {
-  --editor-font: "yekan", sans-serif;
+body {
+  --tiptap-editor-font: "yekan", sans-serif;
+}
 
-  font-family: var(--editor-font);
+.tiptap-editor {
+  font-family: var(--tiptap-editor-font);
   padding: 1rem; /* p-4 */
   border: 1px solid #b3b7b8; /* border + border-gray-200 */
   border-style: solid; /* border-solid */

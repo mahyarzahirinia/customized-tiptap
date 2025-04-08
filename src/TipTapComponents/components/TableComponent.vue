@@ -199,7 +199,7 @@ const goToPreviousCell = () =>
 
 <style scoped lang="scss">
 :deep(.v-list-item-title) {
-  font-family: "yekan", sans-serif;
+  font-family: var(--tiptap-editor-font);
 }
 .menu-list {
   cursor: pointer;

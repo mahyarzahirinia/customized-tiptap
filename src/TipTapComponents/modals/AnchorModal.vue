@@ -31,6 +31,6 @@ const dialog = defineModel("dialog");
 .list-item,
 :deep(.v-label),
 :deep(.v-field) {
-  font-family: "yekan", sans-serif;
+  font-family: var(--tiptap-editor-font);
 }
 </style>

@@ -40,11 +40,11 @@ defineProps<{
 
 <style scoped lang="scss">
 .c-tooltip {
-  font-family: "yekan", sans-serif;
+  font-family: var(--tiptap-editor-font);
 }
 
 .v-btn {
-  font-family: "yekan", sans-serif;
+  font-family: var(--tiptap-editor-font);
   border-radius: 0 !important;
   color: #1f2937 !important;
   padding: 0 !important;
