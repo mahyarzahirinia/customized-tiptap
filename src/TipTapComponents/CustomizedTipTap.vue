@@ -74,19 +74,46 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.tiptap-editor {
+  font-family: "yekan", sans-serif;
+  padding: 1rem; /* p-4 */
+  border: 1px solid #b3b7b8; /* border + border-gray-200 */
+  border-style: solid; /* border-solid */
+  border-radius: 0.5rem; /* rounded-md */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+  background-color: #e6e6e6;
+
+  &.normal-mode {
+    display: block; /* block */
+  }
+
+  &.fullscreen-mode {
+    position: fixed; /* fixed */
+    top: 0; /* top-0 */
+    right: 0; /* right-0 */
+    width: 100%; /* w-full */
+    height: 100%; /* h-full */
+    background-color: white; /* bg-white */
+    z-index: 50; /* z-50 */
+    overflow: auto; /* overflow-auto */
+  }
+}
+
 .tiptap-editor-inside {
   @apply prose prose-sm sm:prose lg:prose-lg xl:prose-2xl;
 
+  margin-top: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   outline: 1px solid #b3b7b8; /* focus:outline-none */
   width: 100%; /* w-full */
   max-width: 100%; /* max-w-full */
-  border-radius: 0.375rem; /* rounded */
+  border-radius: 0.15rem; /* rounded */
   margin-left: auto; /* mx-auto */
   margin-right: auto;
   height: 24rem; /* h-96 */
   overflow-y: auto; /* overflow-y-auto */
+  background-color: white;
 
   & pre {
     font-family: "JetBrainsMono", monospace;
@@ -144,30 +171,6 @@ onMounted(() => {
     .hljs-strong {
       font-weight: 700;
     }
-  }
-}
-
-.tiptap-editor {
-  font-family: "yekan", sans-serif;
-  padding: 1rem; /* p-4 */
-  border: 1px solid #b3b7b8; /* border + border-gray-200 */
-  border-style: solid; /* border-solid */
-  border-radius: 0.375rem; /* rounded-md */
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
-
-  &.normal-mode {
-    display: block; /* block */
-  }
-
-  &.fullscreen-mode {
-    position: fixed; /* fixed */
-    top: 0; /* top-0 */
-    right: 0; /* right-0 */
-    width: 100%; /* w-full */
-    height: 100%; /* h-full */
-    background-color: white; /* bg-white */
-    z-index: 50; /* z-50 */
-    overflow: auto; /* overflow-auto */
   }
 }
 </style>

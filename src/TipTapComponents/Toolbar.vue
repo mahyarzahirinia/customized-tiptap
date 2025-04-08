@@ -277,8 +277,9 @@ const { showValues } = props.mergeFields;
 
 <style lang="scss" scoped>
 .toolbar-container {
-  margin: 0.5rem; /* m-2 */
+  border-radius: 0.5rem;
 }
+
 .toolbar {
   display: flex; /* flex */
   gap: 1rem; /* gap-4 */
@@ -294,6 +295,9 @@ const { showValues } = props.mergeFields;
     padding: 0.125rem; /* p-0.5 */
     border: 1px solid #b3b7b8; /* border + border-gray-200 */
     border-radius: 0.375rem; /* rounded-md */
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    background-color: white;
   }
 }
 
