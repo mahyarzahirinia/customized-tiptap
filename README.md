@@ -17,7 +17,7 @@ A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on 
 
 ## 🚀 Demo
 
-> Coming soon: Online playground and CodeSandbox link
+> You can find a live demo of the editor [here](https://stackblitz.com/edit/sb1-1v6rwvd9?file=README.md).
 
 ---
 
