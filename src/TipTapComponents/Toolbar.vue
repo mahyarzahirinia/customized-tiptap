@@ -263,12 +263,6 @@ const { showValues } = props.mergeFields;
 
         <div class="merge-field-tool-box" v-if="hasExtension('mergeFields')">
           <Autocomplete :editor="editor" :mergeFields="props.mergeFields" />
-          <v-switch
-            v-model="showValues"
-            class="c-switch"
-            color="primary"
-            hide-details
-          />
         </div>
       </div>
     </v-expand-transition>
@@ -282,10 +276,9 @@ const { showValues } = props.mergeFields;
 
 .toolbar {
   display: flex; /* flex */
-  gap: 1rem; /* gap-4 */
+  gap: 0.5rem; /* gap-4 */
   flex-wrap: wrap; /* flex-wrap */
   align-items: center; /* items-center */
-  padding-bottom: 0.25rem; /* pb-1 */
   width: 100%; /* w-full */
 
   .tools-group {
@@ -298,24 +291,6 @@ const { showValues } = props.mergeFields;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     background-color: white;
-  }
-}
-
-.merge-field-tool-box {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  width: 14rem; /* w-56 */
-  margin-left: 0.5rem; /* mx-2 => both left and right */
-  margin-right: 0.5rem;
-  max-height: 3rem; /* max-h-12 */
-
-  .merge-field-input {
-    max-height: 2.5rem; /* max-h-10 */
-  }
-
-  .c-switch {
-    margin-left: 1rem; /* mx-4 => both left and right */
-    margin-right: 1rem;
   }
 }
 </style>

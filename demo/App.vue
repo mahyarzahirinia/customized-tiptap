@@ -17,7 +17,7 @@ const mergeFieldsData = ref([
     group: "اطلاعات تماس",
   },
 ]);
-const content = ref("<p>test string</p>");
+const content = ref("<p>متن تستی</p>");
 </script>
 
 <template>
@@ -37,7 +37,6 @@ const content = ref("<p>test string</p>");
 
 <style scoped>
 .middle {
-  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;

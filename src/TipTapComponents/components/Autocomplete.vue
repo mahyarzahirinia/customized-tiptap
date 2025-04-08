@@ -16,6 +16,16 @@
         @keydown.escape="handleClose"
       />
       <label class="label">افزودن فیلدها</label>
+
+      <div class="c-switch-wrapper">
+        <v-switch
+          v-model="showValues"
+          class="c-switch"
+          color="primary"
+          density="compact"
+          hide-details
+        />
+      </div>
     </div>
 
     <ul
