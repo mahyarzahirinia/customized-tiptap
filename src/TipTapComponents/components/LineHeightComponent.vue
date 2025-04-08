@@ -33,17 +33,28 @@ const applyLineHeight = (value: string) => {
         density="compact"
         hide-details
         item-value="value"
+        item-title="title"
         menu-icon="mdi-chevron-down"
         prepend-icon="mdi-format-line-height"
         v-bind="props"
         variant="plain"
         @update:modelValue="applyLineHeight"
-      />
+      >
+        <template v-slot:item="{ props, item }">
+          <v-list-item class="list-item" v-bind="{ ...props, title: undefined }"
+            >{{ item.title }}
+          </v-list-item>
+        </template>
+      </v-select>
     </template>
   </v-tooltip>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.list-item {
+  font-family: "yekan", sans-serif;
+}
+
 .lh-select {
   position: relative;
   right: 1.25rem;
@@ -51,12 +62,12 @@ const applyLineHeight = (value: string) => {
 }
 
 :deep(.v-field__append-inner) {
-  transform: translateX(0.875rem);
+  transform: translateX(0.75rem);
 }
 
 :deep(.v-input__prepend) {
-  position: relative;
-  left: 0.375rem;
-  margin-left: 1rem;
+  font-size: 0.9rem;
+  transform: translate(0rem, 0.05rem);
+  margin-left: 0.5rem;
 }
 </style>

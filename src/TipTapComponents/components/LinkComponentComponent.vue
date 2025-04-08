@@ -131,7 +131,14 @@ const targetOptions = [
             item-title="label"
             item-value="value"
             label="بازشدن لینک"
-          />
+            ><template v-slot:item="{ props, item }">
+              <v-list-item
+                class="list-item"
+                v-bind="{ ...props, title: undefined }"
+                >{{ item.title }}
+              </v-list-item>
+            </template></v-select
+          >
         </template>
       </v-card-text>
       <v-card-actions>
@@ -147,3 +154,12 @@ const targetOptions = [
     </v-card>
   </v-dialog>
 </template>
+
+<style scoped lang="scss">
+.v-card-title,
+.list-item,
+:deep(.v-label),
+:deep(.v-select__selection-text) {
+  font-family: "yekan", sans-serif;
+}
+</style>

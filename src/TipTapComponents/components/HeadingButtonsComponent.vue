@@ -20,7 +20,7 @@ const levels = ref<Level[]>([1, 2, 3, 4, 5, 6]);
   </Button>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 :deep(.v-field-label) {
   background: #fff;
 }

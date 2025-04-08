@@ -52,6 +52,7 @@ watch(
   >
     <template v-slot:item="{ props, item }">
       <v-list-item
+        class="list-item"
         v-bind="{ ...props, title: undefined }"
         :disabled="item.value === selectedHeading"
         >{{ item.title }}
@@ -60,9 +61,9 @@ watch(
   </v-autocomplete>
 </template>
 
-<style scoped>
-:deep(.v-field-label) {
-  background: #fff;
+<style scoped lang="scss">
+.list-item {
+  font-family: "yekan", sans-serif;
 }
 
 .heading-box {
@@ -70,5 +71,9 @@ watch(
   position: relative;
   bottom: 0.25rem;
   right: 0.5rem;
+
+  &:deep(.v-field--active .v-field-label) {
+    background: transparent !important;
+  }
 }
 </style>

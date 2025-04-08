@@ -47,7 +47,7 @@ const {
   />
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .m-autocomplete {
   position: absolute;
   background-color: transparent;

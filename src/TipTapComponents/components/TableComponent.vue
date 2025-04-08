@@ -197,7 +197,10 @@ const goToPreviousCell = () =>
   </Button>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+:deep(.v-list-item-title) {
+  font-family: "yekan", sans-serif;
+}
 .menu-list {
   cursor: pointer;
   padding: 0;

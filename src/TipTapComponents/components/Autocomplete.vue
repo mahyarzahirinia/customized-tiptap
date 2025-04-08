@@ -95,7 +95,7 @@ const handleBlur = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .autocomplete {
   position: relative;
   width: 300px;
@@ -188,5 +188,19 @@ const handleBlur = () => {
   &:hover {
     background-color: #e5e7eb;
   }
+}
+
+.c-switch-wrapper {
+  /*transform: translateY(-0.5rem);*/
+  /*transform: rotateZ(-90deg);*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.c-switch {
+  /*height: 2.5rem;*/
+  margin-left: 1.5rem; /* mx-4 => both left and right */
+  margin-right: 1.5rem;
 }
 </style>

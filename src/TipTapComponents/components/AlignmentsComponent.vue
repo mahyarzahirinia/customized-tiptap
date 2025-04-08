@@ -59,7 +59,7 @@ watch(
   </v-select>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .a-select {
   position: relative;
   bottom: 0.25rem;

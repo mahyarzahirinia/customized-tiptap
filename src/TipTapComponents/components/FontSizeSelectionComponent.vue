@@ -53,6 +53,7 @@ watch(
       @update:model-value="applyFontSize"
       ><template v-slot:item="{ props, item }">
         <v-list-item
+          class="list-item"
           v-bind="{ ...props, title: undefined }"
           :disabled="item.value === selectedFontSize"
           >{{ item.title }}
@@ -62,19 +63,23 @@ watch(
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.list-item {
+  font-family: "yekan", sans-serif;
+}
+
 .font-size-container {
   display: flex;
   align-items: center;
-}
-
-:deep(.v-field-label) {
-  background-color: #fff;
 }
 
 .font-size-box {
   width: 5rem;
   position: relative;
   bottom: 0.25rem;
+
+  &:deep(.v-field--active .v-field-label) {
+    background: transparent !important;
+  }
 }
 </style>

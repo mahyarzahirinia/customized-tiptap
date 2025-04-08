@@ -155,7 +155,7 @@ const unsetAllMarks = () => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .ch-container {
   display: flex;
 }

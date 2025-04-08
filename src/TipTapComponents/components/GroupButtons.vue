@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .group-buttons {
   background-color: white;
   display: flex;

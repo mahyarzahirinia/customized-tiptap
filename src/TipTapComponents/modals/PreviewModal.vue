@@ -12,7 +12,7 @@ const showModal = defineModel<boolean>();
 <template>
   <v-dialog v-model="showModal" max-width="800px" min-width="600px">
     <v-card>
-      <v-card-title class="text-h5 !font-[yekan]">پیش نمایش</v-card-title>
+      <v-card-title class="">پیش نمایش</v-card-title>
       <v-card-text>
         <v-textarea
           v-model="props.previewContent"
@@ -28,7 +28,10 @@ const showModal = defineModel<boolean>();
   </v-dialog>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.v-card-title {
+  font-family: "yekan", sans-serif;
+}
 :deep(.v-field__input) {
   direction: ltr;
 }

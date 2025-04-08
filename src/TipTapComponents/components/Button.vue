@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
   <template v-if="text">
-    <v-tooltip :text="text" location="bottom">
+    <v-tooltip :text="text" location="bottom" class="c-tooltip">
       <template v-slot:activator="{ props }">
         <v-btn
           :ripple="ripple ?? false"
@@ -38,8 +38,13 @@ defineProps<{
   </template>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.c-tooltip {
+  font-family: "yekan", sans-serif;
+}
+
 .v-btn {
+  font-family: "yekan", sans-serif;
   border-radius: 0 !important;
   color: #1f2937 !important;
   padding: 0 !important;

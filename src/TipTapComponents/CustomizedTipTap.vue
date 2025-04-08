@@ -75,7 +75,9 @@ onMounted(() => {
 
 <style lang="scss">
 .tiptap-editor {
-  font-family: "yekan", sans-serif;
+  --editor-font: "yekan", sans-serif;
+
+  font-family: var(--editor-font);
   padding: 1rem; /* p-4 */
   border: 1px solid #b3b7b8; /* border + border-gray-200 */
   border-style: solid; /* border-solid */

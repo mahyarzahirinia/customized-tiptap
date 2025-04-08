@@ -26,4 +26,11 @@ const dialog = defineModel("dialog");
   </v-dialog>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.v-card-title,
+.list-item,
+:deep(.v-label),
+:deep(.v-field) {
+  font-family: "yekan", sans-serif;
+}
+</style>

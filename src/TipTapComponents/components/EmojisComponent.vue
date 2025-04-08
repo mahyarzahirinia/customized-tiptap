@@ -1340,6 +1340,9 @@ const insertCharacter = (character: string) => {
 </script>
 
 <style lang="scss" scoped>
+* {
+  font-family: "yekan", sans-serif;
+}
 .chars-container {
   display: flex;
   flex-wrap: wrap;
