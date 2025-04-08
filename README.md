@@ -48,6 +48,7 @@ npm install customized-tiptap-editor
 
 ### 1. Install the package
 
+Install the package through the following command:
 ```bash
 npm install customized-tiptap-editor
 ```
