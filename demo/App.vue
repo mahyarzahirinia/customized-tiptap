@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CustomizedTipTap from "../src/TipTapComponents/CustomizedTipTap.vue";
 import { ref } from "vue";
 
 const mergeFieldsData = ref([
@@ -25,7 +24,7 @@ const content = ref("<p>متن تستی</p>");
     <v-main>
       <div class="middle">
         <v-container fluid>
-          <CustomizedTipTap
+          <customized-tiptap
             :content="content"
             :merge-fields-data="mergeFieldsData"
           />

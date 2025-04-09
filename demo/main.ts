@@ -9,6 +9,7 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import "@mdi/font/css/materialdesignicons.css";
 import { md3 } from "vuetify/blueprints";
+import CustomizedTipTapPlugin from "../src";
 
 const app = createApp(App);
 const vuetify = createVuetify({
@@ -19,4 +20,5 @@ const vuetify = createVuetify({
 });
 
 app.use(vuetify);
+app.use(CustomizedTipTapPlugin);
 app.mount("#app");
