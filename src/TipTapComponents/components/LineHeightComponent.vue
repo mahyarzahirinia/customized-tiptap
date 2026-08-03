@@ -58,7 +58,7 @@ watch(
         item-value="value"
         item-title="title"
         menu-icon="mdi-chevron-down"
-        prepend-icon="mdi-format-line-height"
+        prepend-icon="ct-line-height"
         v-bind="props"
         variant="plain"
         @update:modelValue="applyLineHeight"
@@ -79,13 +79,15 @@ watch(
 }
 
 .lh-select {
-  position: relative;
-  right: 1.25rem;
-  margin-left: 1.5rem;
+  width: 4.25rem;
+  min-width: 4.25rem;
 }
 
-:deep(.v-field__append-inner) {
-  transform: translateX(0.75rem);
+:deep(.ct-select__control) {
+  min-height: 2rem;
+  height: 2rem;
+  padding: 0 0.35rem;
+  gap: 0.2rem;
 }
 
 :deep(.v-field) {
@@ -93,9 +95,20 @@ watch(
   background: transparent !important;
 }
 
-:deep(.v-input__prepend) {
-  font-size: 0.9rem;
-  transform: translate(0rem, 0.05rem);
-  margin-left: 0.5rem;
+:deep(.ct-select__input) {
+  width: 1.25rem;
+  flex: 0 1 1.25rem;
+  text-align: center;
+  font-size: 0.82rem;
+  padding: 0;
+}
+
+:deep(.ct-icon) {
+  width: 1rem;
+  height: 1rem;
+}
+
+:deep(.ct-select__menu) {
+  min-width: 4.25rem;
 }
 </style>

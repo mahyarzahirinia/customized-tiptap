@@ -77,8 +77,6 @@
     "tiptap-extension-resize-image": "^1.4.5"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.0.12",
     "@types/node": "^22.13.10",
     "@vitejs/plugin-vue": "^5.2.3",
     "autoprefixer": "^10.4.20",
@@ -88,7 +86,6 @@
     "rollup-plugin-copy": "^3.5.0",
     "sass": "^1.86.3",
     "sass-embedded": "^1.85.1",
-    "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "unplugin-element-plus": "^0.9.1",
     "vite": "^6.2.5",

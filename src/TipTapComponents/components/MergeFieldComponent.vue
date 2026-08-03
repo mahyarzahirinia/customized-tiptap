@@ -25,7 +25,7 @@ function removeMergeField() {
 <template>
   <NodeViewWrapper
     as="span"
-    class="inline-flex items-center rounded-full bg-blue-100 text-blue-800 border border-blue-300 px-2 py-1 text-xs gap-2 select-none"
+    class="merge-field-chip"
     contenteditable="false"
     :data-merge-field="true"
     :data-title="props.node.attrs.title"
@@ -33,7 +33,7 @@ function removeMergeField() {
     :data-name="props.node.attrs.name"
     :data-show-values="props.node.attrs.showValues"
   >
-    <span class="cursor-pointer" @click.stop="toggleShowValues">
+    <span class="merge-field-chip__label" @click.stop="toggleShowValues">
       {{
         props?.node?.attrs?.showValues
           ? props?.node?.attrs?.value
@@ -43,10 +43,52 @@ function removeMergeField() {
 
     <button
       type="button"
-      class="h-4 w-4 flex items-center justify-center rounded-full bg-blue-200 text-blue-800 hover:bg-blue-300 focus:outline-none"
+      class="merge-field-chip__remove"
       @click.stop="removeMergeField"
     >
       ×
     </button>
   </NodeViewWrapper>
 </template>
+
+<style scoped>
+.merge-field-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #93c5fd;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+.merge-field-chip__label {
+  cursor: pointer;
+}
+
+.merge-field-chip__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #bfdbfe;
+  color: #1e40af;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.merge-field-chip__remove:hover {
+  background: #93c5fd;
+}
+
+.merge-field-chip__remove:focus {
+  outline: none;
+}
+</style>

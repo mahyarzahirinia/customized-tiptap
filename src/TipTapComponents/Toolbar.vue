@@ -139,7 +139,7 @@ const toggleAdvancedPanel = () => {
         :text="t('clearContent')"
         @click="props.editor.chain().focus().clearContent().run()"
       >
-        <v-icon icon="mdi-backspace" />
+        <v-icon icon="ct-clear-content" />
       </Button>
     </GroupButtons>
 
@@ -169,7 +169,7 @@ const toggleAdvancedPanel = () => {
         :text="t('bold')"
         @click="props.editor.chain().focus().toggleBold().run()"
       >
-        <v-icon icon="mdi-format-bold" />
+        <v-icon icon="mdi-format-bold-box" />
       </Button>
       <Button
         v-if="hasExtension('italic')"

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref } from "vue";
 import Button from "../components/Button.vue";
 import { useTiptapI18n } from "../i18n";
 
@@ -41,6 +40,10 @@ const toggleHeaderCell = () =>
 const goToNextCell = () => props.editor.chain().focus().goToNextCell().run();
 const goToPreviousCell = () =>
   props.editor.chain().focus().goToPreviousCell().run();
+
+const runTableAction = (action: () => void) => {
+  action();
+};
 </script>
 
 <template>
@@ -48,163 +51,189 @@ const goToPreviousCell = () =>
     <v-icon icon="mdi-table" />
 
     <v-menu activator="parent" location="start" transition="slide-x-transition">
-      <v-list class="menu-list" density="compact">
-        <v-list-item @click="insertTable">
-          <template v-slot:prepend>
+      <div class="table-menu" dir="rtl">
+        <section class="table-menu__section table-menu__section--primary">
+          <button class="table-menu__action" type="button" @click="runTableAction(insertTable)">
             <v-icon icon="mdi-table-plus" />
-          </template>
-          <v-list-item-title>{{ t("addTable") }}</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="deleteTable">
-          <template v-slot:prepend>
+            <span>{{ t("addTable") }}</span>
+          </button>
+          <button class="table-menu__action table-menu__action--danger" type="button" @click="runTableAction(deleteTable)">
             <v-icon icon="mdi-table-remove" />
-          </template>
-          <v-list-item-title>{{ t("deleteTable") }}</v-list-item-title>
-        </v-list-item>
+            <span>{{ t("deleteTable") }}</span>
+          </button>
+        </section>
 
-        <!-- ستون‌ها -->
-        <v-list-item>
-          <v-menu
-            activator="parent"
-            location="end"
-            open-on-hover
-            transition="slide-x-transition"
-          >
-            <v-list class="menu-list" density="compact">
-              <v-list-item @click="addColumnBefore">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-column-plus-before" />
-                </template>
-                <v-list-item-title>{{ t("addColumnBefore") }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="addColumnAfter">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-column-plus-after" />
-                </template>
-                <v-list-item-title>{{ t("addColumnAfter") }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="deleteColumn">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-column-remove" />
-                </template>
-                <v-list-item-title>{{ t("deleteColumn") }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-list-item-title>{{ t("columnManagement") }}</v-list-item-title>
-          <template #append>
-            <v-icon icon="mdi-menu-left" />
-          </template>
-        </v-list-item>
+        <section class="table-menu__section">
+          <h3 class="table-menu__title">{{ t("columnManagement") }}</h3>
+          <div class="table-menu__grid">
+            <button class="table-menu__action" type="button" @click="runTableAction(addColumnBefore)">
+              <v-icon icon="mdi-table-column-plus-before" />
+              <span>{{ t("addColumnBefore") }}</span>
+            </button>
+            <button class="table-menu__action" type="button" @click="runTableAction(addColumnAfter)">
+              <v-icon icon="mdi-table-column-plus-after" />
+              <span>{{ t("addColumnAfter") }}</span>
+            </button>
+            <button class="table-menu__action" type="button" @click="runTableAction(deleteColumn)">
+              <v-icon icon="mdi-table-column-remove" />
+              <span>{{ t("deleteColumn") }}</span>
+            </button>
+          </div>
+        </section>
 
-        <!-- سطرها -->
-        <v-list-item>
-          <v-menu
-            activator="parent"
-            location="end"
-            open-on-hover
-            transition="slide-x-transition"
-          >
-            <v-list class="menu-list" density="compact">
-              <v-list-item @click="addRowBefore">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-row-plus-before" />
-                </template>
-                <v-list-item-title>{{ t("addRowBefore") }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="addRowAfter">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-row-plus-after" />
-                </template>
-                <v-list-item-title>{{ t("addRowAfter") }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="deleteRow">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-row-remove" />
-                </template>
-                <v-list-item-title>{{ t("deleteRow") }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-list-item-title>{{ t("rowManagement") }}</v-list-item-title>
-          <template #append>
-            <v-icon icon="mdi-menu-left" />
-          </template>
-        </v-list-item>
+        <section class="table-menu__section">
+          <h3 class="table-menu__title">{{ t("rowManagement") }}</h3>
+          <div class="table-menu__grid">
+            <button class="table-menu__action" type="button" @click="runTableAction(addRowBefore)">
+              <v-icon icon="mdi-table-row-plus-before" />
+              <span>{{ t("addRowBefore") }}</span>
+            </button>
+            <button class="table-menu__action" type="button" @click="runTableAction(addRowAfter)">
+              <v-icon icon="mdi-table-row-plus-after" />
+              <span>{{ t("addRowAfter") }}</span>
+            </button>
+            <button class="table-menu__action" type="button" @click="runTableAction(deleteRow)">
+              <v-icon icon="mdi-table-row-remove" />
+              <span>{{ t("deleteRow") }}</span>
+            </button>
+          </div>
+        </section>
 
-        <!-- سلول‌ها -->
-        <v-list-item>
-          <v-menu
-            activator="parent"
-            location="end"
-            open-on-hover
-            transition="slide-x-transition"
-          >
-            <v-list class="menu-list" density="compact">
-              <v-list-item @click="mergeCells">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-merge-cells" />
-                </template>
-                <v-list-item-title>{{ t("mergeCells") }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="splitCell">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-split-cell" />
-                </template>
-                <v-list-item-title>{{ t("splitCell") }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="mergeOrSplit">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table" />
-                </template>
-                <v-list-item-title>{{ t("mergeOrSplit") }}</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="setCellAttribute">
-                <template v-slot:prepend>
-                  <v-icon icon="mdi-table-column-width" />
-                </template>
-                <v-list-item-title>{{ t("setCellAttribute") }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-list-item-title>{{ t("cellManagement") }}</v-list-item-title>
-          <template #append>
-            <v-icon icon="mdi-menu-left" />
-          </template>
-        </v-list-item>
+        <section class="table-menu__section">
+          <h3 class="table-menu__title">{{ t("cellManagement") }}</h3>
+          <div class="table-menu__grid">
+            <button class="table-menu__action" type="button" @click="runTableAction(mergeCells)">
+              <v-icon icon="mdi-table-merge-cells" />
+              <span>{{ t("mergeCells") }}</span>
+            </button>
+            <button class="table-menu__action" type="button" @click="runTableAction(splitCell)">
+              <v-icon icon="mdi-table-split-cell" />
+              <span>{{ t("splitCell") }}</span>
+            </button>
+            <button class="table-menu__action" type="button" @click="runTableAction(mergeOrSplit)">
+              <v-icon icon="mdi-table" />
+              <span>{{ t("mergeOrSplit") }}</span>
+            </button>
+            <button class="table-menu__action" type="button" @click="runTableAction(setCellAttribute)">
+              <v-icon icon="mdi-table-column-width" />
+              <span>{{ t("setCellAttribute") }}</span>
+            </button>
+          </div>
+        </section>
 
-        <!-- تنظیمات -->
-        <v-list-item @click="fixTables">
-          <template v-slot:prepend>
+        <section class="table-menu__section table-menu__section--compact">
+          <button class="table-menu__action" type="button" @click="runTableAction(fixTables)">
             <v-icon icon="mdi-table-refresh" />
-          </template>
-          <v-list-item-title>{{ t("fixTable") }}</v-list-item-title>
-        </v-list-item>
-
-        <!-- ناوبری -->
-        <v-list-item @click="goToNextCell">
-          <template v-slot:prepend>
+            <span>{{ t("fixTable") }}</span>
+          </button>
+          <button class="table-menu__action" type="button" @click="runTableAction(goToNextCell)">
             <v-icon icon="mdi-chevron-left-box" />
-          </template>
-          <v-list-item-title>{{ t("nextCell") }}</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="goToPreviousCell">
-          <template v-slot:prepend>
+            <span>{{ t("nextCell") }}</span>
+          </button>
+          <button class="table-menu__action" type="button" @click="runTableAction(goToPreviousCell)">
             <v-icon icon="mdi-chevron-right-box" />
-          </template>
-          <v-list-item-title>{{ t("previousCell") }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+            <span>{{ t("previousCell") }}</span>
+          </button>
+        </section>
+      </div>
     </v-menu>
   </Button>
 </template>
 
 <style scoped lang="scss">
-:deep(.v-list-item-title) {
+.table-menu {
+  display: grid;
+  gap: 0.65rem;
+  width: 22rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.4rem;
   font-family: var(--tiptap-editor-font);
 }
-.menu-list {
+
+.table-menu__section {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.45rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #f9fafb;
+}
+
+.table-menu__section--primary,
+.table-menu__section--compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.table-menu__section--compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.table-menu__title {
+  margin: 0;
+  color: #475569;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.table-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.table-menu__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 2.15rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.45rem;
+  background: #fff;
+  color: #111827;
   cursor: pointer;
-  padding: 0;
+  font: inherit;
+  font-size: 0.76rem;
+  gap: 0.4rem;
+  text-align: right;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease;
+}
+
+.table-menu__action:hover,
+.table-menu__action:focus-visible {
+  border-color: #94a3b8;
+  background: #f8fafc;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
+  outline: none;
+}
+
+.table-menu__action--danger {
+  color: #b91c1c;
+}
+
+.table-menu__action--danger:hover,
+.table-menu__action--danger:focus-visible {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.table-menu__action span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+:deep(.ct-menu__content) {
+  padding: 0.35rem;
+  border-radius: 0.65rem;
+  min-width: auto;
+  max-height: min(32rem, calc(100vh - 2rem));
+}
+
+:deep(.ct-icon) {
+  flex: 0 0 auto;
 }
 </style>

@@ -89,15 +89,13 @@ const handleSelect = (item: MergeFieldType) => {
 </script>
 
 <template>
-  <div class="relative w-[300px] text-sm">
-    <div
-      class="relative flex h-[36px] items-center rounded-lg border border-gray-300 bg-white px-2 shadow-sm transition-all duration-200 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200"
-    >
+  <div class="merge-field-default">
+    <div class="merge-field-default__control">
       <input
         v-model="mergeFieldQuery"
         type="text"
         placeholder=" "
-        class="peer w-full bg-transparent px-2 py-2 text-base text-gray-900 outline-none disabled:cursor-not-allowed disabled:text-gray-400"
+        class="merge-field-default__input"
         @input="
           handleSearchUpdate(($event.target as HTMLInputElement).value ?? '')
         "
@@ -106,15 +104,12 @@ const handleSelect = (item: MergeFieldType) => {
         @keydown.enter="handleEnter"
         @keydown.escape="handleEscape"
       />
-      <label
-        class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded px-1 text-gray-500 transition-all duration-200 bg-white peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-600 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base"
-      >
+      <label class="merge-field-default__label">
         {{ t("addField") }}
       </label>
-      <div class="flex items-center px-2">
+      <div class="merge-field-default__switch">
         <v-switch
           v-model="showValues"
-          class="ml-4"
           color="primary"
           density="compact"
           hide-details
@@ -124,23 +119,23 @@ const handleSelect = (item: MergeFieldType) => {
 
     <ul
       v-if="showDropdown"
-      class="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-md"
+      class="merge-field-default__dropdown"
     >
-      <li v-if="isLoading" class="px-3 py-2">
+      <li v-if="isLoading" class="merge-field-default__loading">
         <v-progress-linear color="primary" height="3" indeterminate />
       </li>
       <li
         v-else
         v-for="group in groupedMergeFields"
         :key="group.category"
-        class="bg-gray-100 px-3 py-2 font-semibold text-gray-600"
+        class="merge-field-default__group"
       >
         {{ group.category }}
         <ul>
           <li
             v-for="item in group.items"
             :key="item?.value"
-            class="cursor-pointer px-3 py-2 text-gray-700 transition-colors duration-150 hover:bg-gray-200"
+            class="merge-field-default__item"
             @mousedown.prevent="handleSelect(item)"
           >
             {{ item?.title }}
@@ -150,3 +145,124 @@ const handleSelect = (item: MergeFieldType) => {
     </ul>
   </div>
 </template>
+
+<style scoped>
+.merge-field-default {
+  position: relative;
+  width: 300px;
+  font-size: 0.875rem;
+  font-family: var(--tiptap-editor-font);
+}
+
+.merge-field-default__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.merge-field-default__control:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+.merge-field-default__input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111827;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.merge-field-default__input:disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.merge-field-default__label {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  padding: 0 0.25rem;
+  border-radius: 0.15rem;
+  background: #fff;
+  color: #6b7280;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    color 0.2s ease,
+    font-size 0.2s ease,
+    top 0.2s ease,
+    transform 0.2s ease;
+}
+
+.merge-field-default__input:focus + .merge-field-default__label,
+.merge-field-default__input:not(:placeholder-shown) + .merge-field-default__label {
+  top: -0.5rem;
+  color: #2563eb;
+  font-size: 0.75rem;
+  transform: none;
+}
+
+.merge-field-default__switch {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.merge-field-default__dropdown {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  max-height: 12rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.12);
+  list-style: none;
+}
+
+.merge-field-default__loading,
+.merge-field-default__group {
+  padding: 0.5rem 0.75rem;
+}
+
+.merge-field-default__group {
+  background: #f3f4f6;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.merge-field-default__group ul {
+  margin: 0.5rem -0.75rem -0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.merge-field-default__item {
+  padding: 0.5rem 0.75rem;
+  color: #374151;
+  cursor: pointer;
+  font-weight: 400;
+  transition: background-color 0.15s ease;
+}
+
+.merge-field-default__item:hover {
+  background: #e5e7eb;
+}
+</style>

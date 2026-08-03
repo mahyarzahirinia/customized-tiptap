@@ -26,7 +26,7 @@ const {
 </script>
 
 <template>
-  <div class="flex items-center gap-3">
+  <div class="merge-fields-basic">
     <v-autocomplete
       v-model="selectedMergeField"
       :filter="() => true"
@@ -34,7 +34,7 @@ const {
       :search="mergeFieldQuery"
       :loading="loading"
       autocomplete="off"
-      class="merge-field-input flex-1 min-w-[140px] w-[200px] rounded-lg"
+      class="merge-field-input"
       clear-icon="mdi-close"
       clearable
       density="compact"
@@ -51,23 +51,47 @@ const {
       @keydown.escape="handleClose"
     />
 
-    <div class="flex items-center gap-2 shrink-0 text-sm text-gray-700">
+    <div class="merge-fields-basic__values">
       <span>{{ t("mergeFieldsValues") }}</span>
       <v-switch
         v-model="showValues"
         color="primary"
         density="compact"
         hide-details
-        class="shrink-0"
+        class="merge-fields-basic__switch"
       />
     </div>
   </div>
 </template>
 
 <style scoped>
+.merge-fields-basic {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .merge-field-input {
   --v-input-control-height: 36px;
+  flex: 1 1 auto;
+  width: 200px;
+  min-width: 140px;
+  border-radius: 0.5rem;
 }
+
+.merge-fields-basic__values {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.merge-fields-basic__switch {
+  flex: 0 0 auto;
+}
+
 
 :deep(.merge-field-input .v-field) {
   height: 36px;

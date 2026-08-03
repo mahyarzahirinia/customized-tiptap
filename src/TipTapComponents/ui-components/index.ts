@@ -406,6 +406,19 @@ export const VMenu = defineComponent({
     const parentActivator = ref<HTMLElement | null>(null);
     const cleanups: Array<() => void> = [];
     const usesParentActivator = computed(() => !slots.activator && props.activator === "parent");
+    let closeTimer: number | undefined;
+
+    const show = () => {
+      if (closeTimer) window.clearTimeout(closeTimer);
+      open.value = true;
+    };
+
+    const hide = () => {
+      if (closeTimer) window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => {
+        open.value = false;
+      }, 140);
+    };
 
     const closeFromOutside = (event: MouseEvent | TouchEvent) => {
       const target = event.target as Node | null;
@@ -427,8 +440,6 @@ export const VMenu = defineComponent({
 
       const parent = root.value.parentElement;
       parentActivator.value = parent;
-      const show = () => (open.value = true);
-      const hide = () => (open.value = false);
       const toggle = (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -451,6 +462,7 @@ export const VMenu = defineComponent({
     });
 
     onUnmounted(() => {
+      if (closeTimer) window.clearTimeout(closeTimer);
       cleanups.forEach((cleanup) => cleanup());
     });
 
@@ -461,10 +473,10 @@ export const VMenu = defineComponent({
           ref: root,
           class: "ct-menu",
           onMouseenter: () => {
-            if (!usesParentActivator.value) open.value = true;
+            show();
           },
           onMouseleave: () => {
-            if (!usesParentActivator.value) open.value = false;
+            hide();
           },
           onClick: (event: Event) => {
             if (usesParentActivator.value) return;
@@ -472,7 +484,19 @@ export const VMenu = defineComponent({
             open.value = !open.value;
           },
         },
-        [slots.activator?.({ props: {} }), open.value && h("div", { class: "ct-menu__content" }, slots.default?.())]
+        [
+          slots.activator?.({ props: {} }),
+          open.value &&
+            h(
+              "div",
+              {
+                class: "ct-menu__content",
+                onMouseenter: show,
+                onMouseleave: hide,
+              },
+              slots.default?.()
+            ),
+        ]
       );
   },
 });

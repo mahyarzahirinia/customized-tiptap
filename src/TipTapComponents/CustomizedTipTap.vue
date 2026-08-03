@@ -301,13 +301,10 @@ body {
 }
 
 .tiptap-editor-inside {
-  // remove prose classes and use manual css instead
-  @apply prose prose-sm sm:prose lg:prose-lg xl:prose-2xl;
+  color: #111827;
+  font-size: 0.875rem;
+  line-height: 1.714;
 
-  p {
-    font-size: 12pt;
-  }
-  //overriding prose h1,h6 and p tags
   h1,
   h2,
   h3,
@@ -316,6 +313,93 @@ body {
   h6,
   p {
     margin: 1rem auto;
+  }
+
+  p {
+    font-size: 12pt;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    line-height: 1.111;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.333;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  h5,
+  h6 {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong {
+    font-weight: 700;
+  }
+
+  a {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  ul,
+  ol {
+    margin: 1rem auto;
+    padding-inline-start: 1.625rem;
+  }
+
+  li {
+    margin: 0.25rem auto;
+  }
+
+  blockquote {
+    margin: 1rem auto;
+    padding-inline-start: 1rem;
+    border-inline-start: 0.25rem solid #d1d5db;
+    color: #4b5563;
+  }
+
+  code {
+    border-radius: 0.25rem;
+    background: #f3f4f6;
+    color: #111827;
+    font-family: "JetBrainsMono", monospace;
+    font-size: 0.875em;
+    padding: 0.15rem 0.3rem;
+  }
+
+  pre {
+    margin: 1rem auto;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    background: #282c34;
+    color: #abb2bf;
+    overflow-x: auto;
+  }
+
+  pre code {
+    background: transparent;
+    color: inherit;
+    font-size: inherit;
+    padding: 0;
   }
 
   margin-top: 0.5rem;

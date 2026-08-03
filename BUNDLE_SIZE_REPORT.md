@@ -109,7 +109,7 @@ This is the largest JavaScript-specific cause of bundle growth.
 The library build currently externalizes only:
 
 ```ts
-external: ["vue", "vuetify", "@mdi/font", "tailwindcss"]
+external: ["vue"]
 ```
 
 That is in `vite.config.ts`.
@@ -192,7 +192,7 @@ vite.config.ts
 Current external list:
 
 ```ts
-external: ["vue", "vuetify", "@mdi/font", "tailwindcss"]
+external: ["vue"]
 ```
 
 Problem:
@@ -358,7 +358,7 @@ Recommended structure:
 
 - `src/TipTapComponents/styles/editor.css`: required editor styles only.
 - `src/assets/fonts.css`: optional font declarations.
-- `demo/assets/main.css`: demo-only Tailwind and font setup.
+- `demo/assets/main.css`: demo-only font setup and plain CSS.
 
 Then only import required editor styles from the library runtime.
 
@@ -600,7 +600,7 @@ build: IS_DEMO
         fileName: "customized-tiptap",
       },
       rollupOptions: {
-        external: ["vue", "vuetify", "@mdi/font", "tailwindcss"],
+        external: ["vue"],
       },
     },
 ```
@@ -719,4 +719,3 @@ Expected best outcome:
 - `dist/style.css` drops from megabytes to a much smaller stylesheet.
 - `dist/customized-tiptap.js` drops substantially after removing `lowlight/all`.
 - If editor dependencies are externalized, the JavaScript bundle becomes much smaller again.
-

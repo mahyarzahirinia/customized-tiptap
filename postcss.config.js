@@ -1,6 +1,5 @@
 export default {
   plugins: {
-    tailwindcss: {},
     autoprefixer: {},
     ...(process.env.VITE_BUILD_TARGET === "production"
       ? {

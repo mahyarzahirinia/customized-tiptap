@@ -78,8 +78,17 @@ watch(
 .font-size-box {
   width: 5rem;
 
+  &:deep(.ct-select__control) {
+    justify-content: center;
+  }
+
   &:deep(.v-field__input) {
-    transform: translate(-1.2rem, -0.1rem);
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 2.5rem;
+    padding: 0;
+    text-align: center;
+    transform: translateY(-0.1rem);
   }
 
   &:deep(.v-field-label) {

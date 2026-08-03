@@ -9,7 +9,7 @@ A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on 
 `customized-tiptap` is a feature-rich Vue 3 plugin offering a refined editing experience out of the box. Designed with clean aesthetics and an extensible architecture, it simplifies rich-text editing for modern Vue applications.
 
 🛠 Based on TipTap 2
-🎨 Styled with Tailwind and internal UI components
+🎨 Styled with internal UI components and plain CSS
 🔗 Includes out-of-the-box self-hosted icons
 💬 Multilingual & markdown-capable (in roadmap)
 
@@ -24,7 +24,7 @@ A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on 
 ## ✨ Features
 
 - 📐 **Self-hosted menus** — Ships with internal toolbar, menu, modal, and form controls
-- 🎨 **Tailwind-powered layout** — Clean, customizable UI
+- 🎨 **Plain CSS layout** — Clean, customizable UI without framework CSS
 - 🧩 **Pluggable extensions** — Easily extend or override editor behavior
 - 🔠 **Markdown-friendly output**
 - 🧼 **Zero warnings** — Clean console, smooth experience
@@ -145,7 +145,7 @@ Want to add custom buttons or logic? You can pass in your own extensions, merge 
 ## ❗ Requirements
 
 - Vue 3
-- Tailwind CSS (optional but recommended)
+- No CSS framework required
 
 ---
 

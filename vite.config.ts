@@ -67,7 +67,7 @@ export default ({ mode }) => {
           // https://rollupjs.org/guide/en/#big-list-of-options
           rollupOptions: {
             // Make sure to externalize dependencies that you don't want to bundle into your library.
-            external: ["vue", "tailwindcss"],
+            external: ["vue"],
             output: {
               assetFileNames: (assetInfo) => {
                 if (assetInfo.names?.some((name) => name.endsWith(".css"))) {
