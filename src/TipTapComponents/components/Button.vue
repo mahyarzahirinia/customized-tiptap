@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // defineProps is auto-imported in Vue 3 SFC
+defineOptions({ inheritAttrs: false });
 
 defineProps<{
   text?: string;

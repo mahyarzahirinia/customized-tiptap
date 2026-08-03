@@ -67,7 +67,7 @@ export default ({ mode }) => {
           // https://rollupjs.org/guide/en/#big-list-of-options
           rollupOptions: {
             // Make sure to externalize dependencies that you don't want to bundle into your library.
-            external: ["vue", "vuetify", "@mdi/font", "tailwindcss"],
+            external: ["vue", "tailwindcss"],
             output: {
               assetFileNames: (assetInfo) => {
                 if (assetInfo.names?.some((name) => name.endsWith(".css"))) {
@@ -81,7 +81,6 @@ export default ({ mode }) => {
               // In UMD build mode, provide a global variable for these externalized dependencies.
               globals: {
                 vue: "vue",
-                vuetify: "vuetify",
               },
             },
             plugins: [

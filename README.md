@@ -1,6 +1,6 @@
 # ✨ Customized TipTap
 
-A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on [TipTap](https://tiptap.dev) and customized to work seamlessly with **Vuetify 3**, **Tailwind**, and **Material Design Icons**.
+A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on [TipTap](https://tiptap.dev), with self-hosted UI controls and icons.
 
 ---
 
@@ -8,9 +8,9 @@ A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on 
 
 `customized-tiptap` is a feature-rich Vue 3 plugin offering a refined editing experience out of the box. Designed with clean aesthetics and an extensible architecture, it simplifies rich-text editing for modern Vue applications.
 
-🛠 Based on TipTap 2  
-🎨 Styled with Tailwind & Vuetify 3  
-🔗 Includes out-of-the-box Vuetify-compatible UI  
+🛠 Based on TipTap 2
+🎨 Styled with Tailwind and internal UI components
+🔗 Includes out-of-the-box self-hosted icons
 💬 Multilingual & markdown-capable (in roadmap)
 
 ---
@@ -23,7 +23,7 @@ A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on 
 
 ## ✨ Features
 
-- 📐 **Vuetify-styled menus** — Looks and feels native to your Vuetify app
+- 📐 **Self-hosted menus** — Ships with internal toolbar, menu, modal, and form controls
 - 🎨 **Tailwind-powered layout** — Clean, customizable UI
 - 🧩 **Pluggable extensions** — Easily extend or override editor behavior
 - 🔠 **Markdown-friendly output**
@@ -40,7 +40,7 @@ A beautiful, powerful, and developer-friendly WYSIWYG rich-text editor built on 
 npm install customized-tiptap-editor
 ```
 
-> This package **requires Vuetify 3** and **@mdi/font** as peer dependencies.
+> Tiptap, ProseMirror, UI controls, and icons are package internals. Consumer apps only need Vue 3.
 
 ---
 
@@ -53,25 +53,15 @@ Install the package through the following command:
 npm install customized-tiptap-editor
 ```
 
-### 2. Make sure Vuetify and Material Design Icons are installed
-
-Install Vuetify and MDI icons if not already installed:
-
-```bash
-npm install vuetify @mdi/font
-```
-
-### 3. Import styles files
+### 2. Import styles files
 
 import the following styles into your consumer app.
 
 ```ts
-import '@mdi/font/css/materialdesignicons.css';
 import 'customized-tiptap-editor/dist/style.css';
-import "vuetify/styles";
 ```
 
-### 4. Register the plugin
+### 3. Register the plugin
 
 In your main entry file (e.g. `main.ts` or `main.js`):
 
@@ -81,28 +71,17 @@ import App from './App.vue';
 import router from './router';
 
 import CustomizedTipTapPlugin from 'customized-tiptap-editor';
-import '@mdi/font/css/materialdesignicons.css';
 import 'customized-tiptap-editor/dist/style.css';
-
-import { createVuetify } from 'vuetify';
-import * as components from 'vuetify/components';
-import * as directives from 'vuetify/directives';
-
-const vuetify = createVuetify({
-  components,
-  directives,
-});
 
 const app = createApp(App);
 
 app.use(router);
-app.use(vuetify); // Vuetify must be used
 app.use(CustomizedTipTapPlugin); // Register the editor plugin
 
 app.mount('#app');
 ```
 
-> **Note:** The editor requires Vuetify and MDI icons to render properly. Ensure both are imported as shown above.
+> **Note:** The editor no longer requires Vuetify or external Material Design Icons. Its controls and icons are self-hosted by the package.
 
 ---
 
@@ -166,15 +145,13 @@ Want to add custom buttons or logic? You can pass in your own extensions, merge 
 ## ❗ Requirements
 
 - Vue 3
-- Vuetify 3
 - Tailwind CSS (optional but recommended)
-- @mdi/font
 
 ---
 
 ## 🛠 Roadmap
 
-- [x] Vuetify 3 integration
+- [x] Self-hosted UI controls
 - [x] TypeScript support
 - [x] Custom merge field insertion
 - [ ] Markdown export support
@@ -192,5 +169,3 @@ Issues, ideas, and pull requests are always welcome! If you spot any bugs or hav
 ## 📄 License
 
 MIT © Mohammad
-
-

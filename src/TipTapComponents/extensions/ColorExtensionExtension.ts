@@ -39,7 +39,7 @@ export const ColorExtensionExtension = Extension.create({
       unsetColor:
         () =>
         ({ chain }) =>
-          chain().setMark("textStyle", { color: null }).run(),
+          chain().setMark("textStyle", { color: null }).removeEmptyTextStyle().run(),
     };
   },
 });

@@ -47,7 +47,10 @@ export const HighlightExtension = Extension.create({
       unsetHighlight:
         () =>
         ({ chain }) =>
-          chain().setMark("textStyle", { backgroundColor: null }).run(),
+          chain()
+            .setMark("textStyle", { backgroundColor: null })
+            .removeEmptyTextStyle()
+            .run(),
     };
   },
 });
