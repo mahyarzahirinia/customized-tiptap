@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue";
 import Button from "../components/Button.vue";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: any }>();
+const { t } = useTiptapI18n();
 
 const dialog = ref(false);
 const isImageMode = ref(false);
@@ -83,22 +85,22 @@ const unsetLink = () => {
   dialog.value = false;
 };
 
-const targetOptions = [
-  { label: "در تب جدید", value: "_blank" },
-  { label: "در تب جاری", value: "_self" },
-];
+const targetOptions = computed(() => [
+  { label: t("newTab"), value: "_blank" },
+  { label: t("currentTab"), value: "_self" },
+]);
 </script>
 
 <template>
   <Button
     :class="{ 'is-active': editor.isActive('link') }"
-    :text="editor.isActive('link') ? 'حذف لینک' : 'لینک'"
+    :text="editor.isActive('link') ? t('removeLink') : t('link')"
     @click="toggleLink"
   >
     <v-icon :icon="editor.isActive('link') ? 'mdi-link-off' : 'mdi-link'" />
   </Button>
 
-  <Button text="تصویر" @click="insertImage">
+  <Button :text="t('image')" @click="insertImage">
     <v-icon icon="mdi-image" />
   </Button>
 
@@ -106,14 +108,14 @@ const targetOptions = [
   <v-dialog v-model="dialog" max-width="400">
     <v-card>
       <v-card-title
-        >{{ isImageMode ? "افزودن تصویر" : "لینک ضمیمه" }}
+        >{{ isImageMode ? t("addImage") : t("linkAnchor") }}
       </v-card-title>
       <v-card-text>
-        <v-text-field v-model="url" autofocus label="لینک" type="url" />
+        <v-text-field v-model="url" autofocus :label="t('link')" type="url" />
 
         <!-- extra fields only for links not images -->
         <template v-if="!isImageMode">
-          <v-text-field v-model="textToDisplay" label="متن" readonly />
+          <v-text-field v-model="textToDisplay" :label="t('text')" readonly />
 
           <!-- Autocomplete for IDs -->
           <v-autocomplete
@@ -121,7 +123,7 @@ const targetOptions = [
             :items="elementsWithId"
             clearable
             item-title="id"
-            label="انتخاب نشانه"
+            :label="t('selectAnchor')"
             return-object
           />
 
@@ -130,7 +132,7 @@ const targetOptions = [
             :items="targetOptions"
             item-title="label"
             item-value="value"
-            label="بازشدن لینک"
+            :label="t('linkOpen')"
             ><template v-slot:item="{ props, item }">
               <v-list-item
                 class="list-item"
@@ -147,9 +149,9 @@ const targetOptions = [
           color="primary"
           @click="isImageMode ? applyImage() : applyLink()"
         >
-          اعمال
+          {{ t("apply") }}
         </Button>
-        <Button color="red" @click="dialog = false">لغو</Button>
+        <Button color="red" @click="dialog = false">{{ t("cancel") }}</Button>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -2,10 +2,12 @@
 import Button from "./Button.vue";
 // defineProps is a compiler macro; no runtime import needed
 import type { Editor } from "@tiptap/core";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{
   editor: Editor;
 }>();
+const { t } = useTiptapI18n();
 
 const setTextDirection = (direction: "ltr" | "rtl") => {
   props.editor.commands.setDirection(direction);
@@ -13,10 +15,10 @@ const setTextDirection = (direction: "ltr" | "rtl") => {
 </script>
 
 <template>
-  <Button text="راست به چپ" @click="setTextDirection('rtl')">
+  <Button :text="t('rightToLeft')" @click="setTextDirection('rtl')">
     <v-icon icon="mdi-format-pilcrow-arrow-left" />
   </Button>
-  <Button text="چپ به راست" @click="setTextDirection('ltr')">
+  <Button :text="t('leftToRight')" @click="setTextDirection('ltr')">
     <v-icon icon="mdi-format-pilcrow-arrow-right" />
   </Button>
 </template>

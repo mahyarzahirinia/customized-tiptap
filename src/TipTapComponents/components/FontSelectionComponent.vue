@@ -1,8 +1,10 @@
 <script lang="ts" setup="">
 import { ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 const fontFamilies = ref([
   { title: "ایران یکان", value: "IRANYekanX" },
@@ -41,7 +43,7 @@ watch(
   <v-autocomplete
     v-model="selectedFont"
     :items="fontFamilies"
-    :label="!selectedFont ? 'فونت' : ''"
+    :label="!selectedFont ? t('font') : ''"
     class="font-box"
     density="compact"
     hide-details

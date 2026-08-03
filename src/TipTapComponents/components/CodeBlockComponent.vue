@@ -2,8 +2,10 @@
 import Button from "./Button.vue";
 // defineProps is a compiler macro; no runtime import needed
 import { Editor } from "@tiptap/core";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 const toggleCodeBlock = () => {
   props.editor.chain().focus().toggleCodeBlock().run();
@@ -11,7 +13,7 @@ const toggleCodeBlock = () => {
 </script>
 
 <template>
-  <Button text="کد" @click="toggleCodeBlock">
+  <Button :text="t('code')" @click="toggleCodeBlock">
     <v-icon
       :icon="
         props.editor.isActive('codeBlock')

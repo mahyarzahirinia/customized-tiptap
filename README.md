@@ -133,6 +133,27 @@ Each prop is designed with flexibility and clarity in mind:
 - `editorProps?: EditorProps` — Pass native props directly to the underlying Tiptap editor.
 - `customClasses?: TiptapEditorCustomClasses` — Apply custom CSS classes, e.g., `{ editorWrapper: 'my-wrapper' }`.
 - `editorOptions?: EditorOptions` — Full control over Tiptap editor options (like `editable`, `autofocus`, etc).
+- `language?: 'fa' | 'en'` — Sets the UI language. Defaults to Persian (`fa`).
+- `showLanguageToggle?: boolean` — Renders a toolbar toggle for switching between Persian and English.
+
+### Language API
+
+```vue
+<template>
+  <customized-tiptap
+    v-model="content"
+    v-model:language="language"
+    show-language-toggle
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const content = ref('<p>Hello world!</p>')
+const language = ref<'fa' | 'en'>('fa')
+</script>
+```
 
 ---
 
@@ -158,7 +179,7 @@ Want to add custom buttons or logic? You can pass in your own extensions, merge 
 - [x] Custom merge field insertion
 - [ ] Markdown export support
 - [ ] Plugin system for menus and toolbars
-- [ ] I18n (English, Farsi, and more)
+- [x] I18n (English and Persian)
 
 ---
 
@@ -171,6 +192,5 @@ Issues, ideas, and pull requests are always welcome! If you spot any bugs or hav
 ## 📄 License
 
 MIT © Mohammad
-
 
 

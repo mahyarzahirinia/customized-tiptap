@@ -2,8 +2,10 @@
 import { ref, computed } from "vue";
 import Button from "../components/Button.vue";
 import AnchorModal from "../modals/AnchorModal.vue";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: any }>();
+const { t } = useTiptapI18n();
 
 const dialog = ref<boolean>(false);
 const url = ref<string>(""); // Fixed missing `url` reference
@@ -43,7 +45,7 @@ const unsetLink = () => {
 </script>
 
 <template>
-  <Button text="نشانه‌گذاری" @click="toggleLink()">
+  <Button :text="t('addAnchor')" @click="toggleLink()">
     <v-icon
       :icon="editor.isActive('idSetter') ? 'mdi-bookmark-off' : 'mdi-bookmark'"
     />

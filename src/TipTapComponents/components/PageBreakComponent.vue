@@ -1,10 +1,12 @@
 <script lang="ts" setup="">
 import Button from "./Button.vue";
+import { useTiptapI18n } from "../i18n";
 
 // defineProps is a compiler macro; no runtime import needed
 import { type Editor } from "@tiptap/core";
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 const handlePageBreak = () => {
   props.editor
@@ -18,7 +20,7 @@ const handlePageBreak = () => {
 </script>
 
 <template>
-  <Button text="شکست صفحه" @click="handlePageBreak()">
+  <Button :text="t('pageBreak')" @click="handlePageBreak()">
     <v-icon icon="mdi-format-page-break" />
   </Button>
 </template>

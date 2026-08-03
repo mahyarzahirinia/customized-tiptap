@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type useMergeFields } from "./MergeFields/useMergeFields";
+import { useTiptapI18n } from "../i18n";
 
 /* ========================= options ========================= */
 defineOptions({ name: "MergeFieldsBasicAutocompleteComponent" });
@@ -9,6 +10,7 @@ const props = defineProps<{
   mergeFields: ReturnType<typeof useMergeFields>;
   loading?: boolean;
 }>();
+const { t } = useTiptapI18n();
 
 /* ========================= merge fields ========================= */
 const {
@@ -38,7 +40,7 @@ const {
       density="compact"
       item-title="title"
       item-value="value"
-      label="افزودن فیلدها"
+      :label="t('addField')"
       return-object
       variant="outlined"
       rounded="lg"
@@ -50,7 +52,7 @@ const {
     />
 
     <div class="flex items-center gap-2 shrink-0 text-sm text-gray-700">
-      <span>نمایش مقادیر</span>
+      <span>{{ t("mergeFieldsValues") }}</span>
       <v-switch
         v-model="showValues"
         color="primary"

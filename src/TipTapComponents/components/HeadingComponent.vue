@@ -1,22 +1,27 @@
 <script lang="ts" setup="">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { type Editor } from "@tiptap/core";
 import { type Level } from "@tiptap/extension-heading";
+import { useTiptapI18n } from "../i18n";
 
 type Levels = 0 | Level;
 
 const props = defineProps<{ editor: Editor }>();
+const { language, t } = useTiptapI18n();
 
 const selectedHeading = ref<number | null>(0);
-const headingOptions = [
-  { title: "سرتیتر ۶", value: 6 },
-  { title: "سرتیتر ۵", value: 5 },
-  { title: "سرتیتر ۴", value: 4 },
-  { title: "سرتیتر ۳", value: 3 },
-  { title: "سرتیتر ۲", value: 2 },
-  { title: "سرتیتر ۱", value: 1 },
-  { title: "پاراگراف", value: 0 },
-];
+const headingOptions = computed(() => {
+  const headingLabel = language.value === "fa" ? "سرتیتر" : "Heading";
+  return [
+    { title: `${headingLabel} ۶`, value: 6 },
+    { title: `${headingLabel} ۵`, value: 5 },
+    { title: `${headingLabel} ۴`, value: 4 },
+    { title: `${headingLabel} ۳`, value: 3 },
+    { title: `${headingLabel} ۲`, value: 2 },
+    { title: `${headingLabel} ۱`, value: 1 },
+    { title: language.value === "fa" ? "پاراگراف" : "Paragraph", value: 0 },
+  ];
+});
 
 const applyHeading = (value: Levels) => {
   if (!props.editor) return;
@@ -40,7 +45,7 @@ watch(
   <v-autocomplete
     v-model="selectedHeading"
     :items="headingOptions"
-    :label="!selectedHeading ? 'سر تیتر' : ''"
+    :label="!selectedHeading ? t('heading') : ''"
     class="heading-box"
     density="compact"
     hide-details

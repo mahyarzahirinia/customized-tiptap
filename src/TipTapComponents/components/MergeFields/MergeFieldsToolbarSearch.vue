@@ -1,11 +1,13 @@
 <script lang="ts" setup="">
 // defineProps is a compiler macro; no runtime import needed
 import { type useMergeFields } from "./useMergeFields";
+import { useTiptapI18n } from "../../i18n";
 
 const props = defineProps<{
   mergeFields: ReturnType<typeof useMergeFields>;
   loading?: boolean;
 }>();
+const { t } = useTiptapI18n();
 
 const {
   selectedMergeField,
@@ -32,7 +34,7 @@ const {
     density="compact"
     item-title="title"
     item-value="value"
-    label="افزودن فیلدها"
+    :label="t('addField')"
     return-object
     variant="plain"
     @update:search="handleSearchUpdate"

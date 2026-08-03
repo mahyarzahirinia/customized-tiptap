@@ -1,11 +1,11 @@
 <template>
-  <Button text="ایموجی" @click="dialog = true">
+  <Button :text="t('emoji')" @click="dialog = true">
     <v-icon icon="mdi-emoticon-outline" />
   </Button>
 
   <v-dialog v-model="dialog" max-width="600px">
     <v-card>
-      <v-card-title class="card-title">شکلک ها</v-card-title>
+      <v-card-title class="card-title">{{ t("emoji") }}</v-card-title>
       <v-card-text class="inner-container">
         <v-container fluid>
           <v-row>
@@ -25,7 +25,7 @@
             </v-col>
             <v-col cols="9">
               <div>
-                <v-text-field v-model="search" dense label="جستجو" />
+                <v-text-field v-model="search" dense :label="t('search')" />
               </div>
               <div class="chars-container">
                 <div v-for="char in filteredCharacters" :key="char.value">
@@ -40,7 +40,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <Button class="button" @click="dialog = false">بستن</Button>
+        <Button class="button" @click="dialog = false">{{ t("close") }}</Button>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -51,6 +51,7 @@ import { ref, computed } from "vue";
 import Button from "../components/Button.vue";
 import type { Editor } from "@tiptap/core";
 import { useNotifier } from "../notifier/useNotifier";
+import { useTiptapI18n } from "../i18n";
 
 type Emoji = { label: string; value: string };
 type EmojisCategories =
@@ -68,17 +69,18 @@ const search = ref<string>("");
 const selectedCategory = ref<EmojisCategories>("smileys_people");
 const props = defineProps<{ editor: Editor }>();
 const { notify } = useNotifier();
+const { t } = useTiptapI18n();
 
-const categories: { label: string; value: EmojisCategories }[] = [
-  { label: "لبخندها", value: "smileys_people" },
-  { label: "حیوانات", value: "animals_nature" },
-  { label: "خوراکی‌ها", value: "food_drink" },
-  { label: "مکان‌ها", value: "travel_places" },
-  { label: "فعالیت‌ها", value: "activities" },
-  { label: "اشیا", value: "objects" },
-  { label: "نمادها", value: "symbols" },
+const categories = computed<{ label: string; value: EmojisCategories }[]>(() => [
+  { label: t("categorySmileys"), value: "smileys_people" },
+  { label: t("categoryAnimals"), value: "animals_nature" },
+  { label: t("categoryFood"), value: "food_drink" },
+  { label: t("categoryPlaces"), value: "travel_places" },
+  { label: t("categoryActivities"), value: "activities" },
+  { label: t("categoryObjects"), value: "objects" },
+  { label: t("categorySymbols"), value: "symbols" },
   // { label: "پرچم‌ها", value: "flags" },
-];
+]);
 
 const characters: Record<EmojisCategories, Emoji[]> = {
   smileys_people: [
@@ -1338,7 +1340,7 @@ const filteredCharacters = computed(() => {
 
 const insertCharacter = (character: string) => {
   props.editor.commands.insertContent(character);
-  notify("کاراکتر موردنظر اعمال شد!");
+  notify(t("characterInserted"));
 };
 </script>
 

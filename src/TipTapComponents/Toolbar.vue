@@ -19,6 +19,7 @@ import { type useMergeFields } from "./components/MergeFields/useMergeFields";
 import { type Module } from "./config";
 import { type MergeFieldInputType } from "./types/CustomizedTipTapProps";
 import MergeFieldsMergeFieldsHiddenInlineSearch from "./components/MergeFields/MergeFieldsHiddenInlineSearch.vue";
+import { useTiptapI18n } from "./i18n";
 
 /* ========================= options ========================= */
 defineOptions({ name: "Toolbar" });
@@ -31,6 +32,7 @@ const props = withDefaults(
     lazyloadAdvancedComponents: boolean;
     mergeFieldsLoading?: boolean;
     mergeFieldInputType?: MergeFieldInputType;
+    showLanguageToggle?: boolean;
   }>(),
   {
     mergeFieldInputType: "default",
@@ -95,6 +97,7 @@ const showModal = reactive<{
 });
 
 const { showValues } = props.mergeFields;
+const { language, t, toggleLanguage } = useTiptapI18n();
 </script>
 
 <template>
@@ -103,14 +106,14 @@ const { showValues } = props.mergeFields;
     <GroupButtons v-if="hasExtension('history')">
       <Button
         :disabled="!props.editor.can().chain().focus().undo().run()"
-        text="بازگشت"
+        :text="t('undo')"
         @click="props.editor.chain().focus().undo().run()"
       >
         <v-icon icon="mdi-undo-variant" />
       </Button>
       <Button
         :disabled="!props.editor.can().chain().focus().redo().run()"
-        text="پیش‌روی"
+        :text="t('redo')"
         @click="props.editor.chain().focus().redo().run()"
       >
         <v-icon icon="mdi-redo-variant" />
@@ -120,14 +123,14 @@ const { showValues } = props.mergeFields;
     <!-- Break/Clear group: always shown, or add extension check if needed -->
     <GroupButtons v-if="hasExtension('hardBreak')">
       <Button
-        text="شکستن خط"
+        :text="t('lineBreak')"
         @click="props.editor.chain().focus().setHardBreak().run()"
         v-if="hasExtension('hardBreak')"
       >
         <v-icon icon="mdi-keyboard-return" />
       </Button>
       <Button
-        text="پاک کردن صفحه"
+        :text="t('clearContent')"
         @click="props.editor.chain().focus().clearContent().run()"
       >
         <v-icon icon="mdi-backspace" />
@@ -157,7 +160,7 @@ const { showValues } = props.mergeFields;
         v-if="hasExtension('bold')"
         :class="{ 'is-active': props.editor.isActive('bold') }"
         :disabled="!props.editor.can().chain().focus().toggleBold().run()"
-        text="بولد"
+        :text="t('bold')"
         @click="props.editor.chain().focus().toggleBold().run()"
       >
         <v-icon icon="mdi-format-bold" />
@@ -166,7 +169,7 @@ const { showValues } = props.mergeFields;
         v-if="hasExtension('italic')"
         :class="{ 'is-active': props.editor.isActive('italic') }"
         :disabled="!props.editor.can().chain().focus().toggleItalic().run()"
-        text="ایتالیک"
+        :text="t('italic')"
         @click="props.editor.chain().focus().toggleItalic().run()"
       >
         <v-icon icon="mdi-format-italic" />
@@ -175,7 +178,7 @@ const { showValues } = props.mergeFields;
         v-if="hasExtension('underline')"
         :class="{ 'is-active': props.editor.isActive('underline') }"
         :disabled="!props.editor.can().chain().focus().toggleUnderline().run()"
-        text="زیرخط‌دار"
+        :text="t('underline')"
         @click="props.editor.chain().focus().toggleUnderline().run()"
       >
         <v-icon icon="mdi-format-underline" />
@@ -184,7 +187,7 @@ const { showValues } = props.mergeFields;
         v-if="hasExtension('strike')"
         :class="{ 'is-active': props.editor.isActive('strike') }"
         :disabled="!props.editor.can().chain().focus().toggleStrike().run()"
-        text="خط‌خورده"
+        :text="t('strike')"
         @click="props.editor.chain().focus().toggleStrike().run()"
       >
         <v-icon icon="mdi-format-strikethrough-variant" />
@@ -239,8 +242,17 @@ const { showValues } = props.mergeFields;
         ])
       "
     >
-      <Button text="بیشتر" @click="showModal.showPanel = !showModal.showPanel">
+      <Button
+        :text="t('advancedTools')"
+        @click="showModal.showPanel = !showModal.showPanel"
+      >
         <v-icon icon="mdi-dots-horizontal" />
+      </Button>
+    </GroupButtons>
+
+    <GroupButtons v-if="props.showLanguageToggle">
+      <Button :text="t('language')" @click="toggleLanguage">
+        <span class="language-toggle-text">{{ language === "fa" ? "EN" : "فا" }}</span>
       </Button>
     </GroupButtons>
 
@@ -353,6 +365,14 @@ const { showValues } = props.mergeFields;
       border: none;
     }
   }
+}
+
+.language-toggle-text {
+  display: inline-flex;
+  font-size: 0.75rem;
+  font-weight: 700;
+  justify-content: center;
+  min-width: 1.5rem;
 }
 
 .merge-field-tool-box {

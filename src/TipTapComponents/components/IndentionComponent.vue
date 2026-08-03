@@ -1,9 +1,11 @@
 <script lang="ts" setup="">
 import Button from "../components/Button.vue";
 import type { Editor } from "@tiptap/core";
+import { useTiptapI18n } from "../i18n";
 // defineProps is a compiler macro; no runtime import needed
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 // note: i reversed the callbacks, since toolbox is rtl
 const increaseIndent = () => {
@@ -18,10 +20,10 @@ const decreaseIndent = () => {
 </script>
 
 <template>
-  <Button text="کاهش تورفتگی" @click="decreaseIndent">
+  <Button :text="t('decreaseIndent')" @click="decreaseIndent">
     <v-icon icon="mdi-format-indent-decrease" />
   </Button>
-  <Button text="افزایش تورفتگی" @click="increaseIndent">
+  <Button :text="t('increaseIndent')" @click="increaseIndent">
     <v-icon icon="mdi-format-indent-increase" />
   </Button>
 </template>

@@ -4,6 +4,7 @@ import {
   type MergeFieldType,
   type useMergeFields,
 } from "./MergeFields/useMergeFields";
+import { useTiptapI18n } from "../i18n";
 
 /* ========================= options ========================= */
 defineOptions({ name: "MergeFieldsDefaultAutocompleteComponent" });
@@ -13,6 +14,7 @@ const props = defineProps<{
   mergeFields: ReturnType<typeof useMergeFields>;
   loading?: boolean;
 }>();
+const { t } = useTiptapI18n();
 
 /* ========================= state ========================= */
 const state = reactive({ showDropdown: false });
@@ -107,7 +109,7 @@ const handleSelect = (item: MergeFieldType) => {
       <label
         class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded px-1 text-gray-500 transition-all duration-200 bg-white peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-600 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base"
       >
-        افزودن فیلدها
+        {{ t("addField") }}
       </label>
       <div class="flex items-center px-2">
         <v-switch

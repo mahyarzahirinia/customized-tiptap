@@ -109,6 +109,8 @@ export interface BasicMergeField {
 
 export type MergeFieldInputType = "default" | "basic";
 
+export type TiptapLanguage = "fa" | "en";
+
 export type MergeFieldsData = Array<GroupedMergeFields | BasicMergeField>;
 
 /**
@@ -173,6 +175,17 @@ export interface CustomizedTipTapProps {
    * If true, advanced components in the toolbar will be lazy loaded. If false, they will be eagerly loaded.
    */
   lazyloadAdvancedComponents?: boolean;
+
+  /**
+   * UI language for editor controls.
+   * Supports Persian (`fa`) and English (`en`).
+   */
+  language?: TiptapLanguage;
+
+  /**
+   * If true, renders a toolbar control that toggles between Persian and English.
+   */
+  showLanguageToggle?: boolean;
 
   /**
    * Name of a preset to load a predefined set of extensions. Overrides included/excludedExtensions if provided.

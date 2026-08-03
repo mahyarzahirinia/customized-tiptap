@@ -5,6 +5,7 @@ export type {
   CustomizedTipTapProps,
   BasicMergeField,
   MergeFieldInputType,
+  TiptapLanguage,
   TiptapEditorCustomClasses,
   TiptapExtensionName,
 } from "./TipTapComponents/types/CustomizedTipTapProps";

@@ -1,18 +1,20 @@
 <script lang="ts" setup="">
 // defineProps is a compiler macro; no runtime import needed
 import Button from "../components/Button.vue";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{
   previewContent: string;
 }>();
 
 const showModal = defineModel<boolean>();
+const { t } = useTiptapI18n();
 </script>
 
 <template>
   <v-dialog v-model="showModal" max-width="800px" min-width="600px">
     <v-card>
-      <v-card-title class="">پیش نمایش</v-card-title>
+      <v-card-title class="">{{ t("preview") }}</v-card-title>
       <v-card-text>
         <v-textarea
           v-model="props.previewContent"
@@ -22,7 +24,7 @@ const showModal = defineModel<boolean>();
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <Button color="red" @click="showModal = false"> بستن</Button>
+        <Button color="red" @click="showModal = false">{{ t("close") }}</Button>
       </v-card-actions>
     </v-card>
   </v-dialog>

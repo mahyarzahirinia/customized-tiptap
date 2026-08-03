@@ -1,18 +1,12 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import type { Editor } from "@tiptap/core";
-import {
-  VDialog,
-  VSheet,
-  VIcon,
-  VBtn,
-  VMenu,
-  VColorPicker,
-} from "vuetify/components";
 import Button from "../components/Button.vue";
 import ColorModal from "../modals/ColorModal.vue";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 // states
 const showColorPicker = ref(false);
@@ -94,7 +88,7 @@ const unsetAllMarks = () => {
 <template>
   <div class="ch-container">
     <!-- Buttons -->
-    <Button color="#eee" text="رنگ متن" @click="togglePicker('color')">
+    <Button color="#eee" :text="t('textColor')" @click="togglePicker('color')">
       <v-icon icon="mdi-format-color-text" />
       <v-icon
         :style="[
@@ -104,7 +98,7 @@ const unsetAllMarks = () => {
         icon="mdi-minus"
       />
     </Button>
-    <Button text="برجسته کردن" @click="togglePicker('highlight')">
+    <Button :text="t('highlight')" @click="togglePicker('highlight')">
       <v-icon icon="mdi-format-color-highlight" />
       <v-icon
         :style="[
@@ -114,7 +108,7 @@ const unsetAllMarks = () => {
         icon="mdi-minus"
       />
     </Button>
-    <Button text="پاک کردن فرمت" @click="unsetAllMarks">
+    <Button :text="t('clearFormat')" @click="unsetAllMarks">
       <v-icon icon="mdi-format-clear" />
     </Button>
 

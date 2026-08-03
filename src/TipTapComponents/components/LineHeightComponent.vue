@@ -2,8 +2,10 @@
 import { onMounted, ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
 import { LineHeight } from "../extensions/LineHeightExtension"; // import custom extension if needed
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 // line height options
 const lineHeights = [
@@ -45,7 +47,7 @@ watch(
 </script>
 
 <template>
-  <v-tooltip location="bottom" text="ارتفاع خط">
+  <v-tooltip location="bottom" :text="t('lineHeight')">
     <template v-slot:activator="{ props }">
       <v-select
         v-model="selectedLineHeight"

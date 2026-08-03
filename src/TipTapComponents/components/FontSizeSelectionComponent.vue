@@ -1,8 +1,10 @@
 <script lang="ts" setup="">
 import { ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 const fontSizes = ref([
   { size: "8pt", label: "۸" },
@@ -44,7 +46,7 @@ watch(
       :item-title="'label'"
       :item-value="'size'"
       :items="fontSizes"
-      :label="!selectedFontSize ? 'اندازه' : ''"
+      :label="!selectedFontSize ? t('fontSize') : ''"
       class="font-size-box"
       density="compact"
       hide-details

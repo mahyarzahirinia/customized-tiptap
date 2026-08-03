@@ -1,15 +1,17 @@
 <script lang="ts" setup="">
-import { ref, watch, onMounted } from "vue";
+import { computed, ref, onMounted } from "vue";
 import type { Editor } from "@tiptap/core";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
-const textAlignments = [
-  { title: "راست چین", value: "right", icon: "mdi-format-align-right" },
-  { title: "وسط چین", value: "center", icon: "mdi-format-align-center" },
-  { title: "چپ چین", value: "left", icon: "mdi-format-align-left" },
-  { title: "خود چین", value: "justify", icon: "mdi-format-align-justify" },
-];
+const textAlignments = computed(() => [
+  { title: t("alignRight"), value: "right", icon: "mdi-format-align-right" },
+  { title: t("alignCenter"), value: "center", icon: "mdi-format-align-center" },
+  { title: t("alignLeft"), value: "left", icon: "mdi-format-align-left" },
+  { title: t("alignJustify"), value: "justify", icon: "mdi-format-align-justify" },
+]);
 
 const selectedAlignment = ref<string | undefined>("right");
 

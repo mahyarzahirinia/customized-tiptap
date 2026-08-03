@@ -15,7 +15,7 @@
         @keydown.enter="handleEnterPress"
         @keydown.escape="handleClose"
       />
-      <label class="label">افزودن فیلدها</label>
+      <label class="label">{{ t("addField") }}</label>
 
       <div class="c-switch-wrapper">
         <v-progress-circular
@@ -66,12 +66,12 @@
 <script lang="ts" setup>
 import { defineEmits, computed, ref } from "vue";
 import { type useMergeFields } from "./MergeFields/useMergeFields.js";
-
+import { useTiptapI18n } from "../i18n";
 const props = defineProps<{
   mergeFields: ReturnType<typeof useMergeFields>;
   loading?: boolean;
 }>();
-
+const { t } = useTiptapI18n();
 const {
   selectedMergeField,
   filteredMergeFields,

@@ -14,7 +14,7 @@
         @keydown.enter="handlers.handleEnterPress"
         @keydown.escape="handlers.handleClose"
       />
-      <label class="label">افزودن فیلدها</label>
+      <label class="label">{{ t("addField") }}</label>
 
       <div class="c-switch-wrapper">
         <v-switch
@@ -56,6 +56,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
+import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{
   mergeFields: {
@@ -74,6 +75,7 @@ const props = defineProps<{
   };
   loading?: boolean;
 }>();
+const { t } = useTiptapI18n();
 
 const showDropdown = {
   value: false,

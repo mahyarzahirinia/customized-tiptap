@@ -3,10 +3,12 @@ import Button from "../components/Button.vue";
 import type { Editor } from "@tiptap/core";
 import { ref } from "vue";
 import HTMLExportModal from "../modals/HTMLExportModal.vue";
+import { useTiptapI18n } from "../i18n";
 
 const exportedHtml = ref("");
 const showModal = ref<boolean>(false);
 const props = defineProps<{ editor: Editor }>();
+const { t } = useTiptapI18n();
 
 const exportHtml = () => {
   exportedHtml.value = props.editor.getHTML();
@@ -24,7 +26,7 @@ const saveHtml = () => {
 </script>
 
 <template>
-  <Button text="خروجی کد" @click="exportHtml">
+  <Button :text="t('codeExport')" @click="exportHtml">
     <v-icon icon="mdi-code-tags" />
   </Button>
 

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { defineModel } from "vue";
 import Button from "../components/Button.vue";
+import { useTiptapI18n } from "../i18n";
 
 defineProps<{
   applyColor: (color: string | null | undefined) => void;
@@ -8,19 +9,20 @@ defineProps<{
 
 const showModal = defineModel<boolean>("showModal");
 const selectedColor = defineModel<string | null>("selectedColor");
+const { t } = useTiptapI18n();
 </script>
 
 <template>
   <v-dialog v-model="showModal" max-width="400px">
     <v-card>
-      <v-card-title class="card-title">انتخاب رنگ</v-card-title>
+      <v-card-title class="card-title">{{ t("colorPicker") }}</v-card-title>
       <v-card-text class="color-container">
         <v-color-picker v-model="selectedColor" elevation="0"></v-color-picker>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <Button color="primary" @click="applyColor(selectedColor)"
-          >اعمال</Button
+          >{{ t("apply") }}</Button
         >
       </v-card-actions>
     </v-card>

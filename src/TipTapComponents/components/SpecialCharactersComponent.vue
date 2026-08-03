@@ -1,11 +1,11 @@
 <template>
-  <Button text="کاراکترهای خاص" @click="dialog = true">
+  <Button :text="t('specialCharacters')" @click="dialog = true">
     <v-icon icon="mdi-omega" />
   </Button>
 
   <v-dialog v-model="dialog" max-width="600px">
     <v-card>
-      <v-card-title class="card-title">کاراکترهای خاص </v-card-title>
+      <v-card-title class="card-title">{{ t("specialCharacters") }}</v-card-title>
       <v-card-text>
         <v-container class="" fluid>
           <v-row>
@@ -25,7 +25,7 @@
             </v-col>
             <v-col cols="9">
               <div>
-                <v-text-field v-model="search" dense label="جستجو" />
+                <v-text-field v-model="search" dense :label="t('search')" />
               </div>
               <div class="chars-container">
                 <div v-for="char in filteredCharacters" :key="char.value">
@@ -40,7 +40,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <Button class="button" @click="dialog = false">بستن</Button>
+        <Button class="button" @click="dialog = false">{{ t("close") }}</Button>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -51,6 +51,7 @@ import { ref, computed } from "vue";
 import Button from "../components/Button.vue";
 import type { Editor } from "@tiptap/core";
 import { useNotifier } from "../notifier/useNotifier";
+import { useTiptapI18n } from "../i18n";
 
 type Character = { label: string; value: string };
 type CharacterCategories =
@@ -67,16 +68,17 @@ const search = ref<string>("");
 const selectedCategory = ref<CharacterCategories>();
 const props = defineProps<{ editor: Editor }>();
 const { notify } = useNotifier();
+const { t } = useTiptapI18n();
 
-const categories: { label: string; value: CharacterCategories }[] = [
-  { label: "واحد پولی", value: "currency" },
-  { label: "متن", value: "text" },
-  { label: "نقل قول", value: "quotations" },
-  { label: "ریاضیات", value: "mathematical" },
-  { label: "لاتین", value: "extendedLatin" },
-  { label: "علائم", value: "symbols" },
-  { label: "جهت ها", value: "arrows" },
-];
+const categories = computed<{ label: string; value: CharacterCategories }[]>(() => [
+  { label: t("categoryCurrency"), value: "currency" },
+  { label: t("categoryText"), value: "text" },
+  { label: t("categoryQuotations"), value: "quotations" },
+  { label: t("categoryMath"), value: "mathematical" },
+  { label: t("categoryLatin"), value: "extendedLatin" },
+  { label: t("categorySymbols"), value: "symbols" },
+  { label: t("categoryArrows"), value: "arrows" },
+]);
 
 const characters: Record<CharacterCategories, Character[]> = {
   currency: [
@@ -317,7 +319,7 @@ const filteredCharacters = computed(() => {
 
 const insertCharacter = (character: string) => {
   props.editor.commands.insertContent(character);
-  notify("کاراکتر موردنظر اعمال شد!");
+  notify(t("characterInserted"));
 };
 </script>
 

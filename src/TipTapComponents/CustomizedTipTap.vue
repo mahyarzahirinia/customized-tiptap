@@ -5,7 +5,7 @@ author: mohammad zahiriniya
 version: 1.0.0 (stable)
 */
 
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import Toolbar from "./Toolbar.vue";
 import {
@@ -25,6 +25,11 @@ import {
 } from "./types/CustomizedTipTapProps";
 import type { MergeFieldType } from "./components/MergeFields/useMergeFields";
 import GlobalSnackbar from "./notifier/GlobalSnackbar.vue";
+import {
+  normalizeLanguage,
+  provideTiptapI18n,
+  type TiptapLanguage,
+} from "./i18n";
 
 defineOptions({ name: "CustomizedTipTap" });
 
@@ -48,6 +53,8 @@ const props = withDefaults(
     editorRef: undefined,
     onUpdateContent: undefined,
     lazyloadAdvancedComponents: false,
+    language: "fa",
+    showLanguageToggle: false,
     preset: undefined, // <-- add default for new prop
     mergeFieldsLoading: false, // <-- default loading
     inputType: "default",
@@ -56,8 +63,28 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
+  (e: "update:language", value: TiptapLanguage): void;
   (e: "error", value: unknown): void;
 }>();
+
+const currentLanguage = ref<TiptapLanguage>(normalizeLanguage(props.language));
+const i18n = provideTiptapI18n({
+  language: currentLanguage,
+  setLanguage: (language) => {
+    currentLanguage.value = language;
+    emit("update:language", language);
+  },
+});
+
+watch(
+  () => props.language,
+  (language) => {
+    const normalizedLanguage = normalizeLanguage(language);
+    if (currentLanguage.value !== normalizedLanguage) {
+      currentLanguage.value = normalizedLanguage;
+    }
+  }
+);
 
 // Helper to get unique extensions by name
 function uniqueExtensionsByName(extensions: Module): Module {
@@ -220,10 +247,11 @@ if (props.editorRef) {
 </script>
 
 <template>
-  <v-locale-provider rtl>
+  <v-locale-provider :rtl="i18n.isRtl.value">
     <div
       v-if="editor"
       :class="props.customClasses?.editorContainer ?? 'tiptap-editor'"
+      :dir="i18n.isRtl.value ? 'rtl' : 'ltr'"
     >
       <Toolbar
         :editor="editor"
@@ -232,6 +260,7 @@ if (props.editorRef) {
         :extensions="extensions"
         :lazyload-advanced-components="props.lazyloadAdvancedComponents"
         :merge-fields-loading="props.mergeFieldsLoading"
+        :show-language-toggle="props.showLanguageToggle"
       />
 
       <editor-content :editor="editor" />
