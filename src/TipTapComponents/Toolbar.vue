@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { onMounted, onUnmounted, reactive, ref, withDefaults } from "vue";
+import { reactive, withDefaults } from "vue";
 import { type Editor } from "@tiptap/core";
 
 import Button from "./components/Button.vue";
@@ -96,31 +96,15 @@ const showModal = reactive<{
 
 const { showValues } = props.mergeFields;
 
-const toolbarContainer = ref<HTMLElement | null>(null);
+const advancedPanelId = "tiptap-advanced-toolbar";
 
 const toggleAdvancedPanel = () => {
   showModal.showPanel = !showModal.showPanel;
 };
-
-const closeAdvancedPanelFromOutside = (event: MouseEvent | TouchEvent) => {
-  const target = event.target as Node | null;
-  if (!target || toolbarContainer.value?.contains(target)) return;
-  showModal.showPanel = false;
-};
-
-onMounted(() => {
-  document.addEventListener("mousedown", closeAdvancedPanelFromOutside);
-  document.addEventListener("touchstart", closeAdvancedPanelFromOutside);
-});
-
-onUnmounted(() => {
-  document.removeEventListener("mousedown", closeAdvancedPanelFromOutside);
-  document.removeEventListener("touchstart", closeAdvancedPanelFromOutside);
-});
 </script>
 
 <template>
-  <div ref="toolbarContainer" class="toolbar-container toolbar">
+  <div class="toolbar-container toolbar">
     <!-- Undo/Redo group: always shown, or add extension check if needed -->
     <GroupButtons v-if="hasExtension('history')">
       <Button
@@ -261,15 +245,35 @@ onUnmounted(() => {
         ])
       "
     >
-      <Button text="بیشتر" @click="toggleAdvancedPanel">
-        <v-icon icon="mdi-dots-horizontal" />
+      <Button
+        class="advanced-toggle"
+        :class="{ 'is-expanded': showModal.showPanel }"
+        :text="showModal.showPanel ? 'بستن ابزارهای پیشرفته' : 'نمایش ابزارهای پیشرفته'"
+        :aria-controls="advancedPanelId"
+        :aria-expanded="showModal.showPanel"
+        :aria-pressed="showModal.showPanel"
+        @click="toggleAdvancedPanel"
+      >
+        <span class="advanced-toggle__mark">
+          <v-icon icon="mdi-dots-horizontal" />
+        </span>
+        <span class="advanced-toggle__text">
+          {{ showModal.showPanel ? "بستن" : "بیشتر" }}
+        </span>
+        <span class="advanced-toggle__indicator">
+          <v-icon icon="mdi-chevron-down" />
+        </span>
       </Button>
     </GroupButtons>
 
     <!-- advanced tools -->
     <!-- transition section -->
     <v-expand-transition>
-      <div v-if="showModal.showPanel" class="toolbar">
+      <div
+        v-if="showModal.showPanel"
+        :id="advancedPanelId"
+        class="toolbar advanced-toolbar"
+      >
         <GroupButtons v-if="hasExtension('lineHeight')">
           <LineHeightComponent :editor="editor" />
         </GroupButtons>
@@ -375,6 +379,82 @@ onUnmounted(() => {
       border: none;
     }
   }
+}
+
+:deep(.advanced-toggle) {
+  background: #ffffff;
+  border: 1px solid #b3b7b8;
+  border-radius: 0.5rem !important;
+  box-shadow: inset 0 -1px 0 rgba(15, 23, 42, 0.06);
+  color: #1f2937 !important;
+  gap: 0.4rem;
+  min-height: 2.3rem;
+  min-width: auto;
+  overflow: hidden;
+  padding: 0.2rem 0.35rem 0.2rem 0.6rem !important;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+:deep(.advanced-toggle:hover:not(:disabled)) {
+  background: #f8fafc;
+  border-color: #64748b;
+}
+
+:deep(.advanced-toggle.is-expanded) {
+  background: #ecfeff;
+  border-color: #0891b2;
+  box-shadow: 0 0 0 2px rgba(8, 145, 178, 0.12);
+  color: #0f172a !important;
+}
+
+.advanced-toggle__mark,
+.advanced-toggle__indicator {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.advanced-toggle__mark {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  height: 1.55rem;
+  width: 1.75rem;
+}
+
+:deep(.advanced-toggle.is-expanded) .advanced-toggle__mark {
+  background: #cffafe;
+  border-color: #67e8f9;
+  color: #0e7490;
+}
+
+.advanced-toggle__text {
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+  min-width: 2.1rem;
+}
+
+.advanced-toggle__indicator {
+  color: #64748b;
+  transition: transform 0.16s ease;
+}
+
+:deep(.advanced-toggle.is-expanded) .advanced-toggle__indicator {
+  color: #0e7490;
+  transform: rotate(180deg);
+}
+
+.advanced-toolbar {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
 }
 
 .merge-field-tool-box {

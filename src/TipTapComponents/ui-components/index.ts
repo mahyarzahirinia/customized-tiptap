@@ -56,6 +56,13 @@ export const VBtn = defineComponent({
   },
 });
 
+export const VBtnGroup = defineComponent({
+  name: "VBtnGroup",
+  setup(_, { attrs, slots }) {
+    return () => h("div", { ...attrs, class: ["ct-btn-group", attrs.class] }, slots.default?.());
+  },
+});
+
 export const VTooltip = defineComponent({
   name: "VTooltip",
   props: {
@@ -158,15 +165,45 @@ export const VTextField = defineComponent({
   setup(props, { emit, attrs }) {
     const model = useModel(props, emit);
     return () =>
-      h("label", { class: ["ct-field", attrs.class] }, [
-        props.label && h("span", { class: "ct-field__label" }, props.label),
+      h("label", { class: ["ct-field", "v-field", attrs.class] }, [
+        props.label && h("span", { class: "ct-field__label v-label v-field-label" }, props.label),
         h("input", {
-          class: "ct-field__input",
+          class: "ct-field__input v-field__input",
           autofocus: props.autofocus,
           type: props.type,
           value: model.value ?? "",
           onInput: (event: Event) => {
             model.value = (event.target as HTMLInputElement).value;
+          },
+        }),
+      ]);
+  },
+});
+
+export const VTextarea = defineComponent({
+  name: "VTextarea",
+  props: {
+    modelValue: [String, Number],
+    label: String,
+    autofocus: Boolean,
+    rows: { type: [String, Number], default: 6 },
+    autoGrow: Boolean,
+    readonly: Boolean,
+  },
+  emits: ["update:modelValue"],
+  setup(props, { emit, attrs }) {
+    const model = useModel(props, emit);
+    return () =>
+      h("label", { class: ["ct-field", "ct-textarea", "v-field", attrs.class] }, [
+        props.label && h("span", { class: "ct-field__label v-label v-field-label" }, props.label),
+        h("textarea", {
+          class: "ct-field__input ct-textarea__input v-field__input",
+          autofocus: props.autofocus,
+          readonly: props.readonly,
+          rows: props.rows,
+          value: model.value ?? "",
+          onInput: (event: Event) => {
+            model.value = (event.target as HTMLTextAreaElement).value;
           },
         }),
       ]);
@@ -263,14 +300,14 @@ const SelectBase = defineComponent({
 
     return () =>
       h("div", { ref: root, class: ["ct-select", attrs.class] }, [
-        h("div", { class: "ct-select__control", onClick: () => (open.value = true) }, [
+        h("div", { class: "ct-select__control v-field", onClick: () => (open.value = true) }, [
           props.prependIcon && h(Icon, { icon: props.prependIcon }),
           selectedSlotItem.value &&
             slots.selection?.({
               item: selectedSlotItem.value,
             }),
           h("input", {
-            class: ["ct-select__input", slots.selection && "ct-select__input--with-selection"],
+            class: ["ct-select__input v-field__input", slots.selection && "ct-select__input--with-selection"],
             placeholder: props.label,
             value: slots.selection
               ? query.value
@@ -442,16 +479,25 @@ export const VMenu = defineComponent({
 
 export const VDialog = defineComponent({
   name: "VDialog",
-  props: { modelValue: Boolean, maxWidth: [String, Number] },
+  props: { modelValue: Boolean, maxWidth: [String, Number], minWidth: [String, Number] },
   emits: ["update:modelValue"],
   setup(props, { emit, slots }) {
+    const toCssSize = (value?: string | number) =>
+      typeof value === "number" ? `${value}px` : value;
+
     return () =>
       props.modelValue
         ? h("div", { class: "ct-dialog" }, [
             h("div", { class: "ct-dialog__scrim", onClick: () => emit("update:modelValue", false) }),
             h(
               "div",
-              { class: "ct-dialog__content", style: { maxWidth: typeof props.maxWidth === "number" ? `${props.maxWidth}px` : props.maxWidth } },
+              {
+                class: "ct-dialog__content",
+                style: {
+                  maxWidth: toCssSize(props.maxWidth),
+                  minWidth: toCssSize(props.minWidth),
+                },
+              },
               slots.default?.()
             ),
           ])
@@ -461,8 +507,8 @@ export const VDialog = defineComponent({
 
 export const VCard = defineComponent({
   name: "VCard",
-  setup(_, { slots }) {
-    return () => h("div", { class: "ct-card" }, slots.default?.());
+  setup(_, { attrs, slots }) {
+    return () => h("div", { ...attrs, class: ["ct-card", attrs.class] }, slots.default?.());
   },
 });
 
@@ -544,6 +590,7 @@ export const uiComponents = {
   VApp,
   VAutocomplete,
   VBtn,
+  VBtnGroup,
   VCard,
   VCardActions,
   VCardText,
@@ -569,6 +616,7 @@ export const uiComponents = {
   VSheet,
   VSwitch,
   VTextField,
+  VTextarea,
   VTooltip,
 };
 
