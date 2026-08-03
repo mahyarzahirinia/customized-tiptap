@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { defineProps, ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import type { Editor } from "@tiptap/core";
 
 const props = defineProps<{ editor: Editor }>();
@@ -19,14 +19,21 @@ const applyAlignment = (value: string) => {
   props.editor.chain().focus().setTextAlign(value).run();
 };
 
-watch(
-  () =>
-    props.editor.getAttributes("paragraph").textAlign ||
-    props.editor.getAttributes("heading").textAlign,
-  (value) => {
-    selectedAlignment.value = value;
-  },
-);
+onMounted(() => {
+  props.editor.on("transaction", () => {
+    const { editor } = props;
+
+    // check paragraph alignment
+    const paragraphAlign = editor.getAttributes("paragraph").textAlign;
+    const headingAlign = editor.getAttributes("heading").textAlign;
+
+    const currentAlignment = paragraphAlign || headingAlign || "right";
+
+    if (selectedAlignment.value !== currentAlignment) {
+      selectedAlignment.value = currentAlignment;
+    }
+  });
+});
 </script>
 
 <template>
@@ -61,9 +68,22 @@ watch(
 
 <style scoped lang="scss">
 .a-select {
-  position: relative;
-  bottom: 0.25rem;
-  left: 0;
+  border-left: 1px solid;
+  border-color: rgba(0, 0, 0, 0.12);
+
+  &:deep(.v-field__input),
+  &:deep(.v-field__append-inner) {
+    padding: unset;
+  }
+
+  &:deep(.v-field__append-inner) {
+    transform: translate(0.5rem, 0.3rem);
+  }
+
+  &:deep(.v-field) {
+    border: none !important;
+    background: transparent !important;
+  }
 }
 
 .a-select-item {
@@ -71,9 +91,6 @@ watch(
   gap: 0.25rem;
   align-items: center;
   justify-content: center;
-}
-
-:deep(.v-field__append-inner) {
-  transform: translateX(0.5rem);
+  transform: translateX(-0.5rem);
 }
 </style>

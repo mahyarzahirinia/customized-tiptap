@@ -4,13 +4,10 @@
         color: #1e3a8a;
         margin-left: 0.25rem;
         margin-right: 0.25rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-        line-height: 1.25; /* leading-tight */
+        padding: 0.25rem 0.5rem;
+        line-height: 1.25;
         font-weight: 700;
-        cursor: pointer;
-        font-family: "JetBrainsMono", monospace;
+        font-family: unset;
+        /*font-family: inherit;*/
     }
 }

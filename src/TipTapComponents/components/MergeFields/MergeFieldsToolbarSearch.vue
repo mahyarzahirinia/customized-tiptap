@@ -1,9 +1,10 @@
 <script lang="ts" setup="">
-import { defineProps } from "vue";
+// defineProps is a compiler macro; no runtime import needed
 import { type useMergeFields } from "./useMergeFields";
 
 const props = defineProps<{
   mergeFields: ReturnType<typeof useMergeFields>;
+  loading?: boolean;
 }>();
 
 const {
@@ -24,12 +25,13 @@ const {
     :filter="() => true"
     :items="filteredMergeFields"
     :search="mergeFieldQuery"
+    :loading="loading"
     class="merge-field-input"
     clear-icon="mdi-close"
     clearable
     density="compact"
     item-title="title"
-    item-value="label"
+    item-value="value"
     label="افزودن فیلدها"
     return-object
     variant="plain"

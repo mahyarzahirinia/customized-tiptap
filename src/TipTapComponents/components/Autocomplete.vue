@@ -18,6 +18,14 @@
       <label class="label">افزودن فیلدها</label>
 
       <div class="c-switch-wrapper">
+        <v-progress-circular
+          v-if="loading"
+          indeterminate
+          color="primary"
+          height="3"
+          class="input-progress"
+        />
+
         <v-switch
           v-model="showValues"
           class="c-switch"
@@ -43,7 +51,7 @@
         <ul>
           <li
             v-for="item in group"
-            :key="item.label"
+            :key="item.value"
             @mousedown.prevent="insertManually(item)"
             class="item"
           >
@@ -56,11 +64,12 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits, computed, ref } from "vue";
+import { defineEmits, computed, ref } from "vue";
 import { type useMergeFields } from "./MergeFields/useMergeFields.js";
 
 const props = defineProps<{
   mergeFields: ReturnType<typeof useMergeFields>;
+  loading?: boolean;
 }>();
 
 const {
@@ -100,6 +109,10 @@ const handleBlur = () => {
   position: relative;
   width: 300px;
   font-size: 0.875rem;
+  position: relative;
+}
+
+.input-progress {
 }
 
 .input-container {
@@ -122,6 +135,7 @@ const handleBlur = () => {
 .input {
   width: 100%;
   padding: 0.5rem 0.75rem;
+  padding-bottom: 0.75rem; // Add extra bottom padding for the progress bar
   background: transparent;
   outline: none;
   color: #111827;
@@ -194,13 +208,14 @@ const handleBlur = () => {
   /*transform: translateY(-0.5rem);*/
   /*transform: rotateZ(-90deg);*/
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
 
 .c-switch {
   /*height: 2.5rem;*/
   margin-left: 1.5rem; /* mx-4 => both left and right */
-  margin-right: 1.5rem;
+  //margin-right: 1.5rem;
 }
 </style>

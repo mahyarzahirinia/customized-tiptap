@@ -1,47 +1,61 @@
 import { type EditorProps } from "prosemirror-view";
-import { type EditorOptions } from "@tiptap/vue-3";
-import { MergeFieldType } from "@/TipTapComponents/components/MergeFields/useMergeFields";
+import { type Editor, type EditorOptions } from "@tiptap/vue-3";
+// import { MergeFieldType } from "../components/MergeFields/useMergeFields";
+import { Ref } from "vue";
 
 export type TiptapExtensionName =
-  | "bold"
-  | "italic"
-  | "underline"
-  | "strike"
-  | "code"
-  | "paragraph"
-  | "heading"
-  | "blockquote"
-  | "bulletList"
-  | "orderedList"
-  | "listItem"
-  | "codeBlock"
-  | "hardBreak"
-  | "horizontalRule"
-  | "image"
-  | "link"
+  // Custom extensions
   | "textAlign"
-  | "color"
-  | "highlight"
-  | "subscript"
-  | "superscript"
-  | "table"
-  | "tableRow"
-  | "tableHeader"
-  | "tableCell"
-  | "mergeFields"
-  | "placeholder"
-  | "characterCount"
-  | "history"
-  | "directionWrapper"
-  | "lineHeight"
-  | "indentation"
+  | "linkAnchor"
+  | "idSetter"
+  | "print"
   | "preview"
   | "fullscreen"
-  | "print"
-  | "pageBreak"
-  | "linkAnchor"
+  | "highlight"
+  | "color"
   | "directionWrapper"
-  | "mergeFields";
+  | "listItem"
+  | "orderedList"
+  | "bulletList"
+  | "fontSize"
+  | "link"
+  | "mergeFields"
+  | "pageBreak"
+  | "table"
+  | "customTableRow"
+  | "customTableHeader"
+  | "floatingToolboxPlugin"
+  | "imageResize"
+  | "indentation"
+  | "lineHeight"
+  | "characterCount"
+  | "customTextBlock"
+  // Built-in extensions
+  | "tableCell"
+  | "fontFamily"
+  | "italic"
+  | "strike"
+  | "codeBlockLowlight"
+  | "underline"
+  | "dropcursor"
+  | "gapcursor"
+  | "history"
+  | "textStyle"
+  | "blockquote"
+  | "bold"
+  | "doc"
+  | "heading"
+  | "paragraph"
+  | "text"
+  | "hardBreak"
+  | "horizontalRule"
+  // Additional extensions that might be used
+  | "image"
+  | "tableRow"
+  | "tableHeader"
+  | "placeholder"
+  | "subscript"
+  | "superscript";
 
 export interface TiptapEditorCustomClasses {
   /**
@@ -66,6 +80,38 @@ export interface TiptapEditorCustomClasses {
 }
 
 /**
+ * Allowed preset names for the editor
+ */
+export type TiptapPresetName =
+  | "minimal"
+  | "basic"
+  | "full-feature"
+  | "writing"
+  | "tables";
+
+// New grouped type for merge fields
+export interface GroupedMergeFields {
+  group: string;
+  entries: Array<{
+    title: string;
+    value: string;
+    name?: string;
+  }>;
+}
+
+export interface BasicMergeField {
+  title: string;
+  name?: string;
+  value?: string;
+  label?: string;
+  group?: string;
+}
+
+export type MergeFieldInputType = "default" | "basic";
+
+export type MergeFieldsData = Array<GroupedMergeFields | BasicMergeField>;
+
+/**
  * CustomizedTipTapProps for CustomizedTiptap editor
  */
 export interface CustomizedTipTapProps {
@@ -75,9 +121,9 @@ export interface CustomizedTipTapProps {
   readonly?: boolean;
 
   /**
-   * The HTML content to initialize the editor with.
+   * The HTML content to initialize the editor with 2-way bound.
    */
-  content?: string;
+  modelValue?: string;
 
   /**
    * List of extension names to exclude from the editor.
@@ -107,6 +153,30 @@ export interface CustomizedTipTapProps {
 
   /**
    * Merge Fields Data Array.
+   * Accepts either a flat array (legacy) or a grouped array (preferred).
    */
-  mergeFieldsData?: MergeFieldType[];
+  mergeFieldsData?: MergeFieldsData;
+
+  /**
+   * Controls which merge field input UI to render in the toolbar.
+   * - 'default': grouped merge fields with custom dropdown
+   * - 'basic': flat list using Vuetify autocomplete
+   */
+  inputType?: MergeFieldInputType;
+
+  /**
+   * Exposed ref Instance Of The Editor
+   */
+  editorRef?: Ref<Editor | null>;
+
+  /**
+   * If true, advanced components in the toolbar will be lazy loaded. If false, they will be eagerly loaded.
+   */
+  lazyloadAdvancedComponents?: boolean;
+
+  /**
+   * Name of a preset to load a predefined set of extensions. Overrides included/excludedExtensions if provided.
+   * Supported: 'minimal', 'basic', 'full-feature', 'writing', 'tables'
+   */
+  preset?: TiptapPresetName;
 }

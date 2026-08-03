@@ -30,7 +30,7 @@
               <div class="chars-container">
                 <div v-for="char in filteredCharacters" :key="char.value">
                   <button class="char-btn" @click="insertCharacter(char.value)">
-                    {{ char.value }}
+                    <span v-html="char.value" />
                   </button>
                 </div>
               </div>
@@ -47,9 +47,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineProps } from "vue";
+import { ref, computed } from "vue";
 import Button from "../components/Button.vue";
 import type { Editor } from "@tiptap/core";
+import { useNotifier } from "../notifier/useNotifier";
 
 type Character = { label: string; value: string };
 type CharacterCategories =
@@ -65,6 +66,7 @@ const dialog = ref<boolean>(false);
 const search = ref<string>("");
 const selectedCategory = ref<CharacterCategories>();
 const props = defineProps<{ editor: Editor }>();
+const { notify } = useNotifier();
 
 const categories: { label: string; value: CharacterCategories }[] = [
   { label: "واحد پولی", value: "currency" },
@@ -309,12 +311,13 @@ const filteredCharacters = computed(() => {
   const category = selectedCategory.value || "currency";
   return characters[category].filter(
     (c: Character) =>
-      c.label.includes(search.value) || c.value.includes(search.value),
+      c.label.includes(search.value) || c.value.includes(search.value)
   );
 });
 
 const insertCharacter = (character: string) => {
   props.editor.commands.insertContent(character);
+  notify("کاراکتر موردنظر اعمال شد!");
 };
 </script>
 
@@ -330,8 +333,19 @@ const insertCharacter = (character: string) => {
 }
 .char-btn {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
   font-size: 1.25rem;
   margin: 0.5rem;
+  padding: 0.5rem;
+  width: 30px;
+  height: 30px;
+  line-height: 1;
+  border-radius: 5px;
+  &:hover {
+    background-color: #f1f1f1;
+  }
 }
 .bg-grey-lighten-4 {
   background-color: #f5f5f5;

@@ -1,16 +1,13 @@
 import {
-  Node,
+  Mark,
   mergeAttributes,
   type RawCommands,
   type Editor,
   type SingleCommands,
 } from "@tiptap/core";
 
-export const AnchorExtension = Node.create({
+export const AnchorExtension = Mark.create({
   name: "idSetter",
-  content: "inline*",
-  group: "block",
-  defining: true,
 
   addAttributes() {
     return {
@@ -20,14 +17,10 @@ export const AnchorExtension = Node.create({
     };
   },
 
-  renderHTML({ HTMLAttributes }) {
-    return ["p", mergeAttributes(HTMLAttributes), 0];
-  },
-
   parseHTML() {
     return [
       {
-        tag: "p",
+        tag: "span[id]",
         getAttrs: (dom) => ({
           id: dom.getAttribute("id"),
         }),
@@ -35,31 +28,21 @@ export const AnchorExtension = Node.create({
     ];
   },
 
+  renderHTML({ HTMLAttributes }) {
+    return ["span", mergeAttributes(HTMLAttributes), 0];
+  },
+
   addCommands() {
     return {
       setID:
         (id: string) =>
-        ({
-          commands,
-          editor,
-        }: {
-          editor: Editor;
-          commands: SingleCommands;
-        }) => {
-          const { $from } = editor.state.selection;
-
-          // check if the selection is inside an `idSetter` node
-          if ($from.parent.type.name !== "idSetter") {
-            // wrap selection with `idSetter` if not already inside one
-            commands.wrapIn("idSetter");
-          }
-
-          return commands.updateAttributes(this.name, { id });
+        ({ commands }: { commands: SingleCommands }) => {
+          return commands.setMark(this.name, { id });
         },
       unsetID:
         () =>
         ({ commands }: { commands: SingleCommands }) => {
-          return commands.updateAttributes(this.name, { id: null });
+          return commands.unsetMark(this.name);
         },
     } as Partial<RawCommands>;
   },

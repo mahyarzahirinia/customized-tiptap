@@ -1,9 +1,10 @@
 <script lang="ts" setup="">
-import { defineProps } from "vue";
+import { onMounted } from "vue";
 import { type useMergeFields } from "./useMergeFields";
 
 const props = defineProps<{
   mergeFields: ReturnType<typeof useMergeFields>;
+  loading?: boolean;
 }>();
 
 const {
@@ -26,19 +27,21 @@ const {
     :filter="() => true"
     :items="filteredMergeFields"
     :search="mergeFieldQuery"
+    :loading="loading"
     :style="{
-      top: `${mergeFieldDropdownPosition.y - 10}px`,
+      top: `${mergeFieldDropdownPosition.y - 25}px`,
       left: `${mergeFieldDropdownPosition.x - 160}px`,
     }"
     autofocus
     class="m-autocomplete"
     density="compact"
     item-title="title"
-    item-value="label"
+    item-value="value"
     label=""
     menu
     return-object
     variant="underlined"
+    hide-details
     @update:search="handleSearchUpdate"
     @update:model-value="(obj: any) => insertMergeField(obj)"
     @keydown.enter="handleEnterPress"
@@ -51,10 +54,11 @@ const {
 .m-autocomplete {
   position: absolute;
   background-color: transparent;
-  border: 1px solid;
+  border: 1px solid gray;
   border-radius: 0.375rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   padding: 0.25rem;
   width: 150px;
+  z-index: 9999999999;
 }
 </style>

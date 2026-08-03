@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { defineProps, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
 import { LineHeight } from "../extensions/LineHeightExtension"; // import custom extension if needed
 
@@ -21,6 +21,27 @@ const applyLineHeight = (value: string) => {
 
   props.editor.chain().focus().setLineHeight(value).run();
 };
+
+watch(
+  () => props.editor?.state?.selection, // watch selection changes
+  () => {
+    if (!props.editor) return;
+
+    const editor = props.editor;
+
+    // check if heading is active, else assume paragraph
+    const activeType = editor.isActive("heading") ? "heading" : "paragraph";
+
+    const { lineHeight } = editor.getAttributes(activeType);
+
+    const value = lineHeight || "1";
+
+    if (selectedLineHeight.value !== value) {
+      selectedLineHeight.value = value;
+    }
+  },
+  { immediate: true, deep: true }
+);
 </script>
 
 <template>
@@ -58,11 +79,16 @@ const applyLineHeight = (value: string) => {
 .lh-select {
   position: relative;
   right: 1.25rem;
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
 :deep(.v-field__append-inner) {
   transform: translateX(0.75rem);
+}
+
+:deep(.v-field) {
+  border: none !important;
+  background: transparent !important;
 }
 
 :deep(.v-input__prepend) {

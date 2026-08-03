@@ -1,7 +1,7 @@
 <script lang="ts" setup="">
 import Button from "../components/Button.vue";
 import { Editor, generateHTML } from "@tiptap/core";
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import PreviewModal from "../modals/PreviewModal.vue";
 
 const previewContent = ref<string>("");

@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { defineProps } from "vue";
+// defineProps is a compiler macro; no runtime import needed
 import Button from "../components/Button.vue";
 
 const props = defineProps<{

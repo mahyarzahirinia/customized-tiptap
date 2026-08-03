@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, defineModel } from "vue";
+import { defineModel } from "vue";
 import Button from "../components/Button.vue";
 
 defineProps<{

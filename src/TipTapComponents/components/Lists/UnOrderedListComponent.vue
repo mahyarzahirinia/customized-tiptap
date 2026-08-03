@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { computed, defineProps, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import type { Editor } from "@tiptap/core";
-import { NodeViewWrapper } from "@tiptap/vue-3";
 
 const props = defineProps<{ editor: Editor }>();
 
@@ -38,6 +37,19 @@ const applyAction = (value: string) => {
       .run();
   }
 };
+
+onMounted(() => {
+  props.editor.on("transaction", () => {
+    const { editor } = props;
+
+    // get current list type from bulletList
+    const type = editor.getAttributes("bulletList").typeOfList || "disc";
+
+    if (selectedUnorderedListType.value !== type) {
+      selectedUnorderedListType.value = type;
+    }
+  });
+});
 </script>
 
 <template>
@@ -51,7 +63,6 @@ const applyAction = (value: string) => {
     label=""
     menu-icon="mdi-chevron-down"
     variant="plain"
-    @update:modelValue="applyAction"
   >
     <template v-slot:selection="{ item }">
       <div class="ul-select-item">
@@ -60,11 +71,11 @@ const applyAction = (value: string) => {
     </template>
 
     <template v-slot:item="{ item, props }">
-      <v-list-item v-bind="{ ...props, title: undefined }">
-        <v-icon
-          :icon="item.raw.icon"
-          :disabled="item.value === selectedUnorderedListType"
-        ></v-icon>
+      <v-list-item
+        v-bind="{ ...props, title: undefined }"
+        @click="() => applyAction(item.value)"
+      >
+        <v-icon :icon="item.raw.icon"></v-icon>
       </v-list-item>
     </template>
   </v-select>
@@ -72,9 +83,19 @@ const applyAction = (value: string) => {
 
 <style lang="scss" scoped>
 .ul-select {
-  position: relative;
-  bottom: 0.25rem;
-  left: 0;
+  &:deep(.v-field__input),
+  &:deep(.v-field__append-inner) {
+    padding: unset;
+  }
+
+  &:deep(.v-field__append-inner) {
+    transform: translate(0.5rem, 0.3rem);
+  }
+
+  &:deep(.v-field) {
+    border: none !important;
+    background: transparent !important;
+  }
 }
 
 .ul-select-item {
@@ -82,9 +103,6 @@ const applyAction = (value: string) => {
   gap: 0.25rem;
   align-items: center;
   justify-content: center;
-}
-
-:deep(.v-field__append-inner) {
-  transform: translateX(0.5rem);
+  transform: translateX(-0.5rem);
 }
 </style>

@@ -1,10 +1,6 @@
 /* Style the anchor icon */
-p[id] {
-    color: #1d4ed8 !important;     /* text-blue-700 */
-    margin-left: 0.5rem !important; /* mx-2 */
-    margin-right: 0.5rem !important;
-    cursor: default !important;
-    position: absolute;
+span[id] {
+    color: #1d4ed8 !important;
 }
 
 /* Hide the icon in print & exports */

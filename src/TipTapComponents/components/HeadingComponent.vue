@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { defineProps, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { type Editor } from "@tiptap/core";
 import { type Level } from "@tiptap/extension-heading";
 
@@ -7,7 +7,7 @@ type Levels = 0 | Level;
 
 const props = defineProps<{ editor: Editor }>();
 
-const selectedHeading = ref<number | null>();
+const selectedHeading = ref<number | null>(0);
 const headingOptions = [
   { title: "سرتیتر ۶", value: 6 },
   { title: "سرتیتر ۵", value: 5 },
@@ -31,8 +31,8 @@ const applyHeading = (value: Levels) => {
 watch(
   () => props.editor.getAttributes("heading").level,
   (value) => {
-    selectedHeading.value = value;
-  },
+    selectedHeading.value = value || 0;
+  }
 );
 </script>
 
@@ -67,13 +67,25 @@ watch(
 }
 
 .heading-box {
-  width: 9rem;
-  position: relative;
-  bottom: 0.25rem;
-  right: 0.5rem;
+  width: 12rem;
+  border-left: 1px solid;
+  border-color: rgba(0, 0, 0, 0.12);
+
+  &:deep(.v-field__input) {
+    transform: translate(-1rem, -0.1rem);
+  }
+
+  &:deep(.v-field-label) {
+    transform: translateX(-0.5rem);
+  }
+
+  &:deep(.v-field) {
+    border: none !important;
+    background: transparent !important;
+  }
 
   &:deep(.v-field--active .v-field-label) {
-    background: transparent !important;
+    visibility: hidden;
   }
 }
 </style>

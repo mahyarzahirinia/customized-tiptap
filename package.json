@@ -74,7 +74,8 @@
     "lowlight": "^3.3.0",
     "prosemirror-model": "^1.25.0",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.38.1"
+    "prosemirror-view": "^1.38.1",
+    "tiptap-extension-resize-image": "^1.4.5"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",

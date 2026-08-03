@@ -1,16 +1,16 @@
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import { type EditorView } from "prosemirror-view";
 
 export type MergeFieldType = {
   title: string;
-  label: string;
   value: string;
   group?: string;
+  name?: string;
 } | null;
 
 export function useMergeFields(
   editorRef: any,
-  mergeFieldsInput: MergeFieldType[] = [],
+  mergeFieldsInput: MergeFieldType[] = []
 ) {
   const delimiter = "{{";
   const showValues = ref(false);
@@ -43,10 +43,10 @@ export function useMergeFields(
       .insertContent({
         type: "mergeFields",
         attrs: {
-          label: `${delimiter}${selected.label}}}`,
           title: selected.title,
           value: selected.value,
-          showValues,
+          name: selected.name,
+          showValues: showValues.value,
         },
       })
       .run();
@@ -65,10 +65,10 @@ export function useMergeFields(
       .insertContent({
         type: "mergeFields",
         attrs: {
-          label: `${delimiter}${selected.label}}}`,
           title: selected.title,
           value: selected.value,
-          showValues,
+          name: selected.name,
+          showValues: showValues.value,
         },
       })
       .run();
@@ -78,8 +78,8 @@ export function useMergeFields(
 
   const filteredMergeFields = computed(() =>
     mergeFields.value.filter((field) =>
-      field?.title.includes(mergeFieldQuery.value || ""),
-    ),
+      field?.title.includes(mergeFieldQuery.value || "")
+    )
   );
 
   // to search
@@ -118,7 +118,7 @@ export function useMergeFields(
     const textBeforeCursor = view.state.doc.textBetween(
       cursorPos - 2,
       cursorPos,
-      "",
+      ""
     );
 
     // check for every char when dropdown is open
@@ -136,6 +136,11 @@ export function useMergeFields(
       isDropdownShown.value = false;
     }
   }
+
+  // watch for changes to the switch
+  watch(showValues, (newShowValue) => {
+    editorRef?.value.commands.setAllMergeFieldsShowValues(newShowValue);
+  });
 
   return {
     delimiter,

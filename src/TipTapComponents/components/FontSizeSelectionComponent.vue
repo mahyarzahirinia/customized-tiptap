@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { defineProps, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
 
 const props = defineProps<{ editor: Editor }>();
@@ -23,7 +23,7 @@ const fontSizes = ref([
   { size: "72pt", label: "۷۲" },
 ]);
 
-const selectedFontSize = ref<string | undefined>();
+const selectedFontSize = ref<string | undefined>("12pt");
 
 const applyFontSize = (value: string) => {
   props.editor.chain().focus().setFontSize(value).run();
@@ -32,8 +32,8 @@ const applyFontSize = (value: string) => {
 watch(
   () => props.editor.getAttributes("textStyle").fontSize,
   (value) => {
-    selectedFontSize.value = value;
-  },
+    selectedFontSize.value = value || "24pt";
+  }
 );
 </script>
 
@@ -75,11 +75,22 @@ watch(
 
 .font-size-box {
   width: 5rem;
-  position: relative;
-  bottom: 0.25rem;
+
+  &:deep(.v-field__input) {
+    transform: translate(-1.2rem, -0.1rem);
+  }
+
+  &:deep(.v-field-label) {
+    transform: translateX(-0.5rem);
+  }
+
+  &:deep(.v-field) {
+    border: none !important;
+    background: transparent !important;
+  }
 
   &:deep(.v-field--active .v-field-label) {
-    background: transparent !important;
+    visibility: hidden;
   }
 }
 </style>

@@ -31,13 +31,13 @@ const openDialog = () => {
 
 const applyLink = () => {
   if (url.value) {
-    props.editor.chain().focus().setNode("idSetter").setID(url.value).run();
+    props.editor.chain().focus().setMark("idSetter").setID(url.value).run();
   }
   dialog.value = false;
 };
 
 const unsetLink = () => {
-  props.editor.chain().focus().unsetID().run();
+  props.editor.chain().focus().unsetMark("idSetter").run();
   dialog.value = false;
 };
 </script>

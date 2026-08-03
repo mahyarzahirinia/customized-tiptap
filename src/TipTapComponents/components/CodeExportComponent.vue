@@ -1,7 +1,7 @@
 <script lang="ts" setup="">
 import Button from "../components/Button.vue";
 import type { Editor } from "@tiptap/core";
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import HTMLExportModal from "../modals/HTMLExportModal.vue";
 
 const exportedHtml = ref("");

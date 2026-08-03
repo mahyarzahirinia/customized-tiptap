@@ -66,12 +66,32 @@ export const Indentation = Extension.create({
         attributes: {
           lineIndent: {
             default: "0em",
-            parseHTML: (element) => element.style.marginInlineStart || "0em",
+            parseHTML: (element) => {
+              // try to get margin from either marginLeft or marginInlineStart
+              const margin =
+                element.style.marginLeft ||
+                element.style.marginInlineStart ||
+                element.getAttribute("data-indent");
+
+              if (!margin) return "0em";
+
+              // convert px to em if needed (assuming 1em = 16px)
+              if (margin.endsWith("px")) {
+                const pxValue = parseFloat(margin);
+                return `${pxValue / 16}em`;
+              }
+
+              // return the margin value if it's already in em or other valid units
+              return margin;
+            },
             renderHTML: (attributes) => {
-              if (!attributes.lineIndent || attributes.lineIndent === "0em")
+              if (!attributes.lineIndent || attributes.lineIndent === "0em") {
                 return {};
+              }
+
               return {
-                style: `margin-left: ${attributes.lineIndent}; margin-right: ${attributes.lineIndent};`,
+                style: `margin-left: ${attributes.lineIndent}; margin-inline-start: ${attributes.lineIndent};`,
+                "data-indent": attributes.lineIndent,
               };
             },
           },

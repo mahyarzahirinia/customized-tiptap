@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps } from "vue";
+// defineProps is auto-imported in Vue 3 SFC
 
 defineProps<{
   text?: string;

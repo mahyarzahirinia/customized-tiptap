@@ -12,6 +12,12 @@ declare module "@tiptap/core" {
 export const HighlightExtension = Extension.create({
   name: "highlight",
 
+  addOptions() {
+    return {
+      types: ["textStyle"],
+    };
+  },
+
   addGlobalAttributes() {
     return [
       {
@@ -19,6 +25,7 @@ export const HighlightExtension = Extension.create({
         attributes: {
           backgroundColor: {
             default: null,
+            parseHTML: (element) => element.style.backgroundColor || null,
             renderHTML: (attributes) => {
               if (!attributes.backgroundColor) return {};
               return {

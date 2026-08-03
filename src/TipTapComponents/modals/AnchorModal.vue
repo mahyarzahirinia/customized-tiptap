@@ -1,6 +1,6 @@
 <script lang="ts" setup="">
 import Button from "../components/Button.vue";
-import { defineProps } from "vue";
+// defineProps is a compiler macro; no runtime import needed
 
 const props = defineProps<{
   applyLink: () => void;

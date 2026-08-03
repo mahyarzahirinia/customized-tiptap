@@ -1,9 +1,9 @@
 .tiptap-editor {
-    .ltr {
-        direction: ltr;
+    .ltr p {
+        direction: ltr !important;
     }
 
-    .rtl {
-        direction: rtl;
+    .rtl p {
+        direction: rtl !important;
     }
 }

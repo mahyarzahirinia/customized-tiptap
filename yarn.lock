@@ -309,7 +309,7 @@
     "@tailwindcss/oxide" "4.1.3"
     tailwindcss "4.1.3"
 
-"@tiptap/core@^2.11.5", "@tiptap/core@^2.11.7", "@tiptap/core@^2.7.0":
+"@tiptap/core@^2.0.0 || ^3.0.0", "@tiptap/core@^2.11.5", "@tiptap/core@^2.11.7", "@tiptap/core@^2.7.0":
   version "2.11.7"
   resolved "https://registry.npmjs.org/@tiptap/core/-/core-2.11.7.tgz"
   integrity sha512-zN+NFFxLsxNEL8Qioc+DL6b8+Tt2bmRbXH22Gk6F6nD30x83eaUSFlSv3wqvgyCq3I1i1NO394So+Agmayx6rQ==
@@ -413,7 +413,7 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-horizontal-rule/-/extension-horizontal-rule-2.11.5.tgz"
   integrity sha512-3up2r1Du8/5/4ZYzTC0DjTwhgPI3dn8jhOCLu73m5F3OGvK/9whcXoeWoX103hYMnGDxBlfOje71yQuN35FL4A==
 
-"@tiptap/extension-image@^2.11.5":
+"@tiptap/extension-image@^2.0.0 || ^3.0.0", "@tiptap/extension-image@^2.11.5":
   version "2.11.5"
   resolved "https://registry.npmjs.org/@tiptap/extension-image/-/extension-image-2.11.5.tgz"
   integrity sha512-HbUq9AL8gb8eSuQfY/QKkvMc66ZFN/b6jvQAILGArNOgalUfGizoC6baKTJShaExMSPjBZlaAHtJiQKPaGRHaA==
@@ -505,7 +505,7 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-underline/-/extension-underline-2.11.5.tgz"
   integrity sha512-YpWHXNIkSoRSuzT2cvgKpyJ2tTz3LzqkTM64uC+uTJ8cUkvXIWUWejJR42q8ma/mTlQe4lHff4IQ0Sf58Digtw==
 
-"@tiptap/pm@^2.0.3", "@tiptap/pm@^2.11.5", "@tiptap/pm@^2.7.0":
+"@tiptap/pm@^2.0.0 || ^3.0.0", "@tiptap/pm@^2.0.3", "@tiptap/pm@^2.11.5", "@tiptap/pm@^2.7.0":
   version "2.11.5"
   resolved "https://registry.npmjs.org/@tiptap/pm/-/pm-2.11.5.tgz"
   integrity sha512-z9JFtqc5ZOsdQLd9vRnXfTCQ8v5ADAfRt9Nm7SqP6FUHII8E1hs38ACzf5xursmth/VonJYb5+73Pqxk1hGIPw==
@@ -2784,6 +2784,11 @@ tippy.js@^6.3.7:
   integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
   dependencies:
     "@popperjs/core" "^2.9.0"
+
+tiptap-extension-resize-image@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.npmjs.org/tiptap-extension-resize-image/-/tiptap-extension-resize-image-1.4.5.tgz"
+  integrity sha512-cL1Llsr7zfYs9l5Llgr7l8vDl/iniHQGGwT7y/AQGoLMuwCv8i0+Yfitdko7eiglvqOApACkDol4ADS6ZvrAXw==
 
 to-regex-range@^5.0.1:
   version "5.0.1"

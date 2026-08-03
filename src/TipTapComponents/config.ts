@@ -37,8 +37,6 @@ import { FontFamily } from "@tiptap/extension-font-family";
 import { Text } from "@tiptap/extension-text";
 import { Heading } from "@tiptap/extension-heading";
 import { Paragraph } from "@tiptap/extension-paragraph";
-import { LineHeight } from "./extensions/LineHeightExtension";
-import { Indentation } from "./extensions/IndentionExtension";
 import { Blockquote } from "@tiptap/extension-blockquote";
 import { HorizontalRule } from "@tiptap/extension-horizontal-rule";
 import { HardBreak } from "@tiptap/extension-hard-break";
@@ -55,6 +53,8 @@ import { Dropcursor } from "@tiptap/extension-dropcursor";
 import { Gapcursor } from "@tiptap/extension-gapcursor";
 import { History } from "@tiptap/extension-history";
 // custom extensions
+import { LineHeight } from "./extensions/LineHeightExtension";
+import { Indentation } from "./extensions/IndentionExtension";
 import { FontSizeExtension } from "./extensions/FontSizeExtension";
 import { OrderedListExtension } from "./extensions/Lists/OrderedListExtension";
 import { BulletListExtension } from "./extensions/Lists/BulletListExtension";
@@ -76,10 +76,10 @@ import { CharacterCountExtension } from "./extensions/CharacterCountExtension";
 import { CustomFloatingToolboxPlugin } from "./extensions/FloatingToolBoxExtension";
 import { CustomTableRow } from "./extensions/CustomTableRow";
 import { CustomTableHeader } from "./extensions/CustomTableHeader";
+import { ImageResize } from "tiptap-extension-resize-image";
 
 const defaultExtensions: Array<Extension | Mark | Node> = [
   // Text,
-  // ListItemExtension,
   // Document,
   // DirectionWrapperExtension,
   // TextAlign.configure({ types: ["heading", "paragraph"] }),
@@ -93,6 +93,7 @@ const defaultExtensions: Array<Extension | Mark | Node> = [
   HighlightExtension,
   ColorExtensionExtension,
   DirectionWrapperExtension,
+  ListItemExtension,
   OrderedListExtension,
   BulletListExtension,
   FontSizeExtension,
@@ -103,6 +104,7 @@ const defaultExtensions: Array<Extension | Mark | Node> = [
   CustomTableRow,
   CustomTableHeader,
   CustomFloatingToolboxPlugin,
+  ImageResize,
   // ResizableTableCell,
   // ListItemExtension,
   // CharacterCountExtension,
@@ -113,7 +115,7 @@ const defaultExtensions: Array<Extension | Mark | Node> = [
     maxIndent: 10, // max 10em indent
   }),
   LineHeight.configure({ types: ["paragraph", "heading"] }),
-  Image,
+  // Image,
   // Table,
   // TableHeader,
   // TableRow,
@@ -136,7 +138,7 @@ const defaultExtensions: Array<Extension | Mark | Node> = [
   // BulletList, // customized
   HardBreak,
   HorizontalRule, // customized
-  ListItem, // customized
+  // ListItem, // customized
   // OrderedList, // customized
 ];
 
@@ -147,7 +149,7 @@ export function getExtensions(selectedExtensions?: string[]): Module {
   }
 
   return defaultExtensions.filter((ext) =>
-    selectedExtensions.includes(ext.name || ""),
+    selectedExtensions.includes(ext.name || "")
   );
 }
 
@@ -157,8 +159,81 @@ export function getExcludedExtensions(excludedExtensions?: string[]): Module {
   }
 
   return defaultExtensions.filter(
-    (ext) => !excludedExtensions.includes(ext.name || ""),
+    (ext) => !excludedExtensions.includes(ext.name || "")
   );
+}
+
+// Preset extension sets
+const presetExtensionNames: Record<string, string[]> = {
+  "bare-minimum": ["doc", "text", "paragraph"],
+  minimal: [
+    "doc",
+    "paragraph",
+    "text",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+  ],
+  basic: [
+    "doc",
+    "paragraph",
+    "text",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "heading",
+    "bulletList",
+    "orderedList",
+    "listItem",
+    "history",
+    "hardBreak",
+    "horizontalRule",
+  ],
+  "full-feature": defaultExtensions.map((ext) => ext.name),
+  // Custom preset: writing
+  writing: [
+    "doc",
+    "paragraph",
+    "text",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "heading",
+    "blockquote",
+    "history",
+    "hardBreak",
+    "horizontalRule",
+    "fontFamily",
+    "fontSize",
+    "lineHeight",
+    "indentation",
+  ],
+  // Custom preset: tables
+  tables: [
+    "doc",
+    "paragraph",
+    "text",
+    "tableCell",
+    "table",
+    "tableRow",
+    "tableHeader",
+    "image",
+    "fontFamily",
+    "fontSize",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "history",
+  ],
+};
+
+export function getPresetExtensions(preset: string): Module {
+  const names = presetExtensionNames[preset] || presetExtensionNames["basic"];
+  return defaultExtensions.filter((ext) => names.includes(ext.name));
 }
 
 export { lowlight };

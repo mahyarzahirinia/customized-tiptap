@@ -3,6 +3,8 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import { type Editor } from "@tiptap/vue-3";
 
 export const OrderedListExtension = OrderedList.extend({
+  content: "listItem*",
+
   addAttributes() {
     return {
       ...this.parent?.(),

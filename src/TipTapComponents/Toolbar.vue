@@ -1,76 +1,89 @@
 <script lang="ts" setup="">
-import { defineProps, reactive, ref, defineAsyncComponent } from "vue";
+import { reactive, withDefaults } from "vue";
 import { type Editor } from "@tiptap/core";
 
-import TableComponent from "./components/TableComponent.vue";
 import Button from "./components/Button.vue";
+import GroupButtons from "./components/GroupButtons.vue";
+import TableComponent from "./components/TableComponent.vue";
 import HeadingComponent from "./components/HeadingComponent.vue";
+import AlignmentsComponent from "./components/AlignmentsComponent.vue";
+import LinkComponentComponent from "./components/LinkComponentComponent.vue";
 import FontSelectionComponent from "./components/FontSelectionComponent.vue";
 import FontSizeSelectionComponent from "./components/FontSizeSelectionComponent.vue";
-import AlignmentsComponent from "./components/AlignmentsComponent.vue";
 import OrderedOrderedListComponent from "./components/Lists/OrderedListComponent.vue";
 import UnOrderedOrderedListComponent from "./components/Lists/UnOrderedListComponent.vue";
-import LinkComponentComponent from "./components/LinkComponentComponent.vue";
-import GroupButtons from "./components/GroupButtons.vue";
+import { useLoadComponents } from "./hooks/useLoadComponents";
 // import MergeFieldsToolbarSearch from "./components/MergeFields/MergeFieldsToolbarSearch.vue";
 // import HeadingButtonsComponent from "./components/HeadingButtonsComponent.vue";
-
-const LineHeightComponent = defineAsyncComponent(
-  () => import("./components/LineHeightComponent.vue"),
-);
-const IndentionComponent = defineAsyncComponent(
-  () => import("./components/IndentionComponent.vue"),
-);
-const CodeBlockComponent = defineAsyncComponent(
-  () => import("./components/CodeBlockComponent.vue"),
-);
-const ColorAndHighlightComponent = defineAsyncComponent(
-  () => import("./components/ColorAndHighlightComponent.vue"),
-);
-const EmojisComponent = defineAsyncComponent(
-  () => import("./components/EmojisComponent.vue"),
-);
-const SpecialCharactersComponent = defineAsyncComponent(
-  () => import("./components/SpecialCharactersComponent.vue"),
-);
-const CodeExportComponent = defineAsyncComponent(
-  () => import("./components/CodeExportComponent.vue"),
-);
-const FullscreenComponent = defineAsyncComponent(
-  () => import("./components/FullscreenComponent.vue"),
-);
-const Preview = defineAsyncComponent(
-  () => import("./components/PreviewComponent.vue"),
-);
-const PageBreakComponent = defineAsyncComponent(
-  () => import("./components/PageBreakComponent.vue"),
-);
-const AnchorComponent = defineAsyncComponent(
-  () => import("./components/AnchorComponent.vue"),
-);
-const DirectionComponent = defineAsyncComponent(
-  () => import("./components/DirectionComponent.vue"),
-);
-const MergeFieldsHiddenInlineSearch = defineAsyncComponent(
-  () => import("./components/MergeFields/MergeFieldsHiddenInlineSearch.vue"),
-);
-const Autocomplete = defineAsyncComponent(
-  () => import("./components/Autocomplete.vue"),
-);
-
 import { type useMergeFields } from "./components/MergeFields/useMergeFields";
 import { type Module } from "./config";
+import { type MergeFieldInputType } from "./types/CustomizedTipTapProps";
+import MergeFieldsMergeFieldsHiddenInlineSearch from "./components/MergeFields/MergeFieldsHiddenInlineSearch.vue";
 
-const props = defineProps<{
-  editor: Editor;
-  mergeFields: ReturnType<typeof useMergeFields>;
-  extensions: Module;
-}>();
+/* ========================= options ========================= */
+defineOptions({ name: "Toolbar" });
+
+const props = withDefaults(
+  defineProps<{
+    editor: Editor;
+    mergeFields: ReturnType<typeof useMergeFields>;
+    extensions: Module;
+    lazyloadAdvancedComponents: boolean;
+    mergeFieldsLoading?: boolean;
+    mergeFieldInputType?: MergeFieldInputType;
+  }>(),
+  {
+    mergeFieldInputType: "default",
+  }
+);
+
+const {
+  LineHeightComponent,
+  IndentionComponent,
+  CodeBlockComponent,
+  ColorAndHighlightComponent,
+  EmojisComponent,
+  SpecialCharactersComponent,
+  CodeExportComponent,
+  FullscreenComponent,
+  PreviewComponent,
+  PageBreakComponent,
+  AnchorComponent,
+  DirectionComponent,
+  MergeFieldsBasicAutocompleteComponent,
+  MergeFieldsDefaultAutocompleteComponent,
+} = useLoadComponents({
+  settings: { lazyLoad: props.lazyloadAdvancedComponents },
+  components: [
+    "LineHeightComponent",
+    "IndentionComponent",
+    "CodeBlockComponent",
+    "ColorAndHighlightComponent",
+    "EmojisComponent",
+    "SpecialCharactersComponent",
+    "CodeExportComponent",
+    "FullscreenComponent",
+    "PreviewComponent",
+    "PageBreakComponent",
+    "AnchorComponent",
+    "DirectionComponent",
+    "MergeFieldsBasicAutocompleteComponent",
+    "MergeFieldsDefaultAutocompleteComponent",
+  ],
+});
 
 const extensionNames = new Set(props.extensions.map((ext) => ext.name));
 
 function hasExtension(name: string): boolean {
   return extensionNames.has(name);
+}
+
+function hasAnyExtension(names: string[]): boolean {
+  return names.some((name) => extensionNames.has(name));
+}
+
+function hasAllExtensions(names: string[]): boolean {
+  return names.every((name) => extensionNames.has(name));
 }
 
 const showModal = reactive<{
@@ -86,7 +99,8 @@ const { showValues } = props.mergeFields;
 
 <template>
   <div class="toolbar-container toolbar">
-    <GroupButtons>
+    <!-- Undo/Redo group: always shown, or add extension check if needed -->
+    <GroupButtons v-if="hasExtension('history')">
       <Button
         :disabled="!props.editor.can().chain().focus().undo().run()"
         text="بازگشت"
@@ -103,10 +117,12 @@ const { showValues } = props.mergeFields;
       </Button>
     </GroupButtons>
 
-    <GroupButtons>
+    <!-- Break/Clear group: always shown, or add extension check if needed -->
+    <GroupButtons v-if="hasExtension('hardBreak')">
       <Button
         text="شکستن خط"
         @click="props.editor.chain().focus().setHardBreak().run()"
+        v-if="hasExtension('hardBreak')"
       >
         <v-icon icon="mdi-keyboard-return" />
       </Button>
@@ -118,13 +134,25 @@ const { showValues } = props.mergeFields;
       </Button>
     </GroupButtons>
 
-    <div class="tools-group">
-      <HeadingComponent :editor="editor" />
-      <FontSelectionComponent :editor="editor" />
-      <FontSizeSelectionComponent :editor="editor" />
+    <div
+      class="tools-group"
+      style="width: 18rem; height: 2.3rem"
+      v-if="hasAnyExtension(['heading', 'fontFamily', 'fontSize'])"
+    >
+      <HeadingComponent :editor="editor" v-if="hasExtension('heading')" />
+      <FontSelectionComponent
+        :editor="editor"
+        v-if="hasExtension('fontFamily')"
+      />
+      <FontSizeSelectionComponent
+        :editor="editor"
+        v-if="hasExtension('fontSize')"
+      />
     </div>
 
-    <GroupButtons>
+    <GroupButtons
+      v-if="hasAnyExtension(['bold', 'italic', 'underline', 'strike'])"
+    >
       <Button
         v-if="hasExtension('bold')"
         :class="{ 'is-active': props.editor.isActive('bold') }"
@@ -152,7 +180,6 @@ const { showValues } = props.mergeFields;
       >
         <v-icon icon="mdi-format-underline" />
       </Button>
-
       <Button
         v-if="hasExtension('strike')"
         :class="{ 'is-active': props.editor.isActive('strike') }"
@@ -164,30 +191,60 @@ const { showValues } = props.mergeFields;
       </Button>
     </GroupButtons>
 
-    <div class="tools-group">
+    <div
+      class="tools-group"
+      style="width: 13rem; height: 2.3rem"
+      v-if="
+        hasAnyExtension(['textAlign', 'orderedList', 'bulletList', 'listItem'])
+      "
+    >
       <AlignmentsComponent :editor="editor" v-if="hasExtension('textAlign')" />
       <OrderedOrderedListComponent
         :editor="editor"
-        v-if="hasExtension('orderedList')"
+        v-if="hasAllExtensions(['orderedList', 'listItem'])"
       />
       <UnOrderedOrderedListComponent
         :editor="editor"
-        v-if="hasExtension('bulletList')"
+        v-if="hasAllExtensions(['bulletList', 'listItem'])"
       />
     </div>
 
-    <GroupButtons>
+    <GroupButtons v-if="hasAnyExtension(['link', 'table'])">
       <LinkComponentComponent :editor="editor" v-if="hasExtension('link')" />
-      <TableComponent :editor="editor" v-if="hasExtension('table')" />
+      <TableComponent
+        :editor="editor"
+        v-if="
+          hasAllExtensions(['table', 'tableRow', 'tableCell', 'tableHeader'])
+        "
+      />
     </GroupButtons>
 
     <!-- toggle transition -->
-    <GroupButtons>
+    <GroupButtons
+      v-if="
+        hasAnyExtension([
+          'lineHeight',
+          'indentation',
+          'codeBlockLowlight',
+          'color',
+          'specialCharacters',
+          'emojis',
+          'codeExport',
+          'fullscreen',
+          'preview',
+          'pageBreak',
+          'linkAnchor',
+          'directionWrapper',
+          'mergeFields',
+        ])
+      "
+    >
       <Button text="بیشتر" @click="showModal.showPanel = !showModal.showPanel">
         <v-icon icon="mdi-dots-horizontal" />
       </Button>
     </GroupButtons>
 
+    <!-- advanced tools -->
     <!-- transition section -->
     <v-expand-transition>
       <div v-if="showModal.showPanel" class="toolbar">
@@ -198,10 +255,10 @@ const { showValues } = props.mergeFields;
           <IndentionComponent :editor="editor" />
         </GroupButtons>
 
-        <GroupButtons>
+        <GroupButtons v-if="hasAnyExtension(['codeBlockLowlight', 'color'])">
           <CodeBlockComponent
             :editor="editor"
-            v-if="hasExtension('codeBlock')"
+            v-if="hasExtension('codeBlockLowlight')"
           />
           <ColorAndHighlightComponent
             :editor="editor"
@@ -209,60 +266,64 @@ const { showValues } = props.mergeFields;
           />
         </GroupButtons>
 
-        <GroupButtons>
-          <SpecialCharactersComponent :editor="editor" />
-          <EmojisComponent :editor="editor" />
+        <GroupButtons v-if="hasAnyExtension(['specialCharacters', 'emojis'])">
+          <SpecialCharactersComponent
+            v-if="hasExtension('specialCharacters')"
+            :editor="editor"
+          />
+          <EmojisComponent v-if="hasExtension('emojis')" :editor="editor" />
         </GroupButtons>
 
-        <GroupButtons>
-          <CodeExportComponent :editor="editor" />
+        <GroupButtons
+          v-if="hasAnyExtension(['codeExport', 'fullscreen', 'preview'])"
+        >
+          <CodeExportComponent
+            v-if="hasExtension('codeExport')"
+            :editor="editor"
+          />
           <FullscreenComponent
             :editor="editor"
             v-if="hasExtension('fullscreen')"
           />
-          <Preview :editor="editor" v-if="hasExtension('lineHeight')" />
+          <PreviewComponent :editor="editor" v-if="hasExtension('preview')" />
         </GroupButtons>
 
-        <GroupButtons>
-          <Button disabled text="ذخیره" @click="">
-            <v-icon icon="mdi-content-save-outline" />
-          </Button>
-          <Button
-            text="چاپ"
-            @click="editor.commands.print()"
-            v-if="hasExtension('print')"
-          >
-            <v-icon icon="mdi-printer" />
-          </Button>
-        </GroupButtons>
-
-        <GroupButtons>
+        <GroupButtons v-if="hasAnyExtension(['pageBreak', 'linkAnchor'])">
           <PageBreakComponent
             :editor="editor"
             v-if="hasExtension('pageBreak')"
           />
-          <AnchorComponent :editor="editor" v-if="hasExtension('linkAnchor')" />
+          <AnchorComponent
+            :editor="editor"
+            v-if="hasExtension('linkAnchor')"
+          />
         </GroupButtons>
 
-        <GroupButtons>
+        <GroupButtons v-if="hasExtension('directionWrapper')">
           <DirectionComponent
             :editor="editor"
             v-if="hasExtension('directionWrapper')"
           />
         </GroupButtons>
 
-        <!--        <MergeFieldsToolbarSearch-->
-        <!--          :editor="editor"-->
-        <!--          :mergeFields="props.mergeFields"-->
-        <!--        />-->
-        <MergeFieldsHiddenInlineSearch
+        <MergeFieldsMergeFieldsHiddenInlineSearch
           :editor="editor"
           :mergeFields="props.mergeFields"
+          :loading="props.mergeFieldsLoading"
           v-if="hasExtension('mergeFields')"
         />
 
         <div class="merge-field-tool-box" v-if="hasExtension('mergeFields')">
-          <Autocomplete :editor="editor" :mergeFields="props.mergeFields" />
+          <MergeFieldsDefaultAutocompleteComponent
+            v-if="props.mergeFieldInputType !== 'basic'"
+            :merge-fields="props.mergeFields"
+            :loading="props.mergeFieldsLoading"
+          />
+          <MergeFieldsBasicAutocompleteComponent
+            v-else
+            :merge-fields="props.mergeFields"
+            :loading="props.mergeFieldsLoading"
+          />
         </div>
       </div>
     </v-expand-transition>
@@ -282,23 +343,21 @@ const { showValues } = props.mergeFields;
   width: 100%; /* w-full */
 
   .tools-group {
-    width: 15rem; /* w-60 */
     display: flex; /* flex */
     gap: 0.25rem; /* gap-1 */
-    padding: 0.125rem; /* p-0.5 */
     border: 1px solid #b3b7b8; /* border + border-gray-200 */
     border-radius: 0.375rem; /* rounded-md */
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
     background-color: white;
+
+    & > .v-field {
+      border: none;
+    }
   }
 }
 
 .merge-field-tool-box {
   display: flex; /* flex */
   align-items: center; /* items-center */
-  margin-left: 0.5rem; /* mx-2 => both left and right */
-  margin-right: 0.5rem;
   max-height: 2rem; /* max-h-12 */
 
   .merge-field-input {
