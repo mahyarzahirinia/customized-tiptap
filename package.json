@@ -114,6 +114,5 @@
   },
   "bugs": {
     "url": "https://github.com/mahyarzahirinia/customized-tiptap/issues"
-  },
-  "packageManager": "yarn"
+  }
 }
