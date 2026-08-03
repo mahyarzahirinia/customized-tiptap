@@ -439,3 +439,284 @@ Object.entries(groups)
 NODE
 ```
 
+## Proposed Solutions
+
+This section turns the findings above into concrete implementation options.
+
+### Solution 1. Remove `lowlight/all`
+
+This is the fastest JavaScript bundle-size win.
+
+Change `src/TipTapComponents/config.ts` from:
+
+```ts
+import { all, createLowlight } from "lowlight";
+
+const lowlight = createLowlight(all);
+lowlight.register("html", html);
+lowlight.register("css", css);
+lowlight.register("js", js);
+lowlight.register("ts", ts);
+```
+
+To:
+
+```ts
+import { createLowlight } from "lowlight";
+import css from "highlight.js/lib/languages/css";
+import js from "highlight.js/lib/languages/javascript";
+import ts from "highlight.js/lib/languages/typescript";
+import html from "highlight.js/lib/languages/xml";
+
+const lowlight = createLowlight();
+lowlight.register("html", html);
+lowlight.register("css", css);
+lowlight.register("js", js);
+lowlight.register("ts", ts);
+```
+
+Expected result:
+
+- Removes unused Highlight.js language modules.
+- Keeps highlighting for HTML, CSS, JavaScript, and TypeScript.
+- Should significantly reduce `dist/customized-tiptap.js`.
+
+Follow-up option:
+
+Expose a helper so consumers can provide their own `lowlight` instance or language list if they need more languages.
+
+### Solution 2. Split Fonts Out of the Default Library CSS
+
+The package should not force every consumer to download all bundled fonts.
+
+Recommended structure:
+
+```text
+src/TipTapComponents/styles/editor.css
+src/assets/fonts.css
+src/assets/main.css
+```
+
+Suggested responsibility:
+
+| File | Purpose |
+| --- | --- |
+| `src/TipTapComponents/styles/editor.css` | Required editor layout/styles only |
+| `src/assets/fonts.css` | Optional bundled font declarations |
+| `src/assets/main.css` | Compatibility entry, or demo-only wrapper |
+
+Then update `src/TipTapComponents/config.ts` so it does not import all fonts by default:
+
+```ts
+// Before
+import "../assets/main.css";
+
+// After
+import "./styles/editor.css";
+```
+
+Then expose optional font CSS from `package.json`:
+
+```json
+{
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/customized-tiptap.js",
+      "require": "./dist/customized-tiptap.umd.cjs"
+    },
+    "./dist/style.css": "./dist/style.css",
+    "./dist/fonts.css": "./dist/fonts.css"
+  }
+}
+```
+
+Expected result:
+
+- Default CSS becomes much smaller.
+- Consumers can opt into the package fonts only when needed.
+- Apps that already have their own font system avoid duplicate font downloads.
+
+### Solution 3. Keep Only `woff2` Font Files
+
+If bundled fonts are still needed, use only modern `woff2` files.
+
+Current pattern:
+
+```css
+@font-face {
+  font-family: vazir-medium;
+  src: url("fonts/Vazir/Vazir-Medium.eot");
+  src:
+    url("fonts/Vazir/Vazir-Medium.eot?#iefix") format("FontName-opentype"),
+    url("fonts/Vazir/Vazir-Medium.woff") format("woff"),
+    url("fonts/Vazir/Vazir-Medium.woff2") format("woff2"),
+    url("fonts/Vazir/Vazir-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+```
+
+Recommended pattern:
+
+```css
+@font-face {
+  font-family: vazir-medium;
+  src: url("fonts/Vazir/Vazir-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+```
+
+Also consider reducing the default font list:
+
+- Keep only the default editor font.
+- Move extra families such as Yekan, Sahel, and Samim to optional CSS files.
+- Avoid shipping both normal and Persian-number variants unless both are actively needed.
+
+Expected result:
+
+- Removes repeated legacy font payload.
+- Reduces CSS size by multiple megabytes if combined with Solution 2.
+
+### Solution 4. Prevent Font Inlining in Library Builds
+
+If fonts must remain in the package, configure Vite to emit them as separate assets instead of inlining them into `style.css`.
+
+Add or adjust `build.assetsInlineLimit` in `vite.config.ts`:
+
+```ts
+build: IS_DEMO
+  ? undefined
+  : {
+      assetsInlineLimit: 0,
+      cssMinify: true,
+      outDir: libDir,
+      minify: "esbuild",
+      lib: {
+        entry: path.resolve(srcDir, "index.ts"),
+        name: "CustomizedTipTap",
+        fileName: "customized-tiptap",
+      },
+      rollupOptions: {
+        external: ["vue", "vuetify", "@mdi/font", "tailwindcss"],
+      },
+    },
+```
+
+Expected result:
+
+- CSS file becomes smaller.
+- Font files may appear as separate files under `dist/assets`.
+- Total published package size may still be large unless unused formats/families are removed.
+
+Important note:
+
+This improves CSS delivery shape but does not remove the font bytes from the package. It should be combined with Solution 2 or Solution 3.
+
+### Solution 5. Externalize Editor Runtime Dependencies
+
+For a library package, it is usually better to externalize major framework/runtime dependencies and declare them as peers.
+
+Create a helper in `vite.config.ts`:
+
+```ts
+const externalPackages = [
+  "vue",
+  "lowlight",
+  "highlight.js",
+  "tiptap-extension-resize-image",
+  /^@tiptap\//,
+  /^prosemirror-/,
+];
+```
+
+Then use it in Rollup:
+
+```ts
+rollupOptions: {
+  external: externalPackages,
+  output: {
+    globals: {
+      vue: "Vue",
+    },
+  },
+}
+```
+
+Expected result:
+
+- Much smaller package JS output.
+- Tiptap/ProseMirror code is not duplicated across consuming apps.
+
+Tradeoff:
+
+- Consumers must install compatible versions.
+- `peerDependencies` should be updated to include the externalized packages.
+- Documentation should clearly list required peer installs.
+
+This solution is best if the package is meant to behave like a reusable editor library. If the package is meant to be a fully self-contained widget, keep dependencies bundled but still apply the `lowlight/all` and font fixes.
+
+### Solution 6. Offer a Minimal Build Entry
+
+The current default entry pulls in the full default extension set. A minimal entry can let consumers choose the extension bundle they want.
+
+Example package exports:
+
+```json
+{
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/customized-tiptap.js",
+      "require": "./dist/customized-tiptap.umd.cjs"
+    },
+    "./minimal": {
+      "types": "./dist/minimal.d.ts",
+      "import": "./dist/minimal.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  }
+}
+```
+
+Example minimal entry:
+
+```ts
+export { CustomizedTipTap } from "./TipTapComponents/CustomizedTipTap.vue";
+export type { CustomizedTipTapProps } from "./TipTapComponents/types/CustomizedTipTapProps";
+```
+
+Expected result:
+
+- Consumers that provide their own extensions avoid importing the package's full default extension config.
+- More advanced consumers can optimize their own bundles.
+
+Tradeoff:
+
+- Slightly more API/documentation surface.
+- Requires careful export design so existing users are not broken.
+
+### Recommended Implementation Plan
+
+Do these in order:
+
+1. Replace `createLowlight(all)` with explicit language registration.
+2. Move bundled fonts out of the default runtime import.
+3. Reduce any retained bundled fonts to `woff2` only.
+4. Add `assetsInlineLimit: 0` if any font files remain referenced from CSS.
+5. Decide whether Tiptap/ProseMirror should be peer-externalized.
+6. Rebuild and compare:
+
+```sh
+npm run build -- --sourcemap
+du -sh dist/*
+```
+
+Expected best outcome:
+
+- `dist/style.css` drops from megabytes to a much smaller stylesheet.
+- `dist/customized-tiptap.js` drops substantially after removing `lowlight/all`.
+- If editor dependencies are externalized, the JavaScript bundle becomes much smaller again.
+
