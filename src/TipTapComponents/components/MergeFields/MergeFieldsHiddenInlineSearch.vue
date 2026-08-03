@@ -1,5 +1,4 @@
 <script lang="ts" setup="">
-import { onMounted } from "vue";
 import { type useMergeFields } from "./useMergeFields";
 
 const props = defineProps<{
@@ -39,6 +38,7 @@ const {
     item-value="value"
     label=""
     menu
+    :menu-props="{ contentClass: 'merge-field-inline-menu' }"
     return-object
     variant="underlined"
     hide-details
@@ -60,5 +60,20 @@ const {
   padding: 0.25rem;
   width: 150px;
   z-index: 9999999999;
+  font-family: var(--tiptap-editor-font);
+}
+
+.m-autocomplete :deep(.v-field),
+.m-autocomplete :deep(.v-field__input),
+.m-autocomplete :deep(.v-label),
+.m-autocomplete :deep(input) {
+  font-family: var(--tiptap-editor-font);
+}
+
+:global(.merge-field-inline-menu),
+:global(.merge-field-inline-menu .v-list),
+:global(.merge-field-inline-menu .v-list-item),
+:global(.merge-field-inline-menu .v-list-item-title) {
+  font-family: var(--tiptap-editor-font);
 }
 </style>
