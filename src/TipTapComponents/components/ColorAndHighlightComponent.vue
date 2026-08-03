@@ -1,14 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import type { Editor } from "@tiptap/core";
-import {
-  VDialog,
-  VSheet,
-  VIcon,
-  VBtn,
-  VMenu,
-  VColorPicker,
-} from "vuetify/components";
 import Button from "../components/Button.vue";
 import ColorModal from "../modals/ColorModal.vue";
 
@@ -119,12 +111,11 @@ const unsetAllMarks = () => {
     </Button>
 
     <!-- Color Picker Menu -->
-    <v-menu
+    <div
       v-if="showColorPicker || showHighlightPicker"
-      activator="parent"
-      location="bottom"
+      class="color-menu"
     >
-      <v-sheet class="color-container">
+      <div class="color-container">
         <!-- Color grid -->
         <div class="color-grid">
           <button
@@ -143,8 +134,8 @@ const unsetAllMarks = () => {
             <v-icon icon="mdi-palette" />
           </button>
         </div>
-      </v-sheet>
-    </v-menu>
+      </div>
+    </div>
 
     <!-- Advanced color picker modal -->
     <ColorModal
@@ -169,6 +160,17 @@ const unsetAllMarks = () => {
 .color-container {
   background-color: #fff;
   border-radius: 0.375rem;
+}
+
+.color-menu {
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+  padding: 0.25rem;
+  position: absolute;
+  top: 100%;
+  z-index: 999999;
 }
 
 .color-grid {

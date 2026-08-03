@@ -1,5 +1,5 @@
 <script lang="ts" setup="">
-import { reactive, withDefaults } from "vue";
+import { onMounted, onUnmounted, reactive, ref, withDefaults } from "vue";
 import { type Editor } from "@tiptap/core";
 
 import Button from "./components/Button.vue";
@@ -95,10 +95,32 @@ const showModal = reactive<{
 });
 
 const { showValues } = props.mergeFields;
+
+const toolbarContainer = ref<HTMLElement | null>(null);
+
+const toggleAdvancedPanel = () => {
+  showModal.showPanel = !showModal.showPanel;
+};
+
+const closeAdvancedPanelFromOutside = (event: MouseEvent | TouchEvent) => {
+  const target = event.target as Node | null;
+  if (!target || toolbarContainer.value?.contains(target)) return;
+  showModal.showPanel = false;
+};
+
+onMounted(() => {
+  document.addEventListener("mousedown", closeAdvancedPanelFromOutside);
+  document.addEventListener("touchstart", closeAdvancedPanelFromOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("mousedown", closeAdvancedPanelFromOutside);
+  document.removeEventListener("touchstart", closeAdvancedPanelFromOutside);
+});
 </script>
 
 <template>
-  <div class="toolbar-container toolbar">
+  <div ref="toolbarContainer" class="toolbar-container toolbar">
     <!-- Undo/Redo group: always shown, or add extension check if needed -->
     <GroupButtons v-if="hasExtension('history')">
       <Button
@@ -239,7 +261,7 @@ const { showValues } = props.mergeFields;
         ])
       "
     >
-      <Button text="بیشتر" @click="showModal.showPanel = !showModal.showPanel">
+      <Button text="بیشتر" @click="toggleAdvancedPanel">
         <v-icon icon="mdi-dots-horizontal" />
       </Button>
     </GroupButtons>
