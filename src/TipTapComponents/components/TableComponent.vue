@@ -72,86 +72,86 @@ const runTableAction = (action: () => void) => {
     <v-icon icon="mdi-table" />
   </Button>
 
-  <div v-else class="table-menu" :dir="dir">
-    <section class="table-menu__section table-menu__section--primary">
-      <button class="table-menu__action" type="button" @click="runTableAction(insertTable)">
+  <div v-else class="table-tools" :dir="dir">
+    <section class="table-tools__group table-tools__group--primary" :aria-label="t('table')">
+      <button class="table-tools__button table-tools__button--wide" type="button" @click="runTableAction(insertTable)">
         <v-icon icon="mdi-table-plus" />
         <span>{{ t("addTable") }}</span>
       </button>
-      <button class="table-menu__action table-menu__action--danger" type="button" @click="runTableAction(deleteTable)">
+      <button class="table-tools__button table-tools__button--danger table-tools__button--wide" type="button" @click="runTableAction(deleteTable)">
         <v-icon icon="mdi-table-remove" />
         <span>{{ t("deleteTable") }}</span>
       </button>
     </section>
 
-    <section class="table-menu__section">
-      <h3 class="table-menu__title">{{ t("columnManagement") }}</h3>
-      <div class="table-menu__grid">
-        <button class="table-menu__action" type="button" @click="runTableAction(addColumnBefore)">
+    <section class="table-tools__group" :aria-label="t('columnManagement')">
+      <h3 class="table-tools__title">{{ t("columnManagement") }}</h3>
+      <div class="table-tools__buttons">
+        <button class="table-tools__button" type="button" @click="runTableAction(addColumnBefore)">
           <v-icon icon="mdi-table-column-plus-before" />
           <span>{{ t("addColumnBefore") }}</span>
         </button>
-        <button class="table-menu__action" type="button" @click="runTableAction(addColumnAfter)">
+        <button class="table-tools__button" type="button" @click="runTableAction(addColumnAfter)">
           <v-icon icon="mdi-table-column-plus-after" />
           <span>{{ t("addColumnAfter") }}</span>
         </button>
-        <button class="table-menu__action" type="button" @click="runTableAction(deleteColumn)">
+        <button class="table-tools__button table-tools__button--danger" type="button" @click="runTableAction(deleteColumn)">
           <v-icon icon="mdi-table-column-remove" />
           <span>{{ t("deleteColumn") }}</span>
         </button>
       </div>
     </section>
 
-    <section class="table-menu__section">
-      <h3 class="table-menu__title">{{ t("rowManagement") }}</h3>
-      <div class="table-menu__grid">
-        <button class="table-menu__action" type="button" @click="runTableAction(addRowBefore)">
+    <section class="table-tools__group" :aria-label="t('rowManagement')">
+      <h3 class="table-tools__title">{{ t("rowManagement") }}</h3>
+      <div class="table-tools__buttons">
+        <button class="table-tools__button" type="button" @click="runTableAction(addRowBefore)">
           <v-icon icon="mdi-table-row-plus-before" />
           <span>{{ t("addRowBefore") }}</span>
         </button>
-        <button class="table-menu__action" type="button" @click="runTableAction(addRowAfter)">
+        <button class="table-tools__button" type="button" @click="runTableAction(addRowAfter)">
           <v-icon icon="mdi-table-row-plus-after" />
           <span>{{ t("addRowAfter") }}</span>
         </button>
-        <button class="table-menu__action" type="button" @click="runTableAction(deleteRow)">
+        <button class="table-tools__button table-tools__button--danger" type="button" @click="runTableAction(deleteRow)">
           <v-icon icon="mdi-table-row-remove" />
           <span>{{ t("deleteRow") }}</span>
         </button>
       </div>
     </section>
 
-    <section class="table-menu__section">
-      <h3 class="table-menu__title">{{ t("cellManagement") }}</h3>
-      <div class="table-menu__grid">
-        <button class="table-menu__action" type="button" @click="runTableAction(mergeCells)">
+    <section class="table-tools__group table-tools__group--cells" :aria-label="t('cellManagement')">
+      <h3 class="table-tools__title">{{ t("cellManagement") }}</h3>
+      <div class="table-tools__buttons">
+        <button class="table-tools__button" type="button" @click="runTableAction(mergeCells)">
           <v-icon icon="mdi-table-merge-cells" />
           <span>{{ t("mergeCells") }}</span>
         </button>
-        <button class="table-menu__action" type="button" @click="runTableAction(splitCell)">
+        <button class="table-tools__button" type="button" @click="runTableAction(splitCell)">
           <v-icon icon="mdi-table-split-cell" />
           <span>{{ t("splitCell") }}</span>
         </button>
-        <button class="table-menu__action" type="button" @click="runTableAction(mergeOrSplit)">
+        <button class="table-tools__button" type="button" @click="runTableAction(mergeOrSplit)">
           <v-icon icon="mdi-table" />
           <span>{{ t("mergeOrSplit") }}</span>
         </button>
-        <button class="table-menu__action" type="button" @click="runTableAction(setCellAttribute)">
+        <button class="table-tools__button" type="button" @click="runTableAction(setCellAttribute)">
           <v-icon icon="mdi-table-column-width" />
           <span>{{ t("setCellAttribute") }}</span>
         </button>
       </div>
     </section>
 
-    <section class="table-menu__section table-menu__section--compact">
-      <button class="table-menu__action" type="button" @click="runTableAction(fixTables)">
+    <section class="table-tools__group table-tools__group--navigation" :aria-label="t('table')">
+      <button class="table-tools__button" type="button" @click="runTableAction(fixTables)">
         <v-icon icon="mdi-table-refresh" />
         <span>{{ t("fixTable") }}</span>
       </button>
-      <button class="table-menu__action" type="button" @click="runTableAction(goToNextCell)">
+      <button class="table-tools__button" type="button" @click="runTableAction(goToNextCell)">
         <v-icon :icon="isRtl ? 'mdi-chevron-left-box' : 'mdi-chevron-right-box'" />
         <span>{{ t("nextCell") }}</span>
       </button>
-      <button class="table-menu__action" type="button" @click="runTableAction(goToPreviousCell)">
+      <button class="table-tools__button" type="button" @click="runTableAction(goToPreviousCell)">
         <v-icon :icon="isRtl ? 'mdi-chevron-right-box' : 'mdi-chevron-left-box'" />
         <span>{{ t("previousCell") }}</span>
       </button>
@@ -160,88 +160,105 @@ const runTableAction = (action: () => void) => {
 </template>
 
 <style scoped lang="scss">
-.table-menu {
-  display: grid;
-  gap: 0.65rem;
+.table-tools {
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   font-family: var(--tiptap-editor-font);
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   width: 100%;
 }
 
-.table-menu__section {
-  display: grid;
-  gap: 0.4rem;
-  padding: 0.45rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  background: #f9fafb;
-}
-
-.table-menu__section--primary,
-.table-menu__section--compact {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.table-menu__section--compact {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.table-menu__title {
-  margin: 0;
-  color: #475569;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-.table-menu__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.35rem;
-}
-
-.table-menu__action {
-  display: inline-flex;
+.table-tools__group {
   align-items: center;
-  justify-content: flex-start;
-  min-height: 2.15rem;
-  padding: 0.35rem 0.5rem;
-  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 0.45rem;
+  display: inline-flex;
+  gap: 0.35rem;
+  min-height: 2.35rem;
+  min-width: 0;
+  padding: 0.25rem;
+}
+
+.table-tools__group--primary,
+.table-tools__group--navigation {
+  flex: 0 1 auto;
+}
+
+.table-tools__group--cells {
+  flex: 1 1 22rem;
+}
+
+.table-tools__title {
+  color: #475569;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  padding-inline: 0.25rem;
+  white-space: nowrap;
+}
+
+.table-tools__buttons {
+  display: contents;
+}
+
+.table-tools__button {
+  align-items: center;
+  border: 0;
+  border-inline-start: 1px solid #e2e8f0;
   background: #fff;
+  border-radius: 0.35rem;
   color: #111827;
   cursor: pointer;
+  display: inline-flex;
   font: inherit;
-  font-size: 0.76rem;
-  gap: 0.4rem;
-  text-align: start;
+  font-size: 0.72rem;
+  font-weight: 650;
+  gap: 0.32rem;
+  justify-content: center;
+  line-height: 1.1;
+  min-height: 1.9rem;
+  min-width: 2.45rem;
+  padding: 0.3rem 0.45rem;
+  text-align: center;
   transition:
     background-color 0.16s ease,
-    border-color 0.16s ease,
     box-shadow 0.16s ease,
     color 0.16s ease;
+  white-space: nowrap;
 }
 
-.table-menu__action:hover,
-.table-menu__action:focus-visible {
-  border-color: #94a3b8;
+.table-tools__button:first-of-type {
+  border-inline-start: 0;
+}
+
+.table-tools__button--wide {
+  min-width: 5.75rem;
+}
+
+.table-tools__button:hover,
+.table-tools__button:focus-visible {
   background: #f8fafc;
-  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
+  box-shadow: inset 0 0 0 1px #94a3b8;
   outline: none;
 }
 
-.table-menu__action--danger {
+.table-tools__button--danger {
   color: #b91c1c;
 }
 
-.table-menu__action--danger:hover,
-.table-menu__action--danger:focus-visible {
-  border-color: #fecaca;
+.table-tools__button--danger:hover,
+.table-tools__button--danger:focus-visible {
   background: #fef2f2;
+  box-shadow: inset 0 0 0 1px #fecaca;
 }
 
-.table-menu__action span {
+.table-tools__button span {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :deep(.table-toggle--active) {
