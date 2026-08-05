@@ -6,6 +6,7 @@ version: 1.0.0 (stable)
 */
 
 import { computed, onMounted, ref, watch } from "vue";
+import type { CSSProperties } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import Toolbar from "./Toolbar.vue";
 import {
@@ -54,6 +55,13 @@ const props = withDefaults(
     onUpdateContent: undefined,
     lazyloadAdvancedComponents: false,
     language: "fa",
+    fontFamily:
+      'Tahoma, Arial, "Helvetica Neue", Helvetica, sans-serif',
+    fontFamilyOptions: () => [
+      { title: "Tahoma", value: "Tahoma" },
+      { title: "Arial", value: "Arial" },
+      { title: "Times New Roman", value: "Times New Roman" },
+    ],
     showLanguageToggle: false,
     preset: undefined, // <-- add default for new prop
     mergeFieldsLoading: false, // <-- default loading
@@ -85,6 +93,10 @@ watch(
     }
   }
 );
+
+const editorStyle = computed<CSSProperties>(() => ({
+  "--tiptap-editor-font": props.fontFamily,
+}));
 
 // Helper to get unique extensions by name
 function uniqueExtensionsByName(extensions: Module): Module {
@@ -252,6 +264,7 @@ if (props.editorRef) {
       v-if="editor"
       :class="props.customClasses?.editorContainer ?? 'tiptap-editor'"
       :dir="i18n.isRtl.value ? 'rtl' : 'ltr'"
+      :style="editorStyle"
     >
       <Toolbar
         :editor="editor"
@@ -261,6 +274,7 @@ if (props.editorRef) {
         :lazyload-advanced-components="props.lazyloadAdvancedComponents"
         :merge-fields-loading="props.mergeFieldsLoading"
         :show-language-toggle="props.showLanguageToggle"
+        :font-family-options="props.fontFamilyOptions"
       />
 
       <editor-content :editor="editor" />
@@ -271,10 +285,6 @@ if (props.editorRef) {
 </template>
 
 <style lang="scss">
-body {
-  --tiptap-editor-font: "yekan", sans-serif;
-}
-
 .tiptap-editor {
   font-family: var(--tiptap-editor-font);
   text-align: initial;

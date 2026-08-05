@@ -9,6 +9,7 @@ export type {
   TiptapLanguage,
   TiptapEditorCustomClasses,
   TiptapExtensionName,
+  TiptapFontFamilyOption,
 } from "./TipTapComponents/types/CustomizedTipTapProps";
 
 export { CustomizedTipTap };

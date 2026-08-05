@@ -1,31 +1,28 @@
 <script lang="ts" setup="">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
 import { useTiptapI18n } from "../i18n";
+import type { TiptapFontFamilyOption } from "../types/CustomizedTipTapProps";
 
-const props = defineProps<{ editor: Editor }>();
+const props = defineProps<{
+  editor: Editor;
+  fontFamilyOptions?: TiptapFontFamilyOption[];
+}>();
 const { t } = useTiptapI18n();
 
-const fontFamilies = ref([
-  { title: "ایران یکان", value: "IRANYekanX" },
-  { title: "یکان", value: "yekan" },
-  { title: "تیتر", value: "B Titr" },
-  { title: "نازنین", value: "B Nazanin" },
-  { title: "کودک", value: "B Koodak" },
-  { title: "ساحل", value: "sahel" },
-  { title: "صمیم", value: "samim" },
-  { title: "وزیر", value: "vazir-medium" },
-  { title: "دوات", value: "B Davat" },
-  { title: "حوما", value: "B Homa" },
-  { title: "میتره", value: "B Mitra" },
-  { title: "مروارید", value: "B Morvarid" },
-  { title: "Arial", value: "arial" },
-  { title: "Arial Black", value: "arial black" },
-  { title: "Tahoma", value: "tahoma" },
-  { title: "Times New Roman", value: "times new roman" },
-]);
+const fallbackFontFamilies: TiptapFontFamilyOption[] = [
+  { title: "Tahoma", value: "Tahoma" },
+  { title: "Arial", value: "Arial" },
+  { title: "Times New Roman", value: "Times New Roman" },
+];
 
-const selectedFont = ref<string | null | undefined>("IRANYekanX");
+const fontFamilies = computed(() =>
+  props.fontFamilyOptions?.length
+    ? props.fontFamilyOptions
+    : fallbackFontFamilies
+);
+
+const selectedFont = ref<string | null | undefined>(fontFamilies.value[0]?.value);
 
 const applyFontFamily = (value: string) => {
   props.editor.chain().focus().setFontFamily(value).run();
@@ -34,7 +31,7 @@ const applyFontFamily = (value: string) => {
 watch(
   () => props.editor.getAttributes("textStyle").fontFamily,
   (value) => {
-    selectedFont.value = value || "IRANYekanX";
+    selectedFont.value = value || fontFamilies.value[0]?.value;
   }
 );
 </script>

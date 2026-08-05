@@ -113,7 +113,37 @@ Each prop is designed with flexibility and clarity in mind:
 - `customClasses?: TiptapEditorCustomClasses` — Apply custom CSS classes, e.g., `{ editorWrapper: 'my-wrapper' }`.
 - `editorOptions?: EditorOptions` — Full control over Tiptap editor options (like `editable`, `autofocus`, etc).
 - `language?: 'fa' | 'en'` — Sets the UI language. Defaults to Persian (`fa`).
+- `fontFamily?: string` — Sets the editor UI/content font family. Custom fonts must be loaded by the consuming app.
+- `fontFamilyOptions?: Array<{ title: string; value: string }>` — Sets the toolbar font-family options. Values should match loaded CSS font-family names.
 - `showLanguageToggle?: boolean` — Renders a toolbar toggle for switching between Persian and English.
+
+### Custom Fonts
+
+The package does not bundle Persian font files. Load your preferred font in your app, then pass its CSS family name to the editor:
+
+```css
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn/index.css");
+```
+
+```vue
+<template>
+  <customized-tiptap
+    v-model="content"
+    font-family="Vazirmatn, Tahoma, sans-serif"
+    :font-family-options="fontFamilyOptions"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const content = ref('<p>سلام دنیا</p>')
+const fontFamilyOptions = [
+  { title: 'Vazirmatn', value: 'Vazirmatn' },
+  { title: 'Tahoma', value: 'Tahoma' },
+]
+</script>
+```
 
 ### Language API
 

@@ -17,7 +17,10 @@ import { useLoadComponents } from "./hooks/useLoadComponents";
 // import HeadingButtonsComponent from "./components/HeadingButtonsComponent.vue";
 import { type useMergeFields } from "./components/MergeFields/useMergeFields";
 import { type Module } from "./config";
-import { type MergeFieldInputType } from "./types/CustomizedTipTapProps";
+import {
+  type MergeFieldInputType,
+  type TiptapFontFamilyOption,
+} from "./types/CustomizedTipTapProps";
 import MergeFieldsMergeFieldsHiddenInlineSearch from "./components/MergeFields/MergeFieldsHiddenInlineSearch.vue";
 import { useTiptapI18n } from "./i18n";
 
@@ -33,6 +36,7 @@ const props = withDefaults(
     mergeFieldsLoading?: boolean;
     mergeFieldInputType?: MergeFieldInputType;
     showLanguageToggle?: boolean;
+    fontFamilyOptions?: TiptapFontFamilyOption[];
   }>(),
   {
     mergeFieldInputType: "default",
@@ -151,6 +155,7 @@ const toggleAdvancedPanel = () => {
       <HeadingComponent :editor="editor" v-if="hasExtension('heading')" />
       <FontSelectionComponent
         :editor="editor"
+        :font-family-options="props.fontFamilyOptions"
         v-if="hasExtension('fontFamily')"
       />
       <FontSizeSelectionComponent

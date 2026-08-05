@@ -111,6 +111,11 @@ export type MergeFieldInputType = "default" | "basic";
 
 export type TiptapLanguage = "fa" | "en";
 
+export interface TiptapFontFamilyOption {
+  title: string;
+  value: string;
+}
+
 export type MergeFieldsData = Array<GroupedMergeFields | BasicMergeField>;
 
 /**
@@ -181,6 +186,18 @@ export interface CustomizedTipTapProps {
    * Supports Persian (`fa`) and English (`en`).
    */
   language?: TiptapLanguage;
+
+  /**
+   * Font family used by the editor UI and editable content.
+   * Consumers are responsible for loading custom fonts in their app CSS.
+   */
+  fontFamily?: string;
+
+  /**
+   * Font options shown in the toolbar font-family selector.
+   * The option values should match loaded CSS font-family names.
+   */
+  fontFamilyOptions?: TiptapFontFamilyOption[];
 
   /**
    * If true, renders a toolbar control that toggles between Persian and English.
