@@ -95,18 +95,25 @@ function hasAllExtensions(names: string[]): boolean {
 const showModal = reactive<{
   exportModal: boolean;
   showPanel: boolean;
+  tablePanel: boolean;
 }>({
   exportModal: false,
   showPanel: false,
+  tablePanel: false,
 });
 
 const { showValues } = props.mergeFields;
 const { language, t, toggleLanguage } = useTiptapI18n();
 
 const advancedPanelId = "tiptap-advanced-toolbar";
+const tablePanelId = "tiptap-table-toolbar";
 
 const toggleAdvancedPanel = () => {
   showModal.showPanel = !showModal.showPanel;
+};
+
+const toggleTablePanel = () => {
+  showModal.tablePanel = !showModal.tablePanel;
 };
 </script>
 
@@ -225,9 +232,12 @@ const toggleAdvancedPanel = () => {
       <LinkComponentComponent :editor="editor" v-if="hasExtension('link')" />
       <TableComponent
         :editor="editor"
+        :expanded="showModal.tablePanel"
+        :panel-id="tablePanelId"
         v-if="
           hasAllExtensions(['table', 'tableRow', 'tableCell', 'tableHeader'])
         "
+        @toggle="toggleTablePanel"
       />
     </GroupButtons>
 
@@ -278,13 +288,26 @@ const toggleAdvancedPanel = () => {
       </Button>
     </GroupButtons>
 
+    <v-expand-transition>
+      <div
+        v-if="
+          showModal.tablePanel &&
+          hasAllExtensions(['table', 'tableRow', 'tableCell', 'tableHeader'])
+        "
+        :id="tablePanelId"
+        class="toolbar-panel table-toolbar"
+      >
+        <TableComponent :editor="editor" panel />
+      </div>
+    </v-expand-transition>
+
     <!-- advanced tools -->
     <!-- transition section -->
     <v-expand-transition>
       <div
         v-if="showModal.showPanel"
         :id="advancedPanelId"
-        class="toolbar advanced-toolbar"
+        class="toolbar toolbar-panel advanced-toolbar"
       >
         <GroupButtons v-if="hasExtension('lineHeight')">
           <LineHeightComponent :editor="editor" />
@@ -477,12 +500,21 @@ const toggleAdvancedPanel = () => {
   transform: rotate(180deg);
 }
 
-.advanced-toolbar {
+.toolbar-panel {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem;
   margin-top: 0.25rem;
   padding: 0.5rem;
+  width: 100%;
+}
+
+.advanced-toolbar {
+  display: flex;
+}
+
+.table-toolbar {
+  display: block;
 }
 
 .merge-field-tool-box {

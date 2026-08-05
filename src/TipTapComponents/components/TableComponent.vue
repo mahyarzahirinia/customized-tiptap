@@ -2,7 +2,20 @@
 import Button from "../components/Button.vue";
 import { useTiptapI18n } from "../i18n";
 
-const props = defineProps<{ editor: any }>();
+const props = withDefaults(
+  defineProps<{
+    editor: any;
+    expanded?: boolean;
+    panel?: boolean;
+    panelId?: string;
+  }>(),
+  {
+    expanded: false,
+    panel: false,
+    panelId: undefined,
+  }
+);
+const emit = defineEmits<{ (e: "toggle"): void }>();
 const { dir, isRtl, t } = useTiptapI18n();
 
 const insertTable = () =>
@@ -47,107 +60,112 @@ const runTableAction = (action: () => void) => {
 </script>
 
 <template>
-  <Button :text="t('table')">
+  <Button
+    v-if="!props.panel"
+    :aria-controls="props.panelId"
+    :aria-expanded="props.expanded"
+    :aria-pressed="props.expanded"
+    :class="{ 'table-toggle--active': props.expanded }"
+    :text="t('table')"
+    @click="emit('toggle')"
+  >
     <v-icon icon="mdi-table" />
-
-    <v-menu activator="parent" location="start" transition="slide-x-transition">
-      <div class="table-menu" :dir="dir">
-        <section class="table-menu__section table-menu__section--primary">
-          <button class="table-menu__action" type="button" @click="runTableAction(insertTable)">
-            <v-icon icon="mdi-table-plus" />
-            <span>{{ t("addTable") }}</span>
-          </button>
-          <button class="table-menu__action table-menu__action--danger" type="button" @click="runTableAction(deleteTable)">
-            <v-icon icon="mdi-table-remove" />
-            <span>{{ t("deleteTable") }}</span>
-          </button>
-        </section>
-
-        <section class="table-menu__section">
-          <h3 class="table-menu__title">{{ t("columnManagement") }}</h3>
-          <div class="table-menu__grid">
-            <button class="table-menu__action" type="button" @click="runTableAction(addColumnBefore)">
-              <v-icon icon="mdi-table-column-plus-before" />
-              <span>{{ t("addColumnBefore") }}</span>
-            </button>
-            <button class="table-menu__action" type="button" @click="runTableAction(addColumnAfter)">
-              <v-icon icon="mdi-table-column-plus-after" />
-              <span>{{ t("addColumnAfter") }}</span>
-            </button>
-            <button class="table-menu__action" type="button" @click="runTableAction(deleteColumn)">
-              <v-icon icon="mdi-table-column-remove" />
-              <span>{{ t("deleteColumn") }}</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="table-menu__section">
-          <h3 class="table-menu__title">{{ t("rowManagement") }}</h3>
-          <div class="table-menu__grid">
-            <button class="table-menu__action" type="button" @click="runTableAction(addRowBefore)">
-              <v-icon icon="mdi-table-row-plus-before" />
-              <span>{{ t("addRowBefore") }}</span>
-            </button>
-            <button class="table-menu__action" type="button" @click="runTableAction(addRowAfter)">
-              <v-icon icon="mdi-table-row-plus-after" />
-              <span>{{ t("addRowAfter") }}</span>
-            </button>
-            <button class="table-menu__action" type="button" @click="runTableAction(deleteRow)">
-              <v-icon icon="mdi-table-row-remove" />
-              <span>{{ t("deleteRow") }}</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="table-menu__section">
-          <h3 class="table-menu__title">{{ t("cellManagement") }}</h3>
-          <div class="table-menu__grid">
-            <button class="table-menu__action" type="button" @click="runTableAction(mergeCells)">
-              <v-icon icon="mdi-table-merge-cells" />
-              <span>{{ t("mergeCells") }}</span>
-            </button>
-            <button class="table-menu__action" type="button" @click="runTableAction(splitCell)">
-              <v-icon icon="mdi-table-split-cell" />
-              <span>{{ t("splitCell") }}</span>
-            </button>
-            <button class="table-menu__action" type="button" @click="runTableAction(mergeOrSplit)">
-              <v-icon icon="mdi-table" />
-              <span>{{ t("mergeOrSplit") }}</span>
-            </button>
-            <button class="table-menu__action" type="button" @click="runTableAction(setCellAttribute)">
-              <v-icon icon="mdi-table-column-width" />
-              <span>{{ t("setCellAttribute") }}</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="table-menu__section table-menu__section--compact">
-          <button class="table-menu__action" type="button" @click="runTableAction(fixTables)">
-            <v-icon icon="mdi-table-refresh" />
-            <span>{{ t("fixTable") }}</span>
-          </button>
-          <button class="table-menu__action" type="button" @click="runTableAction(goToNextCell)">
-            <v-icon :icon="isRtl ? 'mdi-chevron-left-box' : 'mdi-chevron-right-box'" />
-            <span>{{ t("nextCell") }}</span>
-          </button>
-          <button class="table-menu__action" type="button" @click="runTableAction(goToPreviousCell)">
-            <v-icon :icon="isRtl ? 'mdi-chevron-right-box' : 'mdi-chevron-left-box'" />
-            <span>{{ t("previousCell") }}</span>
-          </button>
-        </section>
-      </div>
-    </v-menu>
   </Button>
+
+  <div v-else class="table-menu" :dir="dir">
+    <section class="table-menu__section table-menu__section--primary">
+      <button class="table-menu__action" type="button" @click="runTableAction(insertTable)">
+        <v-icon icon="mdi-table-plus" />
+        <span>{{ t("addTable") }}</span>
+      </button>
+      <button class="table-menu__action table-menu__action--danger" type="button" @click="runTableAction(deleteTable)">
+        <v-icon icon="mdi-table-remove" />
+        <span>{{ t("deleteTable") }}</span>
+      </button>
+    </section>
+
+    <section class="table-menu__section">
+      <h3 class="table-menu__title">{{ t("columnManagement") }}</h3>
+      <div class="table-menu__grid">
+        <button class="table-menu__action" type="button" @click="runTableAction(addColumnBefore)">
+          <v-icon icon="mdi-table-column-plus-before" />
+          <span>{{ t("addColumnBefore") }}</span>
+        </button>
+        <button class="table-menu__action" type="button" @click="runTableAction(addColumnAfter)">
+          <v-icon icon="mdi-table-column-plus-after" />
+          <span>{{ t("addColumnAfter") }}</span>
+        </button>
+        <button class="table-menu__action" type="button" @click="runTableAction(deleteColumn)">
+          <v-icon icon="mdi-table-column-remove" />
+          <span>{{ t("deleteColumn") }}</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="table-menu__section">
+      <h3 class="table-menu__title">{{ t("rowManagement") }}</h3>
+      <div class="table-menu__grid">
+        <button class="table-menu__action" type="button" @click="runTableAction(addRowBefore)">
+          <v-icon icon="mdi-table-row-plus-before" />
+          <span>{{ t("addRowBefore") }}</span>
+        </button>
+        <button class="table-menu__action" type="button" @click="runTableAction(addRowAfter)">
+          <v-icon icon="mdi-table-row-plus-after" />
+          <span>{{ t("addRowAfter") }}</span>
+        </button>
+        <button class="table-menu__action" type="button" @click="runTableAction(deleteRow)">
+          <v-icon icon="mdi-table-row-remove" />
+          <span>{{ t("deleteRow") }}</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="table-menu__section">
+      <h3 class="table-menu__title">{{ t("cellManagement") }}</h3>
+      <div class="table-menu__grid">
+        <button class="table-menu__action" type="button" @click="runTableAction(mergeCells)">
+          <v-icon icon="mdi-table-merge-cells" />
+          <span>{{ t("mergeCells") }}</span>
+        </button>
+        <button class="table-menu__action" type="button" @click="runTableAction(splitCell)">
+          <v-icon icon="mdi-table-split-cell" />
+          <span>{{ t("splitCell") }}</span>
+        </button>
+        <button class="table-menu__action" type="button" @click="runTableAction(mergeOrSplit)">
+          <v-icon icon="mdi-table" />
+          <span>{{ t("mergeOrSplit") }}</span>
+        </button>
+        <button class="table-menu__action" type="button" @click="runTableAction(setCellAttribute)">
+          <v-icon icon="mdi-table-column-width" />
+          <span>{{ t("setCellAttribute") }}</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="table-menu__section table-menu__section--compact">
+      <button class="table-menu__action" type="button" @click="runTableAction(fixTables)">
+        <v-icon icon="mdi-table-refresh" />
+        <span>{{ t("fixTable") }}</span>
+      </button>
+      <button class="table-menu__action" type="button" @click="runTableAction(goToNextCell)">
+        <v-icon :icon="isRtl ? 'mdi-chevron-left-box' : 'mdi-chevron-right-box'" />
+        <span>{{ t("nextCell") }}</span>
+      </button>
+      <button class="table-menu__action" type="button" @click="runTableAction(goToPreviousCell)">
+        <v-icon :icon="isRtl ? 'mdi-chevron-right-box' : 'mdi-chevron-left-box'" />
+        <span>{{ t("previousCell") }}</span>
+      </button>
+    </section>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .table-menu {
   display: grid;
   gap: 0.65rem;
-  width: 22rem;
-  max-width: calc(100vw - 2rem);
-  padding: 0.4rem;
   font-family: var(--tiptap-editor-font);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
 }
 
 .table-menu__section {
@@ -226,11 +244,9 @@ const runTableAction = (action: () => void) => {
   overflow-wrap: anywhere;
 }
 
-:deep(.ct-menu__content) {
-  padding: 0.35rem;
-  border-radius: 0.65rem;
-  min-width: auto;
-  max-height: min(32rem, calc(100vh - 2rem));
+:deep(.table-toggle--active) {
+  background: #ecfeff;
+  color: #0e7490 !important;
 }
 
 :deep(.ct-icon) {
