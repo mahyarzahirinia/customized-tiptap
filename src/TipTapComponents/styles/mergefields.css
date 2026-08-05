@@ -2,8 +2,7 @@
     .merge-field {
         background-color: #e0e7ff;
         color: #1e3a8a;
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
+        margin-inline: 0.25rem;
         padding: 0.25rem 0.5rem;
         line-height: 1.25;
         font-weight: 700;

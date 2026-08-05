@@ -148,8 +148,7 @@ const toggleAdvancedPanel = () => {
     </GroupButtons>
 
     <div
-      class="tools-group"
-      style="width: 18rem; height: 2.3rem"
+      class="tools-group tools-group--typography"
       v-if="hasAnyExtension(['heading', 'fontFamily', 'fontSize'])"
     >
       <HeadingComponent :editor="editor" v-if="hasExtension('heading')" />
@@ -206,8 +205,7 @@ const toggleAdvancedPanel = () => {
     </GroupButtons>
 
     <div
-      class="tools-group"
-      style="width: 13rem; height: 2.3rem"
+      class="tools-group tools-group--lists"
       v-if="
         hasAnyExtension(['textAlign', 'orderedList', 'bulletList', 'listItem'])
       "
@@ -384,14 +382,22 @@ const toggleAdvancedPanel = () => {
 
   .tools-group {
     display: flex; /* flex */
-    gap: 0.25rem; /* gap-1 */
     border: 1px solid #b3b7b8; /* border + border-gray-200 */
     border-radius: 0.375rem; /* rounded-md */
     background-color: white;
+    height: 2.3rem;
 
     & > .v-field {
       border: none;
     }
+  }
+
+  .tools-group--typography {
+    width: 18rem;
+  }
+
+  .tools-group--lists {
+    width: auto;
   }
 }
 

@@ -73,15 +73,15 @@ watch(
 
 .heading-box {
   width: 12rem;
-  border-left: 1px solid;
+  border-inline-start: 1px solid;
   border-color: rgba(0, 0, 0, 0.12);
 
   &:deep(.v-field__input) {
-    transform: translate(-1rem, -0.1rem);
+    transform: translateY(-0.1rem);
   }
 
   &:deep(.v-field-label) {
-    transform: translateX(-0.5rem);
+    padding-inline: 0.25rem;
   }
 
   &:deep(.v-field) {

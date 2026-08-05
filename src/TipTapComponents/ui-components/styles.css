@@ -108,7 +108,7 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
   content: "";
   height: 1rem;
-  left: 0.125rem;
+  inset-inline-start: 0.125rem;
   position: absolute;
   top: 0.125rem;
   transition: transform 0.16s ease;
@@ -121,6 +121,10 @@
 
 .ct-switch input:checked + .ct-switch__track::after {
   transform: translateX(1rem);
+}
+
+[dir="rtl"] .ct-switch input:checked + .ct-switch__track::after {
+  transform: translateX(-1rem);
 }
 
 .ct-field {
@@ -146,8 +150,9 @@
 }
 
 .ct-select__input--with-selection {
-  flex: 0 1 0.5rem;
-  width: 0.5rem;
+  flex: 0 0 0;
+  padding: 0;
+  width: 0;
 }
 
 .ct-field__input {
@@ -171,7 +176,6 @@
 }
 
 .ct-select {
-  direction: rtl;
   font-family: var(--tiptap-editor-font);
   position: relative;
 }
@@ -182,6 +186,10 @@
   gap: 0.25rem;
   min-height: 2rem;
   padding: 0.125rem 0.25rem;
+}
+
+.ct-select--icon-selection .ct-select__control {
+  gap: 0.15rem;
 }
 
 .ct-select__menu,
@@ -196,7 +204,7 @@
   overflow: auto;
   padding: 0.25rem;
   position: absolute;
-  right: 0;
+  inset-inline-start: 0;
   top: calc(100% + 0.25rem);
   z-index: 999999;
 }
@@ -227,7 +235,7 @@
   min-height: 2rem;
   padding: 0.35rem 0.5rem;
   position: relative;
-  text-align: right;
+  text-align: start;
   width: 100%;
 }
 
@@ -325,7 +333,7 @@
 }
 
 .ct-snackbar__actions {
-  margin-right: auto;
+  margin-inline-start: auto;
 }
 
 .ct-expand-enter-active,

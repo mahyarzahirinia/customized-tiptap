@@ -144,7 +144,7 @@ const handleBlur = () => {
 .label {
   position: absolute;
   padding: 0 0.25rem;
-  right: 0.75rem;
+  inset-inline-start: 0.75rem;
   top: 50%;
   transform: translateY(-75%);
   background-color: white;
@@ -213,7 +213,6 @@ const handleBlur = () => {
 
 .c-switch {
   /*height: 2.5rem;*/
-  margin-left: 1.5rem; /* mx-4 => both left and right */
-  //margin-right: 1.5rem;
+  margin-inline-start: 1.5rem;
 }
 </style>

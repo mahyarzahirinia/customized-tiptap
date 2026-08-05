@@ -280,6 +280,7 @@ const translations: Record<TiptapLanguage, Record<TranslationKey, string>> = {
 
 interface TiptapI18nContext {
   language: Ref<TiptapLanguage>;
+  dir: ComputedRef<"ltr" | "rtl">;
   isRtl: ComputedRef<boolean>;
   setLanguage: (language: TiptapLanguage) => void;
   toggleLanguage: () => void;
@@ -297,8 +298,10 @@ export function provideTiptapI18n(context: {
   setLanguage: (language: TiptapLanguage) => void;
 }) {
   const isRtl = computed(() => context.language.value === "fa");
+  const dir = computed(() => (isRtl.value ? "rtl" : "ltr"));
   const value: TiptapI18nContext = {
     language: context.language,
+    dir,
     isRtl,
     setLanguage: context.setLanguage,
     toggleLanguage: () => {
@@ -315,6 +318,7 @@ export function useTiptapI18n(): TiptapI18nContext {
   const fallbackLanguage = computed(() => "fa" as TiptapLanguage);
   const fallback = {
     language: fallbackLanguage,
+    dir: computed(() => "rtl" as const),
     isRtl: computed(() => true),
     setLanguage: () => undefined,
     toggleLanguage: () => undefined,

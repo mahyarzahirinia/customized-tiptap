@@ -83,6 +83,7 @@ const i18n = provideTiptapI18n({
     emit("update:language", language);
   },
 });
+const currentDir = i18n.dir;
 
 watch(
   () => props.language,
@@ -263,7 +264,7 @@ if (props.editorRef) {
     <div
       v-if="editor"
       :class="props.customClasses?.editorContainer ?? 'tiptap-editor'"
-      :dir="i18n.isRtl.value ? 'rtl' : 'ltr'"
+      :dir="currentDir"
       :style="editorStyle"
     >
       <Toolbar
@@ -302,7 +303,7 @@ if (props.editorRef) {
   &.fullscreen-mode {
     position: fixed; /* fixed */
     top: 0; /* top-0 */
-    right: 0; /* right-0 */
+    inset-inline-end: 0;
     width: 100%; /* w-full */
     height: 100%; /* h-full */
     z-index: 9999 !important; /* z-300 */
@@ -413,14 +414,12 @@ if (props.editorRef) {
   }
 
   margin-top: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-inline: 1rem;
   outline: 1px solid #b3b7b8; /* focus:outline-none */
   width: 100%; /* w-full */
   max-width: 100%; /* max-w-full */
   border-radius: 0.15rem; /* rounded */
-  margin-left: auto; /* mx-auto */
-  margin-right: auto;
+  margin-inline: auto;
   min-height: 24rem;
   max-height: 40rem;
   overflow-y: auto; /* overflow-y-auto */

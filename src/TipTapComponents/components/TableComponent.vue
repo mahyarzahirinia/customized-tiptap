@@ -3,7 +3,7 @@ import Button from "../components/Button.vue";
 import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: any }>();
-const { t } = useTiptapI18n();
+const { dir, isRtl, t } = useTiptapI18n();
 
 const insertTable = () =>
   props.editor
@@ -51,7 +51,7 @@ const runTableAction = (action: () => void) => {
     <v-icon icon="mdi-table" />
 
     <v-menu activator="parent" location="start" transition="slide-x-transition">
-      <div class="table-menu" dir="rtl">
+      <div class="table-menu" :dir="dir">
         <section class="table-menu__section table-menu__section--primary">
           <button class="table-menu__action" type="button" @click="runTableAction(insertTable)">
             <v-icon icon="mdi-table-plus" />
@@ -127,11 +127,11 @@ const runTableAction = (action: () => void) => {
             <span>{{ t("fixTable") }}</span>
           </button>
           <button class="table-menu__action" type="button" @click="runTableAction(goToNextCell)">
-            <v-icon icon="mdi-chevron-left-box" />
+            <v-icon :icon="isRtl ? 'mdi-chevron-left-box' : 'mdi-chevron-right-box'" />
             <span>{{ t("nextCell") }}</span>
           </button>
           <button class="table-menu__action" type="button" @click="runTableAction(goToPreviousCell)">
-            <v-icon icon="mdi-chevron-right-box" />
+            <v-icon :icon="isRtl ? 'mdi-chevron-right-box' : 'mdi-chevron-left-box'" />
             <span>{{ t("previousCell") }}</span>
           </button>
         </section>
@@ -195,7 +195,7 @@ const runTableAction = (action: () => void) => {
   font: inherit;
   font-size: 0.76rem;
   gap: 0.4rem;
-  text-align: right;
+  text-align: start;
   transition:
     background-color 0.16s ease,
     border-color 0.16s ease,

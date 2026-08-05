@@ -1,29 +1,43 @@
 <script lang="ts" setup="">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
 import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
-const { t } = useTiptapI18n();
+const { language, t } = useTiptapI18n();
 
-const fontSizes = ref([
-  { size: "8pt", label: "۸" },
-  { size: "9pt", label: "۹" },
-  { size: "10pt", label: "۱۰" },
-  { size: "11pt", label: "۱۱" },
-  { size: "12pt", label: "۱۲" },
-  { size: "14pt", label: "۱۴" },
-  { size: "16pt", label: "۱۶" },
-  { size: "18pt", label: "۱۸" },
-  { size: "20pt", label: "۲۰" },
-  { size: "22pt", label: "۲۲" },
-  { size: "24pt", label: "۲۴" },
-  { size: "26pt", label: "۲۶" },
-  { size: "28pt", label: "۲۸" },
-  { size: "36pt", label: "۳۶" },
-  { size: "48pt", label: "۴۸" },
-  { size: "72pt", label: "۷۲" },
-]);
+const fontSizeValues = [
+  "8pt",
+  "9pt",
+  "10pt",
+  "11pt",
+  "12pt",
+  "14pt",
+  "16pt",
+  "18pt",
+  "20pt",
+  "22pt",
+  "24pt",
+  "26pt",
+  "28pt",
+  "36pt",
+  "48pt",
+  "72pt",
+];
+
+const formatFontSizeLabel = (size: string) => {
+  const numericSize = Number.parseInt(size, 10);
+  return new Intl.NumberFormat(language.value === "fa" ? "fa-IR" : "en-US", {
+    useGrouping: false,
+  }).format(numericSize);
+};
+
+const fontSizes = computed(() =>
+  fontSizeValues.map((size) => ({
+    size,
+    label: formatFontSizeLabel(size),
+  }))
+);
 
 const selectedFontSize = ref<string | undefined>("12pt");
 
@@ -77,6 +91,7 @@ watch(
 
 .font-size-box {
   width: 5rem;
+  border-inline-start: 1px solid rgba(0, 0, 0, 0.12);
 
   &:deep(.ct-select__control) {
     justify-content: center;
@@ -92,7 +107,7 @@ watch(
   }
 
   &:deep(.v-field-label) {
-    transform: translateX(-0.5rem);
+    padding-inline: 0.25rem;
   }
 
   &:deep(.v-field) {

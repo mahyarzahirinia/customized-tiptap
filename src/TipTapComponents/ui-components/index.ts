@@ -84,7 +84,7 @@ export const VLocaleProvider = defineComponent({
   props: { rtl: Boolean },
   setup(props, { slots }) {
     return () =>
-      h("div", { class: "ct-locale-provider", dir: props.rtl ? "rtl" : undefined }, slots.default?.());
+      h("div", { class: "ct-locale-provider", dir: props.rtl ? "rtl" : "ltr" }, slots.default?.());
   },
 });
 
@@ -299,7 +299,7 @@ const SelectBase = defineComponent({
     });
 
     return () =>
-      h("div", { ref: root, class: ["ct-select", attrs.class] }, [
+      h("div", { ref: root, class: ["ct-select", slots.selection && "ct-select--icon-selection", attrs.class] }, [
         h("div", { class: "ct-select__control v-field", onClick: () => (open.value = true) }, [
           props.prependIcon && h(Icon, { icon: props.prependIcon }),
           selectedSlotItem.value &&

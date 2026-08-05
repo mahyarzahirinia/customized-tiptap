@@ -194,7 +194,7 @@ const handleSelect = (item: MergeFieldType) => {
 .merge-field-default__label {
   position: absolute;
   top: 50%;
-  right: 0.75rem;
+  inset-inline-start: 0.75rem;
   padding: 0 0.25rem;
   border-radius: 0.15rem;
   background: #fff;

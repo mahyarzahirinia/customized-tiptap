@@ -90,7 +90,7 @@ export const Indentation = Extension.create({
               }
 
               return {
-                style: `margin-left: ${attributes.lineIndent}; margin-inline-start: ${attributes.lineIndent};`,
+                style: `margin-inline-start: ${attributes.lineIndent};`,
                 "data-indent": attributes.lineIndent,
               };
             },

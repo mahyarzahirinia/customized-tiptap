@@ -5,17 +5,18 @@ import { useTiptapI18n } from "../i18n";
 // defineProps is a compiler macro; no runtime import needed
 
 const props = defineProps<{ editor: Editor }>();
-const { t } = useTiptapI18n();
+const { isRtl, t } = useTiptapI18n();
 
-// note: i reversed the callbacks, since toolbox is rtl
 const increaseIndent = () => {
   if (!props.editor) return;
-  props.editor.chain().focus().decreaseIndent().run();
+  const command = isRtl.value ? "decreaseIndent" : "increaseIndent";
+  props.editor.chain().focus()[command]().run();
 };
 
 const decreaseIndent = () => {
   if (!props.editor) return;
-  props.editor.chain().focus().increaseIndent().run();
+  const command = isRtl.value ? "increaseIndent" : "decreaseIndent";
+  props.editor.chain().focus()[command]().run();
 };
 </script>
 

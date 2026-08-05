@@ -6,7 +6,7 @@ import ColorModal from "../modals/ColorModal.vue";
 import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
-const { t } = useTiptapI18n();
+const { dir, language, t } = useTiptapI18n();
 
 // states
 const showColorPicker = ref(false);
@@ -16,51 +16,51 @@ const selectedButton = ref<"color" | "highlight" | null>(null);
 const selectedColor = ref<string | null>(null);
 const paletteContainer = ref<HTMLElement | null>(null);
 
-const colorGroups = [
+const colorGroups = computed(() => [
   {
-    label: "روشن",
+    label: language.value === "fa" ? "روشن" : "Light",
     colors: [
-      { name: "سبز روشن", value: "#BFEDD2" },
-      { name: "زرد روشن", value: "#FBEEB8" },
-      { name: "قرمز روشن", value: "#F8CAC6" },
-      { name: "بنفش روشن", value: "#ECCAFA" },
-      { name: "آبی روشن", value: "#C2E0F4" },
+      { name: language.value === "fa" ? "سبز روشن" : "Light green", value: "#BFEDD2" },
+      { name: language.value === "fa" ? "زرد روشن" : "Light yellow", value: "#FBEEB8" },
+      { name: language.value === "fa" ? "قرمز روشن" : "Light red", value: "#F8CAC6" },
+      { name: language.value === "fa" ? "بنفش روشن" : "Light purple", value: "#ECCAFA" },
+      { name: language.value === "fa" ? "آبی روشن" : "Light blue", value: "#C2E0F4" },
     ],
   },
   {
-    label: "اصلی",
+    label: language.value === "fa" ? "اصلی" : "Main",
     colors: [
-      { name: "سبز", value: "#2DC26B" },
-      { name: "زرد", value: "#F1C40F" },
-      { name: "قرمز", value: "#E03E2D" },
-      { name: "بنفش", value: "#B96AD9" },
-      { name: "آبی", value: "#3598DB" },
+      { name: language.value === "fa" ? "سبز" : "Green", value: "#2DC26B" },
+      { name: language.value === "fa" ? "زرد" : "Yellow", value: "#F1C40F" },
+      { name: language.value === "fa" ? "قرمز" : "Red", value: "#E03E2D" },
+      { name: language.value === "fa" ? "بنفش" : "Purple", value: "#B96AD9" },
+      { name: language.value === "fa" ? "آبی" : "Blue", value: "#3598DB" },
     ],
   },
   {
-    label: "تیره",
+    label: language.value === "fa" ? "تیره" : "Dark",
     colors: [
-      { name: "فیروزه ای تیره", value: "#169179" },
-      { name: "نارنجی", value: "#E67E23" },
-      { name: "قرمز تیره", value: "#BA372A" },
-      { name: "بنفش تیره", value: "#843FA1" },
-      { name: "آبی تیره", value: "#236FA1" },
+      { name: language.value === "fa" ? "فیروزه ای تیره" : "Dark teal", value: "#169179" },
+      { name: language.value === "fa" ? "نارنجی" : "Orange", value: "#E67E23" },
+      { name: language.value === "fa" ? "قرمز تیره" : "Dark red", value: "#BA372A" },
+      { name: language.value === "fa" ? "بنفش تیره" : "Dark purple", value: "#843FA1" },
+      { name: language.value === "fa" ? "آبی تیره" : "Dark blue", value: "#236FA1" },
     ],
   },
   {
-    label: "خنثی",
+    label: language.value === "fa" ? "خنثی" : "Neutral",
     colors: [
-      { name: "خاکستری روشن", value: "#ECF0F1" },
-      { name: "خاکستری متوسط", value: "#CED4D9" },
-      { name: "خاکستری تیره", value: "#95A5A6" },
-      { name: "مشکی", value: "#000000" },
-      { name: "سبز نفتی", value: "#34495E" },
+      { name: language.value === "fa" ? "خاکستری روشن" : "Light gray", value: "#ECF0F1" },
+      { name: language.value === "fa" ? "خاکستری متوسط" : "Medium gray", value: "#CED4D9" },
+      { name: language.value === "fa" ? "خاکستری تیره" : "Dark gray", value: "#95A5A6" },
+      { name: language.value === "fa" ? "مشکی" : "Black", value: "#000000" },
+      { name: language.value === "fa" ? "سبز نفتی" : "Blue gray", value: "#34495E" },
     ],
   },
-];
+]);
 
 const activePickerTitle = computed(() =>
-  selectedButton.value === "highlight" ? "رنگ برجسته ساز" : "رنگ متن"
+  selectedButton.value === "highlight" ? t("highlight") : t("textColor")
 );
 
 const hasSelectedColor = computed(
@@ -182,7 +182,7 @@ onUnmounted(() => {
     <div
       v-if="showColorPicker || showHighlightPicker"
       class="color-menu"
-      dir="rtl"
+      :dir="dir"
     >
       <div class="color-container">
         <div class="palette-header">
@@ -306,7 +306,7 @@ onUnmounted(() => {
   bottom: 0.08rem;
   height: 0.16rem;
   position: absolute;
-  right: 0.05rem;
+  inset-inline-end: 0.05rem;
   transform: rotate(-25deg);
   width: 1.1rem;
 }
@@ -336,7 +336,7 @@ onUnmounted(() => {
   min-width: 17.5rem;
   padding: 0.75rem;
   position: absolute;
-  right: 0;
+  inset-inline-start: 0;
   top: calc(100% + 0.4rem);
   z-index: 999999;
 }

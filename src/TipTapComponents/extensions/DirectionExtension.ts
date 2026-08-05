@@ -58,7 +58,7 @@ export const DirectionWrapperExtension = Node.create({
               });
               return true;
             })
-            .wrapIn(this.name, { dir: direction }) // Wrap content in a new div with dir="rtl"
+            .wrapIn(this.name, { dir: direction })
             .run();
         },
     } as Partial<RawCommands>;

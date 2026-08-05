@@ -25,6 +25,7 @@ const content = ref("<p>متن تستی</p>");
       <div class="middle">
         <v-container fluid>
           <customized-tiptap
+              language="en"
             :content="content"
             :merge-fields-data="mergeFieldsData"
           />

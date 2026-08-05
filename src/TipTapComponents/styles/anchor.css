@@ -6,8 +6,7 @@ span[id] {
 /* Hide the icon in print & exports */
 @media print {
     p[id] {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+        padding-inline: 0 !important;
     }
 
     p[id]::before {

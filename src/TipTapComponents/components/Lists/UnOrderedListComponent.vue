@@ -83,13 +83,17 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .ul-select {
+  border-inline-start: 1px solid;
+  border-color: rgba(0, 0, 0, 0.12);
+  width: 4rem;
+
   &:deep(.v-field__input),
   &:deep(.v-field__append-inner) {
     padding: unset;
   }
 
   &:deep(.v-field__append-inner) {
-    transform: translate(0.5rem, 0.3rem);
+    transform: none;
   }
 
   &:deep(.v-field) {
@@ -103,6 +107,5 @@ onMounted(() => {
   gap: 0.25rem;
   align-items: center;
   justify-content: center;
-  transform: translateX(-0.5rem);
 }
 </style>
