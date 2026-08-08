@@ -394,21 +394,24 @@ const toggleTablePanel = () => {
 <style lang="scss" scoped>
 .toolbar-container {
   border-radius: 0.5rem;
+  direction: inherit;
 }
 
 .toolbar {
-  display: flex; /* flex */
-  gap: 0.5rem; /* gap-4 */
-  flex-wrap: wrap; /* flex-wrap */
-  align-items: center; /* items-center */
-  width: 100%; /* w-full */
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
 
   .tools-group {
-    display: flex; /* flex */
-    border: 1px solid #b3b7b8; /* border + border-gray-200 */
-    border-radius: 0.375rem; /* rounded-md */
+    align-items: center;
     background-color: white;
-    height: 2.3rem;
+    border: 1px solid #b3b7b8;
+    border-radius: 0.5rem;
+    display: flex;
+    min-height: 2.3rem;
+    overflow: hidden;
 
     & > .v-field {
       border: none;
@@ -421,6 +424,11 @@ const toggleTablePanel = () => {
 
   .tools-group--lists {
     width: auto;
+  }
+
+  :deep(.ct-icon) {
+    height: 1.15rem;
+    width: 1.15rem;
   }
 }
 
@@ -442,7 +450,8 @@ const toggleTablePanel = () => {
   min-height: 2.3rem;
   min-width: auto;
   overflow: hidden;
-  padding: 0.2rem 0.35rem 0.2rem 0.6rem !important;
+  padding-block: 0.2rem !important;
+  padding-inline: 0.6rem 0.35rem !important;
   transition:
     background-color 0.16s ease,
     border-color 0.16s ease,
@@ -493,6 +502,10 @@ const toggleTablePanel = () => {
 .advanced-toggle__indicator {
   color: #64748b;
   transition: transform 0.16s ease;
+}
+
+[dir="rtl"] .advanced-toggle__indicator {
+  margin-inline-start: -0.05rem;
 }
 
 :deep(.advanced-toggle.is-expanded) .advanced-toggle__indicator {

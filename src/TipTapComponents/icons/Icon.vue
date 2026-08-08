@@ -19,8 +19,8 @@ const headerLevel = computed(() =>
   <span class="ct-icon" aria-hidden="true">
     <svg
       v-if="path"
-      :width="size ?? 20"
-      :height="size ?? 20"
+      :width="size ?? 18"
+      :height="size ?? 18"
       viewBox="0 0 24 24"
       focusable="false"
     >
@@ -37,9 +37,17 @@ const headerLevel = computed(() =>
   color: currentColor;
   display: inline-flex;
   flex: 0 0 auto;
+  height: 1.15rem;
   justify-content: center;
   line-height: 1;
   vertical-align: middle;
+  width: 1.15rem;
+}
+
+.ct-icon svg {
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .ct-icon__text {
