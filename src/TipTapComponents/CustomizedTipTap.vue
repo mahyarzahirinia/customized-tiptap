@@ -86,7 +86,7 @@ const currentDir = i18n.dir;
 
 const editorFontFamilies: Record<TiptapLanguage, string> = {
   en: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-  fa: 'Vazirmatn, Vazir, IRANSans, Tahoma, Arial, sans-serif',
+  fa: 'Estedad, Vazirmatn, Vazir, IRANSans, Tahoma, Arial, sans-serif',
 };
 
 watch(
