@@ -442,7 +442,7 @@ const toggleTablePanel = () => {
 
 :deep(.advanced-toggle) {
   background: #ffffff;
-  border: 1px solid #b3b7b8;
+  border: 0;
   border-radius: 0.5rem !important;
   box-shadow: inset 0 -1px 0 rgba(15, 23, 42, 0.06);
   color: #1f2937 !important;
@@ -461,12 +461,10 @@ const toggleTablePanel = () => {
 
 :deep(.advanced-toggle:hover:not(:disabled)) {
   background: #f8fafc;
-  border-color: #64748b;
 }
 
 :deep(.advanced-toggle.is-expanded) {
   background: #ecfeff;
-  border-color: #0891b2;
   box-shadow: 0 0 0 2px rgba(8, 145, 178, 0.12);
   color: #0f172a !important;
 }
