@@ -81,7 +81,7 @@ watch(
 
 <style scoped lang="scss">
 .list-item {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 .font-size-container {

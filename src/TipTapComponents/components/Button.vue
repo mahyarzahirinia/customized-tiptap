@@ -42,12 +42,12 @@ defineProps<{
 
 <style scoped lang="scss">
 .c-tooltip {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 .toolbar-button {
   align-items: center;
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
   border-radius: 0.375rem !important;
   color: #1f2937 !important;
   min-height: 2rem;

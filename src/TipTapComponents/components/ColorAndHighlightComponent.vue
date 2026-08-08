@@ -455,7 +455,7 @@ onUnmounted(() => {
   cursor: pointer;
   display: inline-flex;
   flex: 1;
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
   font-size: 0.72rem;
   font-weight: 700;
   gap: 0.35rem;

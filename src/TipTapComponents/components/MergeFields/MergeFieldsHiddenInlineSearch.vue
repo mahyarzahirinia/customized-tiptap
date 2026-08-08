@@ -60,20 +60,20 @@ const {
   padding: 0.25rem;
   width: 150px;
   z-index: 9999999999;
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 .m-autocomplete :deep(.v-field),
 .m-autocomplete :deep(.v-field__input),
 .m-autocomplete :deep(.v-label),
 .m-autocomplete :deep(input) {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 :global(.merge-field-inline-menu),
 :global(.merge-field-inline-menu .v-list),
 :global(.merge-field-inline-menu .v-list-item),
 :global(.merge-field-inline-menu .v-list-item-title) {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 </style>

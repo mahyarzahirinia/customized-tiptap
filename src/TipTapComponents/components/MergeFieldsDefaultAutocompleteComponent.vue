@@ -151,7 +151,7 @@ const handleSelect = (item: MergeFieldType) => {
   position: relative;
   width: 300px;
   font-size: 0.875rem;
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 .merge-field-default__control {

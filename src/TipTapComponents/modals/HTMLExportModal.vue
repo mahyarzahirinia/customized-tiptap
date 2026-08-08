@@ -34,7 +34,7 @@ const { t } = useTiptapI18n();
 
 <style scoped lang="scss">
 .v-card-title {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 :deep(.v-field__input) {

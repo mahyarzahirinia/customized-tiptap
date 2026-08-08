@@ -165,7 +165,7 @@ const runTableAction = (action: () => void) => {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
   width: 100%;
 }
 

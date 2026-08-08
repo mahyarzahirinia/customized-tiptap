@@ -55,8 +55,7 @@ const props = withDefaults(
     onUpdateContent: undefined,
     lazyloadAdvancedComponents: false,
     language: "fa",
-    fontFamily:
-      'Tahoma, Arial, "Helvetica Neue", Helvetica, sans-serif',
+    fontFamily: undefined,
     fontFamilyOptions: () => [
       { title: "Tahoma", value: "Tahoma" },
       { title: "Arial", value: "Arial" },
@@ -85,6 +84,11 @@ const i18n = provideTiptapI18n({
 });
 const currentDir = i18n.dir;
 
+const editorFontFamilies: Record<TiptapLanguage, string> = {
+  en: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  fa: 'Vazirmatn, Vazir, IRANSans, Tahoma, Arial, sans-serif',
+};
+
 watch(
   () => props.language,
   (language) => {
@@ -95,9 +99,14 @@ watch(
   }
 );
 
-const editorStyle = computed<CSSProperties>(() => ({
-  "--tiptap-editor-font": props.fontFamily,
-}));
+const editorStyle = computed<CSSProperties>(() => {
+  const defaultFontFamily = editorFontFamilies[currentLanguage.value];
+
+  return {
+    "--tiptap-editor-font": props.fontFamily ?? defaultFontFamily,
+    "--tiptap-editor-ui-font": defaultFontFamily,
+  };
+});
 
 // Helper to get unique extensions by name
 function uniqueExtensionsByName(extensions: Module): Module {

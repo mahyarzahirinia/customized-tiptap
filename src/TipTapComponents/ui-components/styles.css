@@ -1,6 +1,6 @@
 .ct-app,
 .ct-locale-provider {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 .ct-main {
@@ -15,7 +15,7 @@
   color: inherit;
   cursor: pointer;
   display: inline-flex;
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
   gap: 0.25rem;
   justify-content: center;
   min-height: 2.25rem;
@@ -177,7 +177,7 @@
 }
 
 .ct-select {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
   position: relative;
 }
 
@@ -256,7 +256,7 @@
 }
 
 .ct-list-item-title {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 
 .ct-menu {

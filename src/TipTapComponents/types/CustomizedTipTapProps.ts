@@ -188,7 +188,8 @@ export interface CustomizedTipTapProps {
   language?: TiptapLanguage;
 
   /**
-   * Font family used by the editor UI and editable content.
+   * Font family used by editable content.
+   * The editor UI uses a language-aware font stack.
    * Consumers are responsible for loading custom fonts in their app CSS.
    */
   fontFamily?: string;

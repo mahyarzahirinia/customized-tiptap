@@ -162,6 +162,6 @@ const targetOptions = computed(() => [
 .list-item,
 :deep(.v-label),
 :deep(.v-select__selection-text) {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 </style>

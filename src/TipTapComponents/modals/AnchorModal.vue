@@ -33,6 +33,6 @@ const { t } = useTiptapI18n();
 .list-item,
 :deep(.v-label),
 :deep(.v-field) {
-  font-family: var(--tiptap-editor-font);
+  font-family: var(--tiptap-editor-ui-font);
 }
 </style>
