@@ -411,7 +411,7 @@ const toggleTablePanel = () => {
     border-radius: 0.5rem;
     display: flex;
     min-height: 2.3rem;
-    overflow: hidden;
+    overflow: visible;
 
     & > .v-field {
       border: none;

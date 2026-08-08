@@ -22,7 +22,7 @@
   border-radius: 0.5rem;
   display: flex;
   min-height: 2.3rem;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .group-buttons :deep(.ct-btn-group) {
