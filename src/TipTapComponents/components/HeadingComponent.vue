@@ -10,15 +10,21 @@ const props = defineProps<{ editor: Editor }>();
 const { language, t } = useTiptapI18n();
 
 const selectedHeading = ref<number | null>(0);
+
+const formatHeadingLevel = (level: Level) =>
+  new Intl.NumberFormat(language.value === "fa" ? "fa-IR" : "en-US", {
+    useGrouping: false,
+  }).format(level);
+
 const headingOptions = computed(() => {
   const headingLabel = language.value === "fa" ? "سرتیتر" : "Heading";
   return [
-    { title: `${headingLabel} ۶`, value: 6 },
-    { title: `${headingLabel} ۵`, value: 5 },
-    { title: `${headingLabel} ۴`, value: 4 },
-    { title: `${headingLabel} ۳`, value: 3 },
-    { title: `${headingLabel} ۲`, value: 2 },
-    { title: `${headingLabel} ۱`, value: 1 },
+    { title: `${headingLabel} ${formatHeadingLevel(6)}`, value: 6 },
+    { title: `${headingLabel} ${formatHeadingLevel(5)}`, value: 5 },
+    { title: `${headingLabel} ${formatHeadingLevel(4)}`, value: 4 },
+    { title: `${headingLabel} ${formatHeadingLevel(3)}`, value: 3 },
+    { title: `${headingLabel} ${formatHeadingLevel(2)}`, value: 2 },
+    { title: `${headingLabel} ${formatHeadingLevel(1)}`, value: 1 },
     { title: language.value === "fa" ? "پاراگراف" : "Paragraph", value: 0 },
   ];
 });

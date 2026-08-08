@@ -1,20 +1,25 @@
 <script lang="ts" setup="">
-import { onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import type { Editor } from "@tiptap/core";
-import { LineHeight } from "../extensions/LineHeightExtension"; // import custom extension if needed
 import { useTiptapI18n } from "../i18n";
 
 const props = defineProps<{ editor: Editor }>();
-const { t } = useTiptapI18n();
+const { language, t } = useTiptapI18n();
 
-// line height options
-const lineHeights = [
-  { title: "۱", value: "1" },
-  { title: "۱.۵", value: "1.5" },
-  { title: "۲", value: "2" },
-  { title: "۲.۵", value: "2.5" },
-  { title: "۳", value: "3" },
-];
+const lineHeightValues = ["1", "1.5", "2", "2.5", "3"];
+
+const formatLineHeight = (value: string) =>
+  new Intl.NumberFormat(language.value === "fa" ? "fa-IR" : "en-US", {
+    maximumFractionDigits: 1,
+    useGrouping: false,
+  }).format(Number(value));
+
+const lineHeights = computed(() =>
+  lineHeightValues.map((value) => ({
+    title: formatLineHeight(value),
+    value,
+  }))
+);
 
 const selectedLineHeight = ref<string | undefined>("1");
 
